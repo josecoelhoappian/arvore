@@ -11,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -21,12 +22,13 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
+            touch-action: manipulation;
         }
 
         .container {
             max-width: 1800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -36,27 +38,27 @@
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 15px 20px;
+            padding: 12px 15px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             flex-shrink: 0;
         }
 
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 5px;
         }
 
         .subtitle {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.8;
         }
 
         .search-section {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             background-color: white;
-            padding: 12px 16px;
+            padding: 12px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             position: relative;
@@ -66,45 +68,69 @@
         .search-box {
             display: flex;
             gap: 10px;
+            position: relative;
         }
 
         .search-box input {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 0.9rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            -webkit-appearance: none;
+            appearance: none;
+            font-size: 16px; /* Prevents zoom on iOS */
         }
 
-        button {
-            padding: 8px 16px;
+        .search-button {
+            padding: 12px 16px;
             background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9rem;
             font-weight: bold;
             transition: background-color 0.3s;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
+            min-width: 50px;
         }
 
-        button:hover {
+        .search-button:hover,
+        .search-button:active {
             background-color: #2980b9;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            display: none;
+        }
+
+        .clear-search.active {
+            display: block;
         }
 
         .main-content-wrapper {
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            gap: 12px;
             flex: 1;
             min-height: 0;
             overflow: hidden;
         }
 
         .sidebar {
-            flex: 0 0 280px;
             background-color: white;
             border-radius: 8px;
             padding: 12px;
@@ -112,6 +138,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            height: 250px;
         }
 
         .main-content-area {
@@ -135,10 +162,10 @@
 
         .tab-btn {
             flex: 1;
-            padding: 12px;
+            padding: 12px 8px;
             background: none;
             border: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: bold;
             color: #7f8c8d;
             cursor: pointer;
@@ -146,8 +173,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             border-bottom: 3px solid transparent;
+            touch-action: manipulation;
         }
 
         .tab-btn:hover {
@@ -162,7 +190,7 @@
         }
 
         .tab-btn .tab-icon {
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .tab-content {
@@ -179,7 +207,7 @@
             flex-direction: column;
             min-height: 0;
             overflow: hidden;
-            padding: 15px;
+            padding: 12px;
         }
 
         .tab-pane.active {
@@ -204,14 +232,14 @@
         }
 
         .section-title {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
+            font-size: 1rem;
+            margin-bottom: 10px;
             color: #2c3e50;
             border-bottom: 2px solid #eee;
             padding-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             flex-shrink: 0;
         }
 
@@ -225,6 +253,7 @@
             overflow-y: auto;
             padding-right: 5px;
             min-height: 0;
+            -webkit-overflow-scrolling: touch;
         }
 
         .person-item {
@@ -237,6 +266,12 @@
             background-color: white;
             position: relative;
             font-size: 0.85rem;
+            touch-action: manipulation;
+        }
+
+        .person-item:active {
+            background-color: #f0f0f0;
+            transform: scale(0.98);
         }
 
         .person-item:hover {
@@ -354,16 +389,17 @@
             position: relative;
             background-color: #f9f9f9;
             min-height: 250px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .tree-node {
             position: absolute;
             background-color: white;
             border: 2px solid #3498db;
-            border-radius: 6px;
+            border-radius: 8px;
             text-align: center;
-            width: 130px;
-            height: 75px;
+            width: 120px;
+            height: 70px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.2s;
@@ -371,6 +407,11 @@
             padding: 6px;
             font-size: 0.75rem;
             overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .tree-node:active {
+            transform: scale(0.95);
         }
 
         .tree-node:hover {
@@ -397,7 +438,7 @@
         .tree-node.selected {
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5), 0 6px 20px rgba(52, 152, 219, 0.3);
             z-index: 3;
-            border-width: 6px;
+            border-width: 4px;
         }
 
         .node-name {
@@ -490,6 +531,7 @@
             flex: 1;
             overflow-y: auto;
             padding-right: 5px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .relationship-badge {
@@ -554,6 +596,12 @@
             transition: all 0.2s;
             cursor: pointer;
             font-size: 0.8rem;
+            touch-action: manipulation;
+        }
+
+        .relationship-item:active {
+            background-color: #f0f0f0;
+            transform: scale(0.98);
         }
 
         .relationship-item:hover {
@@ -628,11 +676,13 @@
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 4px;
-            max-height: 225px;
+            max-height: 250px;
             overflow-y: auto;
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             display: none;
+            margin-top: 5px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .search-results.active {
@@ -640,14 +690,19 @@
         }
 
         .search-result-item {
-            padding: 9px 12px;
+            padding: 12px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
             transition: background-color 0.2s;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            touch-action: manipulation;
+        }
+
+        .search-result-item:active {
+            background-color: #f0f0f0;
         }
 
         .search-result-item:hover {
@@ -660,37 +715,57 @@
 
         .search-result-info {
             flex: 1;
+            min-width: 0;
         }
 
         .search-result-name {
             font-weight: bold;
             color: #2c3e50;
             margin-bottom: 3px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .search-result-surname {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #7f8c8d;
             font-style: italic;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .search-result-details {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: #7f8c8d;
             display: flex;
-            gap: 12px;
-            align-items: center;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-end;
+            text-align: right;
+            flex-shrink: 0;
+            margin-left: 10px;
         }
 
         .search-result-id {
             font-family: monospace;
             color: #95a5a6;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
         }
 
         .search-result-birth {
             color: #27ae60;
+        }
+
+        .search-count {
+            padding: 8px 12px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #eee;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            text-align: center;
         }
 
         /* Custom scrollbars */
@@ -699,6 +774,7 @@
         .details-content-wrapper::-webkit-scrollbar,
         .search-results::-webkit-scrollbar {
             width: 6px;
+            height: 6px;
         }
 
         .person-list::-webkit-scrollbar-track,
@@ -724,95 +800,152 @@
             background: #a8a8a8;
         }
 
-        @media (max-width: 1200px) {
+        /* Mobile optimizations */
+        @media (min-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 20px;
             }
             
             .main-content-wrapper {
-                flex-direction: column;
-                gap: 12px;
+                flex-direction: row;
+                gap: 15px;
             }
             
             .sidebar {
-                flex: none;
-                width: 100%;
-                max-height: 200px;
+                flex: 0 0 280px;
+                height: auto;
+                max-height: none;
             }
             
-            .details-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
             .search-box {
-                flex-direction: column;
+                flex-direction: row;
             }
             
             .search-result-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 6px;
+                flex-direction: row;
             }
             
             .search-result-details {
-                width: 100%;
-                justify-content: space-between;
+                flex-direction: row;
+                gap: 12px;
             }
             
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             
             .section-title {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             
             .tab-btn {
-                padding: 10px 6px;
-                font-size: 0.85rem;
+                padding: 12px;
+                font-size: 0.95rem;
             }
             
             .tab-btn .tab-icon {
-                font-size: 0.85rem;
+                font-size: 1rem;
             }
             
             .tree-node {
-                width: 110px;
-                height: 65px;
-                font-size: 0.7rem;
-            }
-            
-            .node-name {
+                width: 130px;
+                height: 75px;
                 font-size: 0.75rem;
             }
             
+            .node-name {
+                font-size: 0.8rem;
+            }
+            
             .node-surname {
-                font-size: 0.6rem;
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .details-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        /* Improve touch targets */
+        @media (max-width: 767px) {
+            .person-item,
+            .relationship-item,
+            .search-result-item,
+            .tree-node {
+                min-height: 44px; /* Minimum touch target size */
             }
             
-            .node-details {
-                font-size: 0.55rem;
+            button,
+            .tab-btn {
+                min-height: 44px;
             }
             
-            .node-relationship {
-                font-size: 0.5rem;
+            input {
+                min-height: 44px;
+                font-size: 16px; /* Prevents zoom on iOS */
             }
+            
+            .tree-container {
+                min-height: 300px;
+            }
+            
+            .search-box {
+                position: relative;
+            }
+            
+            .search-button {
+                position: absolute;
+                right: 0;
+                top: 0;
+                height: 100%;
+                width: 50px;
+            }
+            
+            .clear-search {
+                right: 55px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background-color: #fffacd;
+            padding: 0 2px;
+            border-radius: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-tree"></i> Árvore Genealógica Completa</h1>
+            <h1><i class="fas fa-tree"></i> Árvore Genealógica</h1>
             <p class="subtitle">Visualize toda a árvore genealógica com ancestrais e descendentes</p>
         </header>
 
         <div class="search-section">
             <h2 class="section-title"><i class="fas fa-search"></i> Procurar Pessoa</h2>
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="Digite o nome, sobrenome ou ID da pessoa...">
+                <input type="text" id="search-input" placeholder="Digite o nome, sobrenome ou ID..." autocomplete="off">
+                <button class="clear-search" id="clear-search"><i class="fas fa-times"></i></button>
+                <button class="search-button" id="search-button"><i class="fas fa-search"></i></button>
             </div>
             <div class="search-results" id="search-results">
                 <!-- Search results will appear here -->
@@ -834,11 +967,11 @@
                 <div class="content-tabs">
                     <button class="tab-btn active" id="tree-tab">
                         <i class="fas fa-project-diagram tab-icon"></i>
-                        <span>Árvore Genealógica</span>
+                        <span>Árvore</span>
                     </button>
                     <button class="tab-btn" id="details-tab">
                         <i class="fas fa-user tab-icon"></i>
-                        <span>Detalhes da Pessoa</span>
+                        <span>Detalhes</span>
                     </button>
                 </div>
                 
@@ -874,7 +1007,7 @@
         </div>
 
         <footer>
-            <p>Árvore Genealógica Completa &copy; 2023 | Mostra relações familiares com graus de parentesco</p>
+            <p>Árvore Genealógica &copy; 2023 | Mostra relações familiares com graus de parentesco</p>
         </footer>
     </div>
 
@@ -897,9 +1030,20 @@
         
         // Variáveis para elementos DOM
         let searchInput, personList, treeContainer, detailsPanel, detailsContent;
-        let relationshipBadge;
+        let relationshipBadge, searchButton, clearSearchButton;
         let searchResults;
         let treeTab, detailsTab, treePane, detailsPane;
+        
+        // Função para remover acentos
+        function removeAccents(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+        
+        // Função para normalizar texto para busca (remove acentos, converte para minúsculas)
+        function normalizeSearchText(text) {
+            if (!text) return '';
+            return removeAccents(text.toLowerCase());
+        }
         
         // Inicializar quando a página carrega
         document.addEventListener('DOMContentLoaded', function() {
@@ -907,7 +1051,21 @@
             initializeEventListeners();
             loadAllFiles();
             showMessage('A carregar dados automaticamente...', 'info');
+            
+            // Ajustar layout inicial para mobile
+            adjustMobileLayout();
         });
+        
+        // Ajustar layout para mobile
+        function adjustMobileLayout() {
+            if (window.innerWidth <= 767) {
+                // Ajustar altura do sidebar em mobile
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar) {
+                    sidebar.style.height = '200px';
+                }
+            }
+        }
         
         // Inicializar elementos DOM
         function initializeElements() {
@@ -918,6 +1076,8 @@
             detailsContent = document.getElementById('details-content');
             relationshipBadge = document.getElementById('relationship-badge');
             searchResults = document.getElementById('search-results');
+            searchButton = document.getElementById('search-button');
+            clearSearchButton = document.getElementById('clear-search');
             
             // Tab elements
             treeTab = document.getElementById('tree-tab');
@@ -929,27 +1089,60 @@
         // Configurar event listeners
         function initializeEventListeners() {
             if (searchInput) {
-                searchInput.addEventListener('keyup', function(event) {
-                    if (event.key === 'Enter') performSearch();
-                });
                 searchInput.addEventListener('input', function() {
+                    const hasText = this.value.trim().length > 0;
+                    clearSearchButton.classList.toggle('active', hasText);
+                    
                     if (this.value.trim().length >= 2) {
                         performSearch();
                     } else {
                         hideSearchResults();
                     }
                 });
-                // Hide search results when clicking outside
+                
+                searchInput.addEventListener('keyup', function(event) {
+                    if (event.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+                
+                // Fechar resultados ao clicar fora
                 document.addEventListener('click', function(event) {
-                    if (!searchResults.contains(event.target) && event.target !== searchInput) {
+                    if (!searchResults.contains(event.target) && 
+                        event.target !== searchInput && 
+                        event.target !== searchButton && 
+                        !searchButton.contains(event.target)) {
                         hideSearchResults();
                     }
+                });
+                
+                // Prevenir comportamento padrão do formulário
+                searchInput.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                    }
+                });
+            }
+            
+            if (searchButton) {
+                searchButton.addEventListener('click', performSearch);
+            }
+            
+            if (clearSearchButton) {
+                clearSearchButton.addEventListener('click', function() {
+                    searchInput.value = '';
+                    this.classList.remove('active');
+                    hideSearchResults();
+                    searchInput.focus();
                 });
             }
             
             // Tab switching
             if (treeTab) treeTab.addEventListener('click', () => switchTab('tree'));
             if (detailsTab) detailsTab.addEventListener('click', () => switchTab('details'));
+            
+            // Ajustar layout ao redimensionar
+            window.addEventListener('resize', adjustMobileLayout);
         }
         
         // Switch between tabs
@@ -979,37 +1172,87 @@
         
         // Perform search and show results
         function performSearch() {
-            const searchTerm = searchInput.value.trim().toLowerCase();
+            const searchTerm = searchInput.value.trim();
             if (!searchTerm) {
                 hideSearchResults();
                 return;
             }
             
-            const foundPersons = persons.filter(person => 
-                (person.nome && person.nome.toLowerCase().includes(searchTerm)) ||
-                (person.sobrenome && person.sobrenome.toLowerCase().includes(searchTerm)) ||
-                (person.id && person.id.toLowerCase().includes(searchTerm))
-            );
+            // Normalizar o termo de busca (remover acentos e converter para minúsculas)
+            const normalizedSearchTerm = normalizeSearchText(searchTerm);
+            
+            // Procurar pessoas
+            const foundPersons = persons.filter(person => {
+                // Normalizar os campos para busca
+                const normalizedName = normalizeSearchText(person.nome);
+                const normalizedSurname = normalizeSearchText(person.sobrenome);
+                const normalizedId = normalizeSearchText(person.id);
+                
+                // Verificar se o termo de busca corresponde a qualquer campo
+                return normalizedName.includes(normalizedSearchTerm) ||
+                       normalizedSurname.includes(normalizedSearchTerm) ||
+                       normalizedId.includes(normalizedSearchTerm);
+            });
             
             if (foundPersons.length > 0) {
-                showSearchResults(foundPersons);
+                showSearchResults(foundPersons, searchTerm);
             } else {
-                showSearchResults([]);
+                showSearchResults([], searchTerm);
+            }
+            
+            // Mostrar resultados automaticamente em mobile
+            if (window.innerWidth <= 767) {
+                searchResults.classList.add('active');
             }
         }
         
+        // Destacar texto nos resultados
+        function highlightText(text, searchTerm) {
+            if (!searchTerm || !text) return text;
+            
+            const normalizedText = normalizeSearchText(text);
+            const normalizedSearchTerm = normalizeSearchText(searchTerm);
+            
+            if (!normalizedText.includes(normalizedSearchTerm)) return text;
+            
+            // Encontrar posição onde o termo começa (considerando acentos)
+            let startIndex = 0;
+            let found = false;
+            
+            // Procurar o termo no texto original considerando acentos
+            for (let i = 0; i <= text.length - searchTerm.length; i++) {
+                const substring = text.substring(i, i + searchTerm.length);
+                if (normalizeSearchText(substring) === normalizedSearchTerm) {
+                    startIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) return text;
+            
+            const endIndex = startIndex + searchTerm.length;
+            return text.substring(0, startIndex) + 
+                   '<span class="highlight">' + text.substring(startIndex, endIndex) + '</span>' + 
+                   text.substring(endIndex);
+        }
+        
         // Show search results in dropdown
-        function showSearchResults(results) {
+        function showSearchResults(results, searchTerm) {
             searchResults.innerHTML = '';
             
             if (results.length === 0) {
                 const noResults = document.createElement('div');
-                noResults.className = 'search-result-item';
-                noResults.style.textAlign = 'center';
-                noResults.style.color = '#7f8c8d';
-                noResults.textContent = 'Nenhuma pessoa encontrada';
+                noResults.className = 'no-results';
+                noResults.innerHTML = `<i class="fas fa-search"></i><div>Nenhuma pessoa encontrada para "${searchTerm}"</div>`;
                 searchResults.appendChild(noResults);
             } else {
+                // Adicionar contador de resultados
+                const countDiv = document.createElement('div');
+                countDiv.className = 'search-count';
+                countDiv.textContent = `${results.length} ${results.length === 1 ? 'pessoa encontrada' : 'pessoas encontradas'}`;
+                searchResults.appendChild(countDiv);
+                
                 results.forEach(person => {
                     const resultItem = document.createElement('div');
                     resultItem.className = 'search-result-item';
@@ -1019,11 +1262,11 @@
                     
                     const nameDiv = document.createElement('div');
                     nameDiv.className = 'search-result-name';
-                    nameDiv.textContent = person.nome || 'Nome desconhecido';
+                    nameDiv.innerHTML = highlightText(person.nome || 'Nome desconhecido', searchTerm);
                     
                     const surnameDiv = document.createElement('div');
                     surnameDiv.className = 'search-result-surname';
-                    surnameDiv.textContent = person.sobrenome || '';
+                    surnameDiv.innerHTML = highlightText(person.sobrenome || '', searchTerm);
                     
                     infoDiv.appendChild(nameDiv);
                     infoDiv.appendChild(surnameDiv);
@@ -1048,7 +1291,13 @@
                     resultItem.addEventListener('click', () => {
                         selectPerson(person.id);
                         searchInput.value = '';
+                        clearSearchButton.classList.remove('active');
                         hideSearchResults();
+                        
+                        // Fechar teclado virtual em mobile após seleção
+                        if (window.innerWidth <= 767) {
+                            searchInput.blur();
+                        }
                     });
                     
                     searchResults.appendChild(resultItem);
@@ -1176,12 +1425,13 @@
                 
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'person-name';
-                if (person.nome && person.nome.length > 20) {
-                    nameDiv.textContent = person.nome.substring(0, 20) + '...';
+                const fullName = person.nome || 'Nome desconhecido';
+                if (fullName.length > 20) {
+                    nameDiv.textContent = fullName.substring(0, 20) + '...';
                     nameDiv.classList.add('has-tooltip');
-                    nameDiv.setAttribute('data-tooltip', person.nome);
+                    nameDiv.setAttribute('data-tooltip', fullName);
                 } else {
-                    nameDiv.textContent = person.nome || 'Nome desconhecido';
+                    nameDiv.textContent = fullName;
                 }
                 
                 const genderDiv = document.createElement('div');
@@ -1196,12 +1446,13 @@
                 
                 const surnameDiv = document.createElement('div');
                 surnameDiv.className = 'person-surname';
-                if (person.sobrenome && person.sobrenome.length > 25) {
-                    surnameDiv.textContent = person.sobrenome.substring(0, 25) + '...';
+                const fullSurname = person.sobrenome || '';
+                if (fullSurname.length > 25) {
+                    surnameDiv.textContent = fullSurname.substring(0, 25) + '...';
                     surnameDiv.classList.add('has-tooltip');
-                    surnameDiv.setAttribute('data-tooltip', person.sobrenome);
+                    surnameDiv.setAttribute('data-tooltip', fullSurname);
                 } else {
-                    surnameDiv.textContent = person.sobrenome || 'Sem sobrenome';
+                    surnameDiv.textContent = fullSurname;
                 }
                 
                 const metaDiv = document.createElement('div');
@@ -1209,7 +1460,7 @@
                 
                 const birthDiv = document.createElement('div');
                 birthDiv.className = 'person-birth';
-                birthDiv.textContent = `Nascimento: ${extractYear(person.data_nascimento)}`;
+                birthDiv.textContent = `Nasc: ${extractYear(person.data_nascimento)}`;
                 
                 const idDiv = document.createElement('div');
                 idDiv.className = 'person-id';
@@ -1261,6 +1512,14 @@
             
             // Switch to tree tab by default when selecting a person
             switchTab('tree');
+            
+            // Scroll para o item selecionado na lista em mobile
+            if (window.innerWidth <= 767) {
+                const activeItem = document.querySelector(`.person-item[data-id="${personId}"]`);
+                if (activeItem) {
+                    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
         }
         
         // Gerar árvore genealógica
@@ -1363,7 +1622,7 @@
                 if (gen.persons.length > maxNodesInRow) maxNodesInRow = gen.persons.length;
             });
             
-            const startX = Math.max(50, (treeContainer.clientWidth - (maxNodesInRow * horizontalSpacing)) / 2);
+            const startX = Math.max(30, (treeContainer.clientWidth - (maxNodesInRow * horizontalSpacing)) / 2);
             
             // Posicionar nós
             generations.forEach((gen, genIndex) => {
@@ -1435,33 +1694,33 @@
             const treeContainer = document.getElementById('tree-container');
             if (!treeContainer) {
                 return {
-                    nodeWidth: 130,
-                    nodeHeight: 75,
-                    horizontalSpacing: 150,
-                    verticalSpacing: 120
+                    nodeWidth: 120,
+                    nodeHeight: 70,
+                    horizontalSpacing: 140,
+                    verticalSpacing: 110
                 };
             }
             
             const containerHeight = treeContainer.clientHeight;
             const containerWidth = treeContainer.clientWidth;
             
-            // Small screens
-            if (containerHeight < 400 || containerWidth < 800) {
+            // Mobile screens
+            if (containerWidth < 768) {
                 return {
-                    nodeWidth: 110,
-                    nodeHeight: 65,
-                    horizontalSpacing: 120,
-                    verticalSpacing: 100
+                    nodeWidth: 100,
+                    nodeHeight: 60,
+                    horizontalSpacing: 110,
+                    verticalSpacing: 90
                 };
             }
             
             // Medium screens
-            if (containerHeight < 500 || containerWidth < 1000) {
+            if (containerWidth < 1024) {
                 return {
-                    nodeWidth: 120,
-                    nodeHeight: 70,
-                    horizontalSpacing: 135,
-                    verticalSpacing: 110
+                    nodeWidth: 110,
+                    nodeHeight: 65,
+                    horizontalSpacing: 125,
+                    verticalSpacing: 100
                 };
             }
             
