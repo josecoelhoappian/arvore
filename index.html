@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árvore Genealógica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .search-section {
+            margin-bottom: 15px;
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .search-btn {
+            background-color: #9b59b6;
+        }
+
+        .search-btn:hover {
+            background-color: #8e44ad;
+        }
+
+        .reload-btn {
+            background-color: #27ae60;
+        }
+
+        .reload-btn:hover {
+            background-color: #219653;
+        }
+
+        .main-content-wrapper {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            flex: 0 0 320px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .main-content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            background-color: #f9f9f9;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            background-color: #f1f1f1;
+            color: #2c3e50;
+        }
+
+        .tab-btn.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+            background-color: white;
+        }
+
+        .tab-btn .tab-icon {
+            font-size: 1.2rem;
+        }
+
+        .tab-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .tab-pane {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .tab-pane.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .tree-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .details-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .section-title i {
+            color: #3498db;
+        }
+
+        .person-list {
+            list-style: none;
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+            min-height: 0;
+        }
+
+        .person-item {
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+            background-color: white;
+            position: relative;
+        }
+
+        .person-item:hover {
+            background-color: #f9f9f9;
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.1);
+        }
+
+        .person-item.active {
+            background-color: #e8f4fc;
+            border: 2px solid #3498db;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .person-item.active::before {
+            content: "✓";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .person-name-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .person-name {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            flex: 1;
+        }
+
+        .person-gender {
+            font-size: 1.2rem;
+            color: #3498db;
+            flex-shrink: 0;
+        }
+
+        .person-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .person-surname {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .person-meta {
+            font-size: 0.85rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .person-birth {
+            color: #27ae60;
+        }
+
+        .person-id {
+            color: #95a5a6;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .tree-container-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .tree-container {
+            flex: 1;
+            width: 100%;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            overflow: auto;
+            position: relative;
+            background-color: #f9f9f9;
+            min-height: 300px;
+        }
+
+        .tree-node {
+            position: absolute;
+            background-color: white;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 160px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 1;
+        }
+
+        .tree-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            z-index: 2;
+        }
+
+        .tree-node.male {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #e8f4fc 0%, #d4e8f7 100%);
+        }
+
+        .tree-node.female {
+            border-color: #e84393;
+            background: linear-gradient(135deg, #fce8f1 0%, #f8d4e4 100%);
+        }
+
+        .tree-node.unknown {
+            border-color: #7f8c8d;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        .tree-node.selected {
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5), 0 6px 20px rgba(52, 152, 219, 0.3);
+            z-index: 3;
+            border-width: 8px;
+        }
+
+        .node-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+            font-size: 1rem;
+            line-height: 1.3;
+        }
+
+        .node-surname {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .node-details {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .node-relationship {
+            font-size: 0.75rem;
+            color: #3498db;
+            font-weight: bold;
+            margin-top: 5px;
+            padding: 3px 8px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .tree-line {
+            position: absolute;
+            background-color: #7f8c8d;
+            z-index: 0;
+        }
+
+        .details-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .details-content-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .relationship-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-label i {
+            color: #3498db;
+            width: 20px;
+        }
+
+        .detail-value {
+            color: #555;
+            line-height: 1.5;
+            padding-left: 28px;
+        }
+
+        .relationship-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .relationship-item {
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .relationship-item:hover {
+            background-color: #f9f9f9;
+            border-color: #3498db;
+        }
+
+        .relationship-info {
+            flex: 1;
+        }
+
+        .relationship-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .relationship-type {
+            color: #3498db;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .relationship-id {
+            color: #95a5a6;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .empty-message i {
+            font-size: 3rem;
+            color: #bdc3c7;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 15px;
+            padding: 15px;
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            border-top: 1px solid #eee;
+            flex-shrink: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tree-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .tree-btn {
+            padding: 8px 16px;
+            background-color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        .tree-btn:hover {
+            background-color: #7f8c8d;
+        }
+
+        .tree-btn.zoom-in {
+            background-color: #3498db;
+        }
+
+        .tree-btn.zoom-out {
+            background-color: #3498db;
+        }
+
+        .tree-btn.reset {
+            background-color: #e74c3c;
+        }
+
+        .tree-btn.reset:hover {
+            background-color: #c0392b;
+        }
+
+        /* Search results dropdown */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-result-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-info {
+            flex: 1;
+        }
+
+        .search-result-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        .search-result-surname {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .search-result-details {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-result-id {
+            font-family: monospace;
+            color: #95a5a6;
+        }
+
+        .search-result-birth {
+            color: #27ae60;
+        }
+
+        /* Custom scrollbars */
+        .person-list::-webkit-scrollbar,
+        .tree-container::-webkit-scrollbar,
+        .details-content-wrapper::-webkit-scrollbar,
+        .search-results::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .person-list::-webkit-scrollbar-track,
+        .tree-container::-webkit-scrollbar-track,
+        .details-content-wrapper::-webkit-scrollbar-track,
+        .search-results::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .person-list::-webkit-scrollbar-thumb,
+        .tree-container::-webkit-scrollbar-thumb,
+        .details-content-wrapper::-webkit-scrollbar-thumb,
+        .search-results::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .person-list::-webkit-scrollbar-thumb:hover,
+        .tree-container::-webkit-scrollbar-thumb:hover,
+        .details-content-wrapper::-webkit-scrollbar-thumb:hover,
+        .search-results::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .main-content-wrapper {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .sidebar {
+                flex: none;
+                width: 100%;
+                max-height: 250px;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .tree-controls {
+                flex-direction: column;
+            }
+            
+            .tree-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-result-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .search-result-details {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .tab-btn {
+                padding: 12px 8px;
+                font-size: 1rem;
+            }
+            
+            .tab-btn .tab-icon {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tree"></i> Árvore Genealógica Completa</h1>
+            <p class="subtitle">Visualize toda a árvore genealógica com ancestrais e descendentes</p>
+        </header>
+
+        <div class="search-section">
+            <h2 class="section-title"><i class="fas fa-search"></i> Procurar Pessoa</h2>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Digite o nome, sobrenome ou ID da pessoa...">
+                <button class="search-btn" id="search-btn"><i class="fas fa-search"></i> Procurar</button>
+                <button class="reload-btn" id="reload-btn"><i class="fas fa-redo"></i> Recarregar Dados</button>
+            </div>
+            <div class="search-results" id="search-results">
+                <!-- Search results will appear here -->
+            </div>
+        </div>
+
+        <div class="main-content-wrapper">
+            <div class="sidebar">
+                <h2 class="section-title"><i class="fas fa-list"></i> Lista de Pessoas</h2>
+                <ul class="person-list" id="person-list">
+                    <li class="empty-message">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <div>A carregar dados...</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="main-content-area">
+                <div class="content-tabs">
+                    <button class="tab-btn active" id="tree-tab">
+                        <i class="fas fa-project-diagram tab-icon"></i>
+                        <span>Árvore Genealógica</span>
+                    </button>
+                    <button class="tab-btn" id="details-tab">
+                        <i class="fas fa-user tab-icon"></i>
+                        <span>Detalhes da Pessoa</span>
+                    </button>
+                </div>
+                
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tree-pane">
+                        <div class="tree-section">
+                            <div class="tree-controls">
+                                <button class="tree-btn zoom-in" id="zoom-in"><i class="fas fa-search-plus"></i> Ampliar</button>
+                                <button class="tree-btn zoom-out" id="zoom-out"><i class="fas fa-search-minus"></i> Reduzir</button>
+                                <button class="tree-btn reset" id="reset-view"><i class="fas fa-sync-alt"></i> Redefinir Vista</button>
+                            </div>
+                            <div class="tree-container" id="tree-container">
+                                <div class="empty-message">
+                                    <i class="fas fa-tree"></i>
+                                    <div>Selecione uma pessoa para visualizar a árvore genealógica completa</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="details-pane">
+                        <div class="details-section">
+                            <div class="details-panel" id="details-panel">
+                                <div class="relationship-badge" id="relationship-badge">
+                                    Pessoa Selecionada
+                                </div>
+                                <h2 class="section-title"><i class="fas fa-user"></i> Detalhes da Pessoa</h2>
+                                <div class="details-content-wrapper">
+                                    <div class="details-grid" id="details-content">
+                                        <!-- Detalhes serão preenchidos aqui -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Árvore Genealógica Completa &copy; 2023 | Mostra relações familiares com graus de parentesco</p>
+        </footer>
+    </div>
+
+    <script>
+        // Dados carregados dos ficheiros
+        let places = [];
+        let persons = [];
+        let marriages = [];
+        let relationships = [];
+        
+        // Mapeamentos para acesso rápido
+        let placesMap = {};
+        let personsMap = {};
+        let marriagesMap = {};
+        let childrenMap = {}; // Mapa de família para filhos
+        let parentsMap = {}; // Mapa de pessoa para seus pais
+        
+        // Pessoa selecionada atualmente
+        let selectedPerson = null;
+        let currentZoom = 1;
+        
+        // Variáveis para elementos DOM
+        let searchBtn, reloadBtn, searchInput, personList, treeContainer, detailsPanel, detailsContent;
+        let zoomInBtn, zoomOutBtn, resetViewBtn;
+        let relationshipBadge;
+        let searchResults;
+        let treeTab, detailsTab, treePane, detailsPane;
+        
+        // Inicializar quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeElements();
+            initializeEventListeners();
+            loadAllFiles();
+            showMessage('A carregar dados automaticamente...', 'info');
+        });
+        
+        // Inicializar elementos DOM
+        function initializeElements() {
+            searchBtn = document.getElementById('search-btn');
+            reloadBtn = document.getElementById('reload-btn');
+            searchInput = document.getElementById('search-input');
+            personList = document.getElementById('person-list');
+            treeContainer = document.getElementById('tree-container');
+            detailsPanel = document.getElementById('details-panel');
+            detailsContent = document.getElementById('details-content');
+            zoomInBtn = document.getElementById('zoom-in');
+            zoomOutBtn = document.getElementById('zoom-out');
+            resetViewBtn = document.getElementById('reset-view');
+            relationshipBadge = document.getElementById('relationship-badge');
+            searchResults = document.getElementById('search-results');
+            
+            // Tab elements
+            treeTab = document.getElementById('tree-tab');
+            detailsTab = document.getElementById('details-tab');
+            treePane = document.getElementById('tree-pane');
+            detailsPane = document.getElementById('details-pane');
+        }
+        
+        // Configurar event listeners
+        function initializeEventListeners() {
+            if (searchBtn) searchBtn.addEventListener('click', performSearch);
+            if (reloadBtn) reloadBtn.addEventListener('click', loadAllFiles);
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function(event) {
+                    if (event.key === 'Enter') performSearch();
+                });
+                searchInput.addEventListener('input', function() {
+                    if (this.value.trim().length >= 2) {
+                        performSearch();
+                    } else {
+                        hideSearchResults();
+                    }
+                });
+                // Hide search results when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!searchResults.contains(event.target) && event.target !== searchInput) {
+                        hideSearchResults();
+                    }
+                });
+            }
+            if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
+            if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
+            if (resetViewBtn) resetViewBtn.addEventListener('click', resetView);
+            
+            // Tab switching
+            if (treeTab) treeTab.addEventListener('click', () => switchTab('tree'));
+            if (detailsTab) detailsTab.addEventListener('click', () => switchTab('details'));
+        }
+        
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Update tab buttons
+            treeTab.classList.remove('active');
+            detailsTab.classList.remove('active');
+            
+            // Hide all panes
+            treePane.classList.remove('active');
+            detailsPane.classList.remove('active');
+            
+            // Show selected tab
+            if (tabName === 'tree') {
+                treeTab.classList.add('active');
+                treePane.classList.add('active');
+            } else if (tabName === 'details') {
+                detailsTab.classList.add('active');
+                detailsPane.classList.add('active');
+            }
+        }
+        
+        // Hide search results
+        function hideSearchResults() {
+            searchResults.classList.remove('active');
+        }
+        
+        // Perform search and show results
+        function performSearch() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            if (!searchTerm) {
+                hideSearchResults();
+                return;
+            }
+            
+            const foundPersons = persons.filter(person => 
+                (person.nome && person.nome.toLowerCase().includes(searchTerm)) ||
+                (person.sobrenome && person.sobrenome.toLowerCase().includes(searchTerm)) ||
+                (person.id && person.id.toLowerCase().includes(searchTerm))
+            );
+            
+            if (foundPersons.length > 0) {
+                showSearchResults(foundPersons);
+            } else {
+                showSearchResults([]);
+            }
+        }
+        
+        // Show search results in dropdown
+        function showSearchResults(results) {
+            searchResults.innerHTML = '';
+            
+            if (results.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.className = 'search-result-item';
+                noResults.style.textAlign = 'center';
+                noResults.style.color = '#7f8c8d';
+                noResults.textContent = 'Nenhuma pessoa encontrada';
+                searchResults.appendChild(noResults);
+            } else {
+                results.forEach(person => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'search-result-info';
+                    
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'search-result-name';
+                    nameDiv.textContent = person.nome || 'Nome desconhecido';
+                    
+                    const surnameDiv = document.createElement('div');
+                    surnameDiv.className = 'search-result-surname';
+                    surnameDiv.textContent = person.sobrenome || '';
+                    
+                    infoDiv.appendChild(nameDiv);
+                    infoDiv.appendChild(surnameDiv);
+                    
+                    const detailsDiv = document.createElement('div');
+                    detailsDiv.className = 'search-result-details';
+                    
+                    const birthSpan = document.createElement('span');
+                    birthSpan.className = 'search-result-birth';
+                    birthSpan.textContent = `Nasc: ${extractYear(person.data_nascimento)}`;
+                    
+                    const idSpan = document.createElement('span');
+                    idSpan.className = 'search-result-id';
+                    idSpan.textContent = person.id;
+                    
+                    detailsDiv.appendChild(birthSpan);
+                    detailsDiv.appendChild(idSpan);
+                    
+                    resultItem.appendChild(infoDiv);
+                    resultItem.appendChild(detailsDiv);
+                    
+                    resultItem.addEventListener('click', () => {
+                        selectPerson(person.id);
+                        searchInput.value = '';
+                        hideSearchResults();
+                    });
+                    
+                    searchResults.appendChild(resultItem);
+                });
+            }
+            
+            searchResults.classList.add('active');
+        }
+        
+        // Carregar todos os ficheiros automaticamente
+        async function loadAllFiles() {
+            // Atualizar mensagens
+            if (personList) personList.innerHTML = '<li class="empty-message"><i class="fas fa-spinner fa-spin"></i><div>A carregar dados...</div></li>';
+            if (treeContainer) treeContainer.innerHTML = '<div class="empty-message"><i class="fas fa-tree"></i><div>A carregar dados...</div></div>';
+            hideSearchResults();
+            
+            try {
+                // Carregar todos os ficheiros
+                const [placesData, personsData, marriagesData, relationshipsData] = await Promise.all([
+                    loadFile('places.json'),
+                    loadFile('persons.json'),
+                    loadFile('marriages.json'),
+                    loadFile('relationships.json')
+                ]);
+                
+                // Atualizar dados
+                places = placesData;
+                persons = personsData;
+                marriages = marriagesData;
+                relationships = relationshipsData;
+                
+                // Criar mapeamentos
+                createMaps();
+                
+                // Atualizar interface
+                updatePersonList();
+                
+                showMessage('Dados carregados com sucesso!', 'success');
+                
+                // Selecionar primeira pessoa
+                if (persons.length > 0) {
+                    setTimeout(() => selectPerson(persons[0].id), 500);
+                }
+                
+            } catch (error) {
+                console.error('Erro ao carregar ficheiros:', error);
+                showMessage('Erro ao carregar ficheiros. Verifique os ficheiros JSON.', 'error');
+            }
+        }
+        
+        // Carregar ficheiro
+        async function loadFile(filename) {
+            const response = await fetch(filename);
+            if (!response.ok) throw new Error(`${filename} não encontrado`);
+            const data = await response.json();
+            if (!Array.isArray(data)) throw new Error(`${filename} não é um array válido`);
+            return data;
+        }
+        
+        // Criar mapeamentos
+        function createMaps() {
+            // Mapear lugares
+            placesMap = {};
+            places.forEach(place => placesMap[place.id] = place);
+            
+            // Mapear pessoas
+            personsMap = {};
+            persons.forEach(person => {
+                personsMap[person.id] = person;
+                if (person.lugar_nascimento && placesMap[person.lugar_nascimento]) {
+                    person.lugar_nascimento_nome = placesMap[person.lugar_nascimento].nome;
+                }
+            });
+            
+            // Mapear casamentos
+            marriagesMap = {};
+            marriages.forEach(marriage => marriagesMap[marriage.id] = marriage);
+            
+            // Mapear filhos por família
+            childrenMap = {};
+            relationships.forEach(rel => {
+                if (!childrenMap[rel.familia]) childrenMap[rel.familia] = [];
+                childrenMap[rel.familia].push(rel.filho);
+            });
+            
+            // Mapear pais por pessoa
+            parentsMap = {};
+            relationships.forEach(rel => {
+                const marriage = marriagesMap[rel.familia];
+                if (marriage) {
+                    parentsMap[rel.filho] = {
+                        father: marriage.marido,
+                        mother: marriage.esposa
+                    };
+                }
+            });
+        }
+        
+        // Atualizar lista de pessoas
+        function updatePersonList() {
+            if (!personList) return;
+            
+            personList.innerHTML = '';
+            
+            if (persons.length === 0) {
+                personList.innerHTML = '<li class="empty-message"><i class="fas fa-users"></i><div>Nenhuma pessoa carregada</div></li>';
+                return;
+            }
+            
+            // Ordenar por nome
+            const sortedPersons = [...persons].sort((a, b) => {
+                const nameA = (a.nome || '').toLowerCase();
+                const nameB = (b.nome || '').toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+            
+            // Adicionar à lista
+            sortedPersons.forEach(person => {
+                const li = document.createElement('li');
+                li.className = 'person-item';
+                li.dataset.id = person.id;
+                
+                const nameContainer = document.createElement('div');
+                nameContainer.className = 'person-name-container';
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'person-name';
+                nameDiv.textContent = person.nome || 'Nome desconhecido';
+                
+                const genderDiv = document.createElement('div');
+                genderDiv.className = 'person-gender';
+                genderDiv.textContent = person.sexo === 'masculino' ? '♂' : person.sexo === 'feminino' ? '♀' : '?';
+                
+                nameContainer.appendChild(nameDiv);
+                nameContainer.appendChild(genderDiv);
+                
+                const detailsDiv = document.createElement('div');
+                detailsDiv.className = 'person-details';
+                
+                const surnameDiv = document.createElement('div');
+                surnameDiv.className = 'person-surname';
+                surnameDiv.textContent = person.sobrenome || 'Sem sobrenome';
+                
+                const metaDiv = document.createElement('div');
+                metaDiv.className = 'person-meta';
+                
+                const birthDiv = document.createElement('div');
+                birthDiv.className = 'person-birth';
+                birthDiv.textContent = `Nascimento: ${extractYear(person.data_nascimento)}`;
+                
+                const idDiv = document.createElement('div');
+                idDiv.className = 'person-id';
+                idDiv.textContent = person.id;
+                
+                metaDiv.appendChild(birthDiv);
+                metaDiv.appendChild(idDiv);
+                
+                detailsDiv.appendChild(surnameDiv);
+                detailsDiv.appendChild(metaDiv);
+                
+                li.appendChild(nameContainer);
+                li.appendChild(detailsDiv);
+                
+                li.addEventListener('click', () => selectPerson(person.id));
+                
+                personList.appendChild(li);
+            });
+        }
+        
+        // Extrair ano
+        function extractYear(dateString) {
+            if (!dateString) return '?';
+            const yearMatch = dateString.match(/\b\d{4}\b/);
+            return yearMatch ? yearMatch[0] : '?';
+        }
+        
+        // Selecionar pessoa
+        function selectPerson(personId) {
+            selectedPerson = personsMap[personId];
+            
+            // Atualizar lista
+            document.querySelectorAll('.person-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.id === personId) item.classList.add('active');
+            });
+            
+            // Atualizar badge de relação
+            if (relationshipBadge) {
+                relationshipBadge.textContent = 'Pessoa Selecionada';
+                relationshipBadge.style.backgroundColor = '#3498db';
+            }
+            
+            // Gerar árvore
+            generateFamilyTree(personId);
+            
+            // Mostrar detalhes
+            showPersonDetails(personId);
+            
+            // Switch to tree tab by default when selecting a person
+            switchTab('tree');
+        }
+        
+        // Gerar árvore genealógica
+        function generateFamilyTree(personId) {
+            if (!treeContainer) return;
+            
+            treeContainer.innerHTML = '';
+            
+            const mainPerson = personsMap[personId];
+            if (!mainPerson) {
+                treeContainer.innerHTML = '<div class="empty-message"><i class="fas fa-user-times"></i><div>Pessoa não encontrada</div></div>';
+                return;
+            }
+            
+            // Get layout based on screen size
+            const layout = adjustTreeLayoutForScreen();
+            const nodeWidth = layout.nodeWidth;
+            const nodeHeight = layout.nodeHeight;
+            const horizontalSpacing = layout.horizontalSpacing;
+            const verticalSpacing = layout.verticalSpacing;
+            
+            // Coletar pessoas para mostrar
+            const allPersons = new Set([personId]);
+            const positions = new Map();
+            
+            // Adicionar pais
+            const parents = parentsMap[personId];
+            if (parents) {
+                if (parents.father) allPersons.add(parents.father);
+                if (parents.mother) allPersons.add(parents.mother);
+                
+                // Adicionar avós paternos
+                const paternalGrandparents = parents.father ? parentsMap[parents.father] : null;
+                if (paternalGrandparents) {
+                    if (paternalGrandparents.father) allPersons.add(paternalGrandparents.father);
+                    if (paternalGrandparents.mother) allPersons.add(paternalGrandparents.mother);
+                }
+                
+                // Adicionar avós maternos
+                const maternalGrandparents = parents.mother ? parentsMap[parents.mother] : null;
+                if (maternalGrandparents) {
+                    if (maternalGrandparents.father) allPersons.add(maternalGrandparents.father);
+                    if (maternalGrandparents.mother) allPersons.add(maternalGrandparents.mother);
+                }
+            }
+            
+            // Adicionar filhos
+            const children = findChildren(personId);
+            children.forEach(childId => allPersons.add(childId));
+            
+            // Adicionar cônjuge(s)
+            const spouses = findSpouses(personId);
+            spouses.forEach(spouseId => allPersons.add(spouseId));
+            
+            // Organizar por gerações
+            const generations = [];
+            
+            // Geração -2: Bisavós (simplificado)
+            const greatGrandparents = [];
+            
+            // Geração -1: Avós
+            const grandparents = [];
+            if (parents) {
+                const paternalGrandparents = parents.father ? parentsMap[parents.father] : null;
+                if (paternalGrandparents) {
+                    if (paternalGrandparents.father) grandparents.push(paternalGrandparents.father);
+                    if (paternalGrandparents.mother) grandparents.push(paternalGrandparents.mother);
+                }
+                const maternalGrandparents = parents.mother ? parentsMap[parents.mother] : null;
+                if (maternalGrandparents) {
+                    if (maternalGrandparents.father) grandparents.push(maternalGrandparents.father);
+                    if (maternalGrandparents.mother) grandparents.push(maternalGrandparents.mother);
+                }
+            }
+            
+            // Geração 0: Pais
+            const parentGeneration = [];
+            if (parents) {
+                if (parents.father) parentGeneration.push(parents.father);
+                if (parents.mother) parentGeneration.push(parents.mother);
+            }
+            
+            // Geração 1: Pessoa principal e cônjuges
+            const mainGeneration = [personId];
+            spouses.forEach(spouseId => mainGeneration.push(spouseId));
+            
+            // Geração 2: Filhos
+            const childrenGeneration = children;
+            
+            // Adicionar gerações
+            if (greatGrandparents.length > 0) generations.push({depth: -2, persons: greatGrandparents});
+            if (grandparents.length > 0) generations.push({depth: -1, persons: grandparents});
+            if (parentGeneration.length > 0) generations.push({depth: 0, persons: parentGeneration});
+            generations.push({depth: 1, persons: mainGeneration});
+            if (childrenGeneration.length > 0) generations.push({depth: 2, persons: childrenGeneration});
+            
+            // Encontrar geração com mais pessoas
+            let maxNodesInRow = 0;
+            generations.forEach(gen => {
+                if (gen.persons.length > maxNodesInRow) maxNodesInRow = gen.persons.length;
+            });
+            
+            const startX = Math.max(50, (treeContainer.clientWidth - (maxNodesInRow * horizontalSpacing)) / 2);
+            
+            // Posicionar nós
+            generations.forEach((gen, genIndex) => {
+                const y = 30 + genIndex * verticalSpacing;
+                const genWidth = gen.persons.length * horizontalSpacing;
+                const startGenX = startX + (maxNodesInRow * horizontalSpacing - genWidth) / 2;
+                
+                gen.persons.forEach((personId, index) => {
+                    const person = personsMap[personId];
+                    if (!person) return;
+                    
+                    const x = startGenX + index * horizontalSpacing;
+                    positions.set(personId, { x, y });
+                    
+                    // Determinar relação com a pessoa selecionada
+                    const relationship = getRelationship(personId, personId === personId ? 'self' : personId);
+                    
+                    // Criar nó
+                    const node = createPersonNode(person, x, y, nodeWidth, nodeHeight, relationship);
+                    if (personId === selectedPerson.id) {
+                        node.classList.add('selected');
+                    }
+                    treeContainer.appendChild(node);
+                });
+            });
+            
+            // Desenhar conexões entre gerações
+            for (let i = 0; i < generations.length - 1; i++) {
+                const currentGen = generations[i];
+                const nextGen = generations[i + 1];
+                
+                currentGen.persons.forEach(parentId => {
+                    const parent = personsMap[parentId];
+                    if (!parent) return;
+                    
+                    const parentPos = positions.get(parentId);
+                    if (!parentPos) return;
+                    
+                    // Encontrar filhos desta pessoa na próxima geração
+                    const childrenIds = findChildren(parentId);
+                    
+                    childrenIds.forEach(childId => {
+                        if (nextGen.persons.includes(childId)) {
+                            const childPos = positions.get(childId);
+                            if (childPos) {
+                                drawConnection(parentPos, childPos, nodeWidth, nodeHeight);
+                            }
+                        }
+                    });
+                });
+            }
+            
+            // Desenhar conexões entre cônjuges
+            mainGeneration.forEach(personId1 => {
+                mainGeneration.forEach(personId2 => {
+                    if (personId1 !== personId2 && areSpouses(personId1, personId2)) {
+                        const pos1 = positions.get(personId1);
+                        const pos2 = positions.get(personId2);
+                        if (pos1 && pos2) {
+                            drawSpouseConnection(pos1, pos2, nodeWidth);
+                        }
+                    }
+                });
+            });
+            
+            // Aplicar zoom
+            applyZoom();
+        }
+        
+        // Adjust tree layout based on screen size
+        function adjustTreeLayoutForScreen() {
+            const treeContainer = document.getElementById('tree-container');
+            if (!treeContainer) {
+                return {
+                    nodeWidth: 160,
+                    nodeHeight: 90,
+                    horizontalSpacing: 200,
+                    verticalSpacing: 150
+                };
+            }
+            
+            const containerHeight = treeContainer.clientHeight;
+            const containerWidth = treeContainer.clientWidth;
+            
+            // Small screens
+            if (containerHeight < 400 || containerWidth < 800) {
+                return {
+                    nodeWidth: 140,
+                    nodeHeight: 80,
+                    horizontalSpacing: 160,
+                    verticalSpacing: 130
+                };
+            }
+            
+            // Medium screens
+            if (containerHeight < 500 || containerWidth < 1000) {
+                return {
+                    nodeWidth: 150,
+                    nodeHeight: 85,
+                    horizontalSpacing: 180,
+                    verticalSpacing: 140
+                };
+            }
+            
+            // Large screens
+            return {
+                nodeWidth: 160,
+                nodeHeight: 90,
+                horizontalSpacing: 200,
+                verticalSpacing: 150
+            };
+        }
+        
+        // Determinar relação com a pessoa selecionada
+        function getRelationship(personId, relativeToId) {
+            if (personId === relativeToId) return 'Eu';
+            
+            const relativeTo = selectedPerson.id;
+            
+            // Pai
+            const parents = parentsMap[relativeTo];
+            if (parents && (parents.father === personId || parents.mother === personId)) {
+                return parents.father === personId ? 'Pai' : 'Mãe';
+            }
+            
+            // Filhos
+            const children = findChildren(relativeTo);
+            if (children.includes(personId)) {
+                const person = personsMap[personId];
+                return person && person.sexo === 'masculino' ? 'Filho' : 'Filha';
+            }
+            
+            // Cônjuge
+            if (areSpouses(personId, relativeTo)) {
+                const person = personsMap[personId];
+                return person && person.sexo === 'masculino' ? 'Marido' : 'Esposa';
+            }
+            
+            // Avós
+            if (parents) {
+                // Avô paterno
+                if (parents.father) {
+                    const paternalGrandparents = parentsMap[parents.father];
+                    if (paternalGrandparents && (paternalGrandparents.father === personId || paternalGrandparents.mother === personId)) {
+                        return paternalGrandparents.father === personId ? 'Avô Paterno' : 'Avó Paterna';
+                    }
+                }
+                
+                // Avô materno
+                if (parents.mother) {
+                    const maternalGrandparents = parentsMap[parents.mother];
+                    if (maternalGrandparents && (maternalGrandparents.father === personId || maternalGrandparents.mother === personId)) {
+                        return maternalGrandparents.father === personId ? 'Avô Materno' : 'Avó Materna';
+                    }
+                }
+            }
+            
+            // Netos
+            const grandchildren = [];
+            children.forEach(childId => {
+                const childsChildren = findChildren(childId);
+                childsChildren.forEach(grandchildId => grandchildren.push(grandchildId));
+            });
+            
+            if (grandchildren.includes(personId)) {
+                const person = personsMap[personId];
+                return person && person.sexo === 'masculino' ? 'Neto' : 'Neta';
+            }
+            
+            // Irmãos
+            if (parents) {
+                const siblings = [];
+                if (parents.father || parents.mother) {
+                    // Encontrar todos os filhos dos mesmos pais
+                    Object.keys(parentsMap).forEach(childId => {
+                        const childParents = parentsMap[childId];
+                        if (childParents && 
+                            ((childParents.father === parents.father && childParents.mother === parents.mother) ||
+                             (childParents.father === parents.father && !parents.mother && !childParents.mother) ||
+                             (!parents.father && childParents.mother === parents.mother && !childParents.father))) {
+                            if (childId !== relativeTo) {
+                                siblings.push(childId);
+                            }
+                        }
+                    });
+                }
+                
+                if (siblings.includes(personId)) {
+                    const person = personsMap[personId];
+                    return person && person.sexo === 'masculino' ? 'Irmão' : 'Irmã';
+                }
+            }
+            
+            return 'Parente';
+        }
+        
+        // Desenhar conexão entre pais e filhos
+        function drawConnection(parentPos, childPos, nodeWidth, nodeHeight) {
+            const line1 = document.createElement('div');
+            line1.className = 'tree-line';
+            line1.style.left = `${parentPos.x + nodeWidth/2 - 1}px`;
+            line1.style.top = `${parentPos.y + nodeHeight}px`;
+            line1.style.width = '2px';
+            line1.style.height = '20px';
+            treeContainer.appendChild(line1);
+            
+            const line2 = document.createElement('div');
+            line2.className = 'tree-line';
+            line2.style.left = `${Math.min(parentPos.x + nodeWidth/2, childPos.x + nodeWidth/2)}px`;
+            line2.style.top = `${parentPos.y + nodeHeight + 20}px`;
+            line2.style.width = `${Math.abs(childPos.x - parentPos.x)}px`;
+            line2.style.height = '2px';
+            treeContainer.appendChild(line2);
+            
+            const line3 = document.createElement('div');
+            line3.className = 'tree-line';
+            line3.style.left = `${childPos.x + nodeWidth/2 - 1}px`;
+            line3.style.top = `${parentPos.y + nodeHeight + 20}px`;
+            line3.style.width = '2px';
+            line3.style.height = `${childPos.y - (parentPos.y + nodeHeight + 20)}px`;
+            treeContainer.appendChild(line3);
+        }
+        
+        // Desenhar conexão entre cônjuges
+        function drawSpouseConnection(pos1, pos2, nodeWidth) {
+            const line = document.createElement('div');
+            line.className = 'tree-line';
+            line.style.left = `${pos1.x + nodeWidth}px`;
+            line.style.top = `${pos1.y + 40}px`;
+            line.style.width = `${pos2.x - pos1.x - nodeWidth}px`;
+            line.style.height = '2px';
+            treeContainer.appendChild(line);
+        }
+        
+        // Encontrar cônjuges de uma pessoa
+        function findSpouses(personId) {
+            const spouses = [];
+            marriages.forEach(marriage => {
+                if (marriage.marido === personId && marriage.esposa) {
+                    spouses.push(marriage.esposa);
+                } else if (marriage.esposa === personId && marriage.marido) {
+                    spouses.push(marriage.marido);
+                }
+            });
+            return spouses;
+        }
+        
+        // Verificar se duas pessoas são cônjuges
+        function areSpouses(personId1, personId2) {
+            return marriages.some(marriage => 
+                (marriage.marido === personId1 && marriage.esposa === personId2) ||
+                (marriage.marido === personId2 && marriage.esposa === personId1)
+            );
+        }
+        
+        // Encontrar filhos diretos
+        function findChildren(personId) {
+            const children = [];
+            
+            // Encontrar casamentos desta pessoa
+            const personMarriages = marriages.filter(marriage => 
+                marriage.marido === personId || marriage.esposa === personId
+            );
+            
+            personMarriages.forEach(marriage => {
+                const marriageChildren = childrenMap[marriage.id] || [];
+                marriageChildren.forEach(childId => {
+                    if (!children.includes(childId)) {
+                        children.push(childId);
+                    }
+                });
+            });
+            
+            return children;
+        }
+        
+        // Criar nó da árvore
+        function createPersonNode(person, x, y, width = 160, height = 90, relationship = '') {
+            const node = document.createElement('div');
+            node.className = `tree-node ${person.sexo || 'unknown'}`;
+            node.style.left = `${x}px`;
+            node.style.top = `${y}px`;
+            node.style.width = `${width}px`;
+            node.style.minWidth = `${width}px`;
+            node.dataset.id = person.id;
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'node-name';
+            nameDiv.textContent = person.nome || 'Nome desconhecido';
+            
+            const surnameDiv = document.createElement('div');
+            surnameDiv.className = 'node-surname';
+            surnameDiv.textContent = person.sobrenome || '';
+            
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'node-details';
+            
+            const birthYear = extractYear(person.data_nascimento);
+            const deathYear = extractYear(person.data_falecimento);
+            
+            let detailsText = `${birthYear}`;
+            if (deathYear && deathYear !== '?') detailsText += ` - ${deathYear}`;
+            
+            detailsDiv.textContent = detailsText;
+            
+            const relationshipDiv = document.createElement('div');
+            relationshipDiv.className = 'node-relationship';
+            relationshipDiv.textContent = relationship;
+            
+            node.appendChild(nameDiv);
+            node.appendChild(surnameDiv);
+            node.appendChild(detailsDiv);
+            node.appendChild(relationshipDiv);
+            
+            node.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectPerson(person.id);
+            });
+            
+            return node;
+        }
+        
+        // Mostrar detalhes da pessoa
+        function showPersonDetails(personId) {
+            const person = personsMap[personId];
+            if (!person || !detailsContent) return;
+            
+            detailsPanel.classList.add('active');
+            detailsContent.innerHTML = '';
+            
+            // Informações básicas
+            addDetailItem('fas fa-user', 'Nome Completo', person.nome || 'Desconhecido');
+            addDetailItem('fas fa-tag', 'Sobrenome', person.sobrenome || 'Não registado');
+            addDetailItem('fas fa-venus-mars', 'Sexo', person.sexo === 'masculino' ? 'Masculino (♂)' : 
+                         person.sexo === 'feminino' ? 'Feminino (♀)' : 'Desconhecido');
+            addDetailItem('fas fa-id-card', 'ID', person.id);
+            
+            // Nascimento
+            if (person.data_nascimento) {
+                addDetailItem('fas fa-birthday-cake', 'Data de Nascimento', formatDate(person.data_nascimento));
+            }
+            if (person.lugar_nascimento_nome) {
+                addDetailItem('fas fa-map-marker-alt', 'Local de Nascimento', person.lugar_nascimento_nome);
+            } else if (person.lugar_nascimento) {
+                addDetailItem('fas fa-map-marker-alt', 'Local de Nascimento', `ID: ${person.lugar_nascimento}`);
+            }
+            
+            // Batismo
+            if (person.data_batismo) {
+                addDetailItem('fas fa-water', 'Data de Batismo', formatDate(person.data_batismo));
+            }
+            if (person.lugar_batismo && placesMap[person.lugar_batismo]) {
+                addDetailItem('fas fa-map-marker-alt', 'Local de Batismo', placesMap[person.lugar_batismo].nome);
+            }
+            
+            // Falecimento
+            if (person.data_falecimento) {
+                addDetailItem('fas fa-cross', 'Data de Falecimento', formatDate(person.data_falecimento));
+            }
+            if (person.lugar_falecimento && placesMap[person.lugar_falecimento]) {
+                addDetailItem('fas fa-map-marker-alt', 'Local de Falecimento', placesMap[person.lugar_falecimento].nome);
+            }
+            
+            // Pais
+            const parents = parentsMap[personId];
+            if (parents) {
+                const parentsList = document.createElement('ul');
+                parentsList.className = 'relationship-list';
+                
+                if (parents.father && personsMap[parents.father]) {
+                    const father = personsMap[parents.father];
+                    const li = createRelationshipItem(father, 'Pai');
+                    parentsList.appendChild(li);
+                }
+                
+                if (parents.mother && personsMap[parents.mother]) {
+                    const mother = personsMap[parents.mother];
+                    const li = createRelationshipItem(mother, 'Mãe');
+                    parentsList.appendChild(li);
+                }
+                
+                addDetailItemWithContent('fas fa-users', 'Pais', parentsList);
+            }
+            
+            // Cônjuges
+            const spouses = findSpouses(personId);
+            if (spouses.length > 0) {
+                const spousesList = document.createElement('ul');
+                spousesList.className = 'relationship-list';
+                
+                spouses.forEach(spouseId => {
+                    const spouse = personsMap[spouseId];
+                    if (spouse) {
+                        const relationshipType = spouse.sexo === 'masculino' ? 'Marido' : 'Esposa';
+                        const li = createRelationshipItem(spouse, relationshipType);
+                        spousesList.appendChild(li);
+                    }
+                });
+                
+                addDetailItemWithContent('fas fa-ring', 'Cônjuges', spousesList);
+            }
+            
+            // Filhos
+            const children = findChildren(personId);
+            if (children.length > 0) {
+                const childrenList = document.createElement('ul');
+                childrenList.className = 'relationship-list';
+                
+                children.forEach(childId => {
+                    const child = personsMap[childId];
+                    if (child) {
+                        const relationshipType = child.sexo === 'masculino' ? 'Filho' : 'Filha';
+                        const li = createRelationshipItem(child, relationshipType);
+                        childrenList.appendChild(li);
+                    }
+                });
+                
+                addDetailItemWithContent('fas fa-baby', 'Filhos', childrenList);
+            }
+        }
+        
+        // Criar item de relação
+        function createRelationshipItem(person, relationshipType) {
+            const li = document.createElement('li');
+            li.className = 'relationship-item';
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'relationship-info';
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'relationship-name';
+            nameDiv.textContent = person.nome || 'Desconhecido';
+            
+            const typeDiv = document.createElement('div');
+            typeDiv.className = 'relationship-type';
+            typeDiv.textContent = relationshipType;
+            
+            infoDiv.appendChild(nameDiv);
+            infoDiv.appendChild(typeDiv);
+            
+            const idDiv = document.createElement('div');
+            idDiv.className = 'relationship-id';
+            idDiv.textContent = person.id;
+            
+            li.appendChild(infoDiv);
+            li.appendChild(idDiv);
+            
+            li.addEventListener('click', () => selectPerson(person.id));
+            
+            return li;
+        }
+        
+        // Adicionar item de detalhe
+        function addDetailItem(iconClass, label, value) {
+            if (!detailsContent) return;
+            
+            const item = document.createElement('div');
+            item.className = 'detail-item';
+            
+            const labelDiv = document.createElement('div');
+            labelDiv.className = 'detail-label';
+            
+            const icon = document.createElement('i');
+            icon.className = iconClass;
+            
+            const labelText = document.createElement('span');
+            labelText.textContent = label;
+            
+            labelDiv.appendChild(icon);
+            labelDiv.appendChild(labelText);
+            
+            const valueDiv = document.createElement('div');
+            valueDiv.className = 'detail-value';
+            valueDiv.textContent = value;
+            
+            item.appendChild(labelDiv);
+            item.appendChild(valueDiv);
+            detailsContent.appendChild(item);
+        }
+        
+        // Adicionar item de detalhe com conteúdo HTML
+        function addDetailItemWithContent(iconClass, label, content) {
+            if (!detailsContent) return;
+            
+            const item = document.createElement('div');
+            item.className = 'detail-item';
+            
+            const labelDiv = document.createElement('div');
+            labelDiv.className = 'detail-label';
+            
+            const icon = document.createElement('i');
+            icon.className = iconClass;
+            
+            const labelText = document.createElement('span');
+            labelText.textContent = label;
+            
+            labelDiv.appendChild(icon);
+            labelDiv.appendChild(labelText);
+            
+            const valueDiv = document.createElement('div');
+            valueDiv.className = 'detail-value';
+            valueDiv.appendChild(content);
+            
+            item.appendChild(labelDiv);
+            item.appendChild(valueDiv);
+            detailsContent.appendChild(item);
+        }
+        
+        // Formatar data
+        function formatDate(dateString) {
+            if (!dateString) return 'Desconhecida';
+            
+            try {
+                const months = {
+                    'Jan': 0, 'Fev': 1, 'Mar': 2, 'Abr': 3, 'Mai': 4, 'Jun': 5,
+                    'Jul': 6, 'Ago': 7, 'Set': 8, 'Out': 9, 'Nov': 10, 'Dez': 11
+                };
+                
+                const parts = dateString.split(' ');
+                if (parts.length >= 3) {
+                    const day = parseInt(parts[0]);
+                    const month = months[parts[1]];
+                    const year = parseInt(parts[2]);
+                    
+                    if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+                        const date = new Date(year, month, day);
+                        return date.toLocaleDateString('pt-PT');
+                    }
+                }
+            } catch (e) {}
+            
+            return dateString;
+        }
+        
+        // Funções de zoom
+        function zoomIn() {
+            if (currentZoom < 2) {
+                currentZoom += 0.1;
+                applyZoom();
+            }
+        }
+        
+        function zoomOut() {
+            if (currentZoom > 0.5) {
+                currentZoom -= 0.1;
+                applyZoom();
+            }
+        }
+        
+        function resetView() {
+            currentZoom = 1;
+            applyZoom();
+            if (selectedPerson) {
+                generateFamilyTree(selectedPerson.id);
+            }
+        }
+        
+        function applyZoom() {
+            if (!treeContainer) return;
+            
+            const nodes = treeContainer.querySelectorAll('.tree-node');
+            const lines = treeContainer.querySelectorAll('.tree-line');
+            
+            nodes.forEach(node => {
+                node.style.transform = `scale(${currentZoom})`;
+                node.style.transformOrigin = 'top left';
+            });
+            
+            lines.forEach(line => {
+                line.style.transform = `scale(${currentZoom})`;
+                line.style.transformOrigin = 'top left';
+            });
+        }
+        
+        // Mostrar mensagem
+        function showMessage(message, type) {
+            const existing = document.querySelectorAll('.status-message-toast');
+            existing.forEach(msg => msg.remove());
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `status-message-toast ${type}`;
+            messageDiv.textContent = message;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 4px;
+                color: white;
+                font-weight: bold;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                animation: fadeIn 0.3s ease-in;
+            `;
+            
+            if (type === 'success') messageDiv.style.backgroundColor = '#27ae60';
+            else if (type === 'error') messageDiv.style.backgroundColor = '#e74c3c';
+            else messageDiv.style.backgroundColor = '#3498db';
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => messageDiv.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
