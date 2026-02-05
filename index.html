@@ -376,6 +376,7 @@
             min-height: 350px;
             -webkit-overflow-scrolling: touch;
             margin-top: 4px;
+            padding: 20px; /* ADDED: Padding para garantir que os avós não fiquem escondidos */
         }
 
         /* Tree nodes - Larger for desktop */
@@ -902,6 +903,7 @@
             
             .tree-container {
                 min-height: 500px; /* Taller on desktop */
+                padding: 40px 20px; /* INCREASED: Mais padding para os avós não ficarem cortados */
             }
         }
 
@@ -942,6 +944,7 @@
             
             .tree-container {
                 min-height: 600px;
+                padding: 50px 20px; /* INCREASED: Ainda mais padding para telas grandes */
             }
         }
 
@@ -959,6 +962,7 @@
             .tree-container {
                 min-height: 400px !important;
                 max-height: calc(100vh - 250px) !important;
+                padding: 20px 10px; /* LESS PADDING FOR MOBILE */
             }
             
             /* Make details section scrollable */
@@ -2113,7 +2117,7 @@
             return 'Selecionado';
         }
         
-        // Gerar árvore genealógica com avós para desktop
+        // Gerar árvore genealógica com avós para desktop - FIXED FOR GRANDPARENTS VISIBILITY
         function generateFamilyTreeWithGrandparents(personId) {
             if (!treeContainer) return;
             
@@ -2125,8 +2129,9 @@
                 return;
             }
             
-            // Obter dimensões do container
+            // Obter dimensões reais do container (considerando padding)
             const containerWidth = treeContainer.clientWidth;
+            const containerHeight = treeContainer.clientHeight;
             const isDesktop = window.innerWidth >= 768;
             const isLargeDesktop = window.innerWidth >= 1200;
             
@@ -2238,9 +2243,12 @@
             const totalWidthNeeded = maxNodesInRow * horizontalSpacing;
             const startX = Math.max(20, (containerWidth - totalWidthNeeded) / 2);
             
+            // POSIÇÃO INICIAL Y COMEÇA MAIS BAIXO PARA OS AVÓS NÃO FICAREM CORTADOS
+            const startY = 40; // Aumentado de 20 para 40 para dar mais espaço no topo
+            
             // Posicionar nós
             generations.forEach((gen, genIndex) => {
-                const y = 20 + genIndex * verticalSpacing;
+                const y = startY + genIndex * verticalSpacing;
                 const genWidth = gen.persons.length * horizontalSpacing;
                 const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
                 
@@ -2316,21 +2324,36 @@
                 });
             });
             
-            // Ajustar altura do container
+            // Ajustar altura do container para garantir que tudo seja visível
             if (generations.length > 0) {
                 const lastGen = generations[generations.length - 1];
-                const lastY = 20 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
+                const lastY = startY + (generations.length - 1) * verticalSpacing + regularNodeHeight + 60; // Aumentado padding inferior
                 const minHeight = isLargeDesktop ? 600 : 500;
-                treeContainer.style.minHeight = Math.max(minHeight, lastY) + 'px';
+                
+                // Garantir altura mínima
+                const neededHeight = Math.max(minHeight, lastY);
+                treeContainer.style.minHeight = neededHeight + 'px';
+                
+                // Scroll para a pessoa selecionada
+                setTimeout(() => {
+                    const selectedNode = treeContainer.querySelector('.tree-node.selected');
+                    if (selectedNode) {
+                        // Primeiro, garantir que o container tenha scroll se necessário
+                        if (treeContainer.scrollHeight > treeContainer.clientHeight) {
+                            treeContainer.style.overflow = 'auto';
+                        }
+                        
+                        // Calcular posição para scroll
+                        const nodeRect = selectedNode.getBoundingClientRect();
+                        const containerRect = treeContainer.getBoundingClientRect();
+                        
+                        // Se o nó selecionado não estiver visível, scroll para ele
+                        if (nodeRect.top < containerRect.top || nodeRect.bottom > containerRect.bottom) {
+                            selectedNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                        }
+                    }
+                }, 100);
             }
-            
-            // Scroll para a pessoa selecionada
-            setTimeout(() => {
-                const selectedNode = treeContainer.querySelector('.tree-node.selected');
-                if (selectedNode) {
-                    selectedNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-                }
-            }, 100);
         }
         
         // Determinar relação com a pessoa selecionada - versão completa para desktop
