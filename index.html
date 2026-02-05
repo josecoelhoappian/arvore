@@ -275,6 +275,26 @@
             color: #2c3e50;
             font-size: 0.95rem;
             flex: 1;
+            position: relative;
+        }
+
+        .person-name.has-tooltip:hover::after,
+        .person-surname.has-tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 5px;
+            pointer-events: none;
         }
 
         .person-gender {
@@ -286,7 +306,7 @@
         .person-details {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             margin-top: 8px;
         }
 
@@ -294,6 +314,8 @@
             font-size: 0.8rem;
             color: #7f8c8d;
             font-style: italic;
+            position: relative;
+            margin-bottom: 1px;
         }
 
         .person-meta {
@@ -302,6 +324,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 1px;
         }
 
         .person-birth {
@@ -386,18 +409,44 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-height: 1.2em;
+            position: relative;
+        }
+
+        .node-name.has-tooltip,
+        .node-surname.has-tooltip {
+            position: relative;
+        }
+
+        .node-name.has-tooltip:hover::after,
+        .node-surname.has-tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 5px;
+            min-width: 120px;
+            max-width: 200px;
+            text-align: center;
         }
 
         .node-surname {
             font-size: 0.65rem;
             color: #7f8c8d;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             font-style: italic;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-height: 1em;
+            position: relative;
         }
 
         .node-details {
@@ -570,40 +619,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .tree-controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            flex-shrink: 0;
-        }
-
-        .tree-btn {
-            padding: 6px 12px;
-            background-color: #95a5a6;
-            font-size: 0.8rem;
-        }
-
-        .tree-btn:hover {
-            background-color: #7f8c8d;
-        }
-
-        .tree-btn.zoom-in {
-            background-color: #3498db;
-        }
-
-        .tree-btn.zoom-out {
-            background-color: #3498db;
-        }
-
-        .tree-btn.reset {
-            background-color: #e74c3c;
-        }
-
-        .tree-btn.reset:hover {
-            background-color: #c0392b;
-        }
-
         /* Search results dropdown */
         .search-results {
             position: absolute;
@@ -735,15 +750,6 @@
                 flex-direction: column;
             }
             
-            .tree-controls {
-                flex-direction: column;
-            }
-            
-            .tree-btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
             .search-result-item {
                 flex-direction: column;
                 align-items: flex-start;
@@ -839,11 +845,6 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tree-pane">
                         <div class="tree-section">
-                            <div class="tree-controls">
-                                <button class="tree-btn zoom-in" id="zoom-in"><i class="fas fa-search-plus"></i> Ampliar</button>
-                                <button class="tree-btn zoom-out" id="zoom-out"><i class="fas fa-search-minus"></i> Reduzir</button>
-                                <button class="tree-btn reset" id="reset-view"><i class="fas fa-sync-alt"></i> Redefinir Vista</button>
-                            </div>
                             <div class="tree-container" id="tree-container">
                                 <div class="empty-message">
                                     <i class="fas fa-tree"></i>
@@ -893,11 +894,9 @@
         
         // Pessoa selecionada atualmente
         let selectedPerson = null;
-        let currentZoom = 1;
         
         // Variáveis para elementos DOM
         let searchInput, personList, treeContainer, detailsPanel, detailsContent;
-        let zoomInBtn, zoomOutBtn, resetViewBtn;
         let relationshipBadge;
         let searchResults;
         let treeTab, detailsTab, treePane, detailsPane;
@@ -917,9 +916,6 @@
             treeContainer = document.getElementById('tree-container');
             detailsPanel = document.getElementById('details-panel');
             detailsContent = document.getElementById('details-content');
-            zoomInBtn = document.getElementById('zoom-in');
-            zoomOutBtn = document.getElementById('zoom-out');
-            resetViewBtn = document.getElementById('reset-view');
             relationshipBadge = document.getElementById('relationship-badge');
             searchResults = document.getElementById('search-results');
             
@@ -950,9 +946,6 @@
                     }
                 });
             }
-            if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
-            if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
-            if (resetViewBtn) resetViewBtn.addEventListener('click', resetView);
             
             // Tab switching
             if (treeTab) treeTab.addEventListener('click', () => switchTab('tree'));
@@ -1183,7 +1176,13 @@
                 
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'person-name';
-                nameDiv.textContent = person.nome || 'Nome desconhecido';
+                if (person.nome && person.nome.length > 20) {
+                    nameDiv.textContent = person.nome.substring(0, 20) + '...';
+                    nameDiv.classList.add('has-tooltip');
+                    nameDiv.setAttribute('data-tooltip', person.nome);
+                } else {
+                    nameDiv.textContent = person.nome || 'Nome desconhecido';
+                }
                 
                 const genderDiv = document.createElement('div');
                 genderDiv.className = 'person-gender';
@@ -1197,7 +1196,13 @@
                 
                 const surnameDiv = document.createElement('div');
                 surnameDiv.className = 'person-surname';
-                surnameDiv.textContent = person.sobrenome || 'Sem sobrenome';
+                if (person.sobrenome && person.sobrenome.length > 25) {
+                    surnameDiv.textContent = person.sobrenome.substring(0, 25) + '...';
+                    surnameDiv.classList.add('has-tooltip');
+                    surnameDiv.setAttribute('data-tooltip', person.sobrenome);
+                } else {
+                    surnameDiv.textContent = person.sobrenome || 'Sem sobrenome';
+                }
                 
                 const metaDiv = document.createElement('div');
                 metaDiv.className = 'person-meta';
@@ -1423,9 +1428,6 @@
                     }
                 });
             });
-            
-            // Aplicar zoom
-            applyZoom();
         }
         
         // Adjust tree layout based on screen size
@@ -1647,11 +1649,25 @@
             
             const nameDiv = document.createElement('div');
             nameDiv.className = 'node-name';
-            nameDiv.textContent = person.nome || 'Nome desconhecido';
+            const fullName = person.nome || 'Nome desconhecido';
+            if (fullName.length > 15) {
+                nameDiv.textContent = fullName.substring(0, 15) + '...';
+                nameDiv.classList.add('has-tooltip');
+                nameDiv.setAttribute('data-tooltip', fullName);
+            } else {
+                nameDiv.textContent = fullName;
+            }
             
             const surnameDiv = document.createElement('div');
             surnameDiv.className = 'node-surname';
-            surnameDiv.textContent = person.sobrenome || '';
+            const fullSurname = person.sobrenome || '';
+            if (fullSurname.length > 18) {
+                surnameDiv.textContent = fullSurname.substring(0, 18) + '...';
+                surnameDiv.classList.add('has-tooltip');
+                surnameDiv.setAttribute('data-tooltip', fullSurname);
+            } else {
+                surnameDiv.textContent = fullSurname;
+            }
             
             const detailsDiv = document.createElement('div');
             detailsDiv.className = 'node-details';
@@ -1891,46 +1907,6 @@
             } catch (e) {}
             
             return dateString;
-        }
-        
-        // Funções de zoom
-        function zoomIn() {
-            if (currentZoom < 2) {
-                currentZoom += 0.1;
-                applyZoom();
-            }
-        }
-        
-        function zoomOut() {
-            if (currentZoom > 0.5) {
-                currentZoom -= 0.1;
-                applyZoom();
-            }
-        }
-        
-        function resetView() {
-            currentZoom = 1;
-            applyZoom();
-            if (selectedPerson) {
-                generateFamilyTree(selectedPerson.id);
-            }
-        }
-        
-        function applyZoom() {
-            if (!treeContainer) return;
-            
-            const nodes = treeContainer.querySelectorAll('.tree-node');
-            const lines = treeContainer.querySelectorAll('.tree-line');
-            
-            nodes.forEach(node => {
-                node.style.transform = `scale(${currentZoom})`;
-                node.style.transformOrigin = 'top left';
-            });
-            
-            lines.forEach(line => {
-                line.style.transform = `scale(${currentZoom})`;
-                line.style.transformOrigin = 'top left';
-            });
         }
         
         // Mostrar mensagem
