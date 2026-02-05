@@ -44,19 +44,19 @@
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 5px;
         }
 
         .subtitle {
-            font-size: 1rem;
+            font-size: 0.9rem;
             opacity: 0.8;
         }
 
         .search-section {
             margin-bottom: 15px;
             background-color: white;
-            padding: 15px 20px;
+            padding: 12px 16px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             position: relative;
@@ -70,60 +70,44 @@
 
         .search-box input {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background-color: #3498db;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: bold;
             transition: background-color 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         button:hover {
             background-color: #2980b9;
         }
 
-        .search-btn {
-            background-color: #9b59b6;
-        }
-
-        .search-btn:hover {
-            background-color: #8e44ad;
-        }
-
-        .reload-btn {
-            background-color: #27ae60;
-        }
-
-        .reload-btn:hover {
-            background-color: #219653;
-        }
-
         .main-content-wrapper {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex: 1;
             min-height: 0;
             overflow: hidden;
         }
 
         .sidebar {
-            flex: 0 0 320px;
+            flex: 0 0 280px;
             background-color: white;
             border-radius: 8px;
-            padding: 15px;
+            padding: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
@@ -151,10 +135,10 @@
 
         .tab-btn {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             background: none;
             border: none;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             color: #7f8c8d;
             cursor: pointer;
@@ -162,7 +146,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             border-bottom: 3px solid transparent;
         }
 
@@ -178,7 +162,7 @@
         }
 
         .tab-btn .tab-icon {
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .tab-content {
@@ -195,7 +179,7 @@
             flex-direction: column;
             min-height: 0;
             overflow: hidden;
-            padding: 20px;
+            padding: 15px;
         }
 
         .tab-pane.active {
@@ -220,14 +204,14 @@
         }
 
         .section-title {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
             color: #2c3e50;
             border-bottom: 2px solid #eee;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-shrink: 0;
         }
 
@@ -244,14 +228,15 @@
         }
 
         .person-item {
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #eee;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             background-color: white;
             position: relative;
+            font-size: 0.85rem;
         }
 
         .person-item:hover {
@@ -271,29 +256,29 @@
         .person-item.active::before {
             content: "✓";
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             color: #3498db;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .person-name-container {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
         }
 
         .person-name {
             font-weight: bold;
             color: #2c3e50;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             flex: 1;
         }
 
         .person-gender {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #3498db;
             flex-shrink: 0;
         }
@@ -301,18 +286,18 @@
         .person-details {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            margin-top: 10px;
+            gap: 4px;
+            margin-top: 8px;
         }
 
         .person-surname {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #7f8c8d;
             font-style: italic;
         }
 
         .person-meta {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: #666;
             display: flex;
             justify-content: space-between;
@@ -326,7 +311,7 @@
         .person-id {
             color: #95a5a6;
             font-family: monospace;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
 
         .tree-container-wrapper {
@@ -345,20 +330,24 @@
             overflow: auto;
             position: relative;
             background-color: #f9f9f9;
-            min-height: 300px;
+            min-height: 250px;
         }
 
         .tree-node {
             position: absolute;
             background-color: white;
             border: 2px solid #3498db;
-            border-radius: 8px;
+            border-radius: 6px;
             text-align: center;
-            min-width: 160px;
+            width: 130px;
+            height: 75px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.2s;
             z-index: 1;
+            padding: 6px;
+            font-size: 0.75rem;
+            overflow: hidden;
         }
 
         .tree-node:hover {
@@ -385,39 +374,53 @@
         .tree-node.selected {
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5), 0 6px 20px rgba(52, 152, 219, 0.3);
             z-index: 3;
-            border-width: 8px;
+            border-width: 6px;
         }
 
         .node-name {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
             color: #2c3e50;
-            font-size: 1rem;
-            line-height: 1.3;
+            font-size: 0.8rem;
+            line-height: 1.1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-height: 1.2em;
         }
 
         .node-surname {
-            font-size: 0.85rem;
+            font-size: 0.65rem;
             color: #7f8c8d;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             font-style: italic;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-height: 1em;
         }
 
         .node-details {
-            font-size: 0.8rem;
+            font-size: 0.6rem;
             color: #666;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
+            line-height: 1;
         }
 
         .node-relationship {
-            font-size: 0.75rem;
+            font-size: 0.55rem;
             color: #3498db;
             font-weight: bold;
-            margin-top: 5px;
-            padding: 3px 8px;
+            margin-top: 2px;
+            padding: 1px 4px;
             background-color: rgba(52, 152, 219, 0.1);
-            border-radius: 12px;
+            border-radius: 8px;
             display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1.2;
         }
 
         .tree-line {
@@ -442,43 +445,47 @@
 
         .relationship-badge {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 4px 10px;
             background-color: #3498db;
             color: white;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            border-radius: 16px;
+            font-size: 0.75rem;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .details-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            font-size: 0.85rem;
         }
 
         .detail-item {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .detail-label {
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            font-size: 0.9rem;
         }
 
         .detail-label i {
             color: #3498db;
-            width: 20px;
+            width: 16px;
+            font-size: 0.8rem;
         }
 
         .detail-value {
             color: #555;
-            line-height: 1.5;
-            padding-left: 28px;
+            line-height: 1.4;
+            padding-left: 22px;
+            font-size: 0.85rem;
         }
 
         .relationship-list {
@@ -487,16 +494,17 @@
         }
 
         .relationship-item {
-            padding: 10px;
+            padding: 8px;
             background-color: white;
             border: 1px solid #eee;
-            border-radius: 6px;
-            margin-bottom: 8px;
+            border-radius: 5px;
+            margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: all 0.2s;
             cursor: pointer;
+            font-size: 0.8rem;
         }
 
         .relationship-item:hover {
@@ -511,42 +519,43 @@
         .relationship-name {
             font-weight: bold;
             color: #2c3e50;
+            font-size: 0.85rem;
         }
 
         .relationship-type {
             color: #3498db;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             font-weight: bold;
         }
 
         .relationship-id {
             color: #95a5a6;
             font-family: monospace;
-            font-size: 0.8rem;
+            font-size: 0.65rem;
         }
 
         .empty-message {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             color: #7f8c8d;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .empty-message i {
-            font-size: 3rem;
+            font-size: 2.25rem;
             color: #bdc3c7;
         }
 
         footer {
             text-align: center;
-            margin-top: 15px;
-            padding: 15px;
+            margin-top: 12px;
+            padding: 12px;
             color: #7f8c8d;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             border-top: 1px solid #eee;
             flex-shrink: 0;
         }
@@ -563,16 +572,16 @@
 
         .tree-controls {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
             flex-shrink: 0;
         }
 
         .tree-btn {
-            padding: 8px 16px;
+            padding: 6px 12px;
             background-color: #95a5a6;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .tree-btn:hover {
@@ -604,7 +613,7 @@
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 4px;
-            max-height: 300px;
+            max-height: 225px;
             overflow-y: auto;
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -616,13 +625,14 @@
         }
 
         .search-result-item {
-            padding: 12px 15px;
+            padding: 9px 12px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
             transition: background-color 0.2s;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 0.8rem;
         }
 
         .search-result-item:hover {
@@ -640,26 +650,28 @@
         .search-result-name {
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
+            font-size: 0.85rem;
         }
 
         .search-result-surname {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             color: #7f8c8d;
             font-style: italic;
         }
 
         .search-result-details {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             color: #7f8c8d;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
         }
 
         .search-result-id {
             font-family: monospace;
             color: #95a5a6;
+            font-size: 0.65rem;
         }
 
         .search-result-birth {
@@ -671,7 +683,7 @@
         .tree-container::-webkit-scrollbar,
         .details-content-wrapper::-webkit-scrollbar,
         .search-results::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         .person-list::-webkit-scrollbar-track,
@@ -679,7 +691,7 @@
         .details-content-wrapper::-webkit-scrollbar-track,
         .search-results::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         .person-list::-webkit-scrollbar-thumb,
@@ -687,7 +699,7 @@
         .details-content-wrapper::-webkit-scrollbar-thumb,
         .search-results::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         .person-list::-webkit-scrollbar-thumb:hover,
@@ -704,13 +716,13 @@
             
             .main-content-wrapper {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
             }
             
             .sidebar {
                 flex: none;
                 width: 100%;
-                max-height: 250px;
+                max-height: 200px;
             }
             
             .details-grid {
@@ -735,7 +747,7 @@
             .search-result-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 8px;
+                gap: 6px;
             }
             
             .search-result-details {
@@ -744,20 +756,42 @@
             }
             
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
             
             .section-title {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
             
             .tab-btn {
-                padding: 12px 8px;
-                font-size: 1rem;
+                padding: 10px 6px;
+                font-size: 0.85rem;
             }
             
             .tab-btn .tab-icon {
-                font-size: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .tree-node {
+                width: 110px;
+                height: 65px;
+                font-size: 0.7rem;
+            }
+            
+            .node-name {
+                font-size: 0.75rem;
+            }
+            
+            .node-surname {
+                font-size: 0.6rem;
+            }
+            
+            .node-details {
+                font-size: 0.55rem;
+            }
+            
+            .node-relationship {
+                font-size: 0.5rem;
             }
         }
     </style>
@@ -773,8 +807,6 @@
             <h2 class="section-title"><i class="fas fa-search"></i> Procurar Pessoa</h2>
             <div class="search-box">
                 <input type="text" id="search-input" placeholder="Digite o nome, sobrenome ou ID da pessoa...">
-                <button class="search-btn" id="search-btn"><i class="fas fa-search"></i> Procurar</button>
-                <button class="reload-btn" id="reload-btn"><i class="fas fa-redo"></i> Recarregar Dados</button>
             </div>
             <div class="search-results" id="search-results">
                 <!-- Search results will appear here -->
@@ -864,7 +896,7 @@
         let currentZoom = 1;
         
         // Variáveis para elementos DOM
-        let searchBtn, reloadBtn, searchInput, personList, treeContainer, detailsPanel, detailsContent;
+        let searchInput, personList, treeContainer, detailsPanel, detailsContent;
         let zoomInBtn, zoomOutBtn, resetViewBtn;
         let relationshipBadge;
         let searchResults;
@@ -880,8 +912,6 @@
         
         // Inicializar elementos DOM
         function initializeElements() {
-            searchBtn = document.getElementById('search-btn');
-            reloadBtn = document.getElementById('reload-btn');
             searchInput = document.getElementById('search-input');
             personList = document.getElementById('person-list');
             treeContainer = document.getElementById('tree-container');
@@ -902,8 +932,6 @@
         
         // Configurar event listeners
         function initializeEventListeners() {
-            if (searchBtn) searchBtn.addEventListener('click', performSearch);
-            if (reloadBtn) reloadBtn.addEventListener('click', loadAllFiles);
             if (searchInput) {
                 searchInput.addEventListener('keyup', function(event) {
                     if (event.key === 'Enter') performSearch();
@@ -1405,10 +1433,10 @@
             const treeContainer = document.getElementById('tree-container');
             if (!treeContainer) {
                 return {
-                    nodeWidth: 160,
-                    nodeHeight: 90,
-                    horizontalSpacing: 200,
-                    verticalSpacing: 150
+                    nodeWidth: 130,
+                    nodeHeight: 75,
+                    horizontalSpacing: 150,
+                    verticalSpacing: 120
                 };
             }
             
@@ -1418,39 +1446,39 @@
             // Small screens
             if (containerHeight < 400 || containerWidth < 800) {
                 return {
-                    nodeWidth: 140,
-                    nodeHeight: 80,
-                    horizontalSpacing: 160,
-                    verticalSpacing: 130
+                    nodeWidth: 110,
+                    nodeHeight: 65,
+                    horizontalSpacing: 120,
+                    verticalSpacing: 100
                 };
             }
             
             // Medium screens
             if (containerHeight < 500 || containerWidth < 1000) {
                 return {
-                    nodeWidth: 150,
-                    nodeHeight: 85,
-                    horizontalSpacing: 180,
-                    verticalSpacing: 140
+                    nodeWidth: 120,
+                    nodeHeight: 70,
+                    horizontalSpacing: 135,
+                    verticalSpacing: 110
                 };
             }
             
             // Large screens
             return {
-                nodeWidth: 160,
-                nodeHeight: 90,
-                horizontalSpacing: 200,
-                verticalSpacing: 150
+                nodeWidth: 130,
+                nodeHeight: 75,
+                horizontalSpacing: 150,
+                verticalSpacing: 120
             };
         }
         
-        // Determinar relação com a pessoa selecionada
+        // Determinar relação com a pessoa selecionada - versão abreviada
         function getRelationship(personId, relativeToId) {
             if (personId === relativeToId) return 'Eu';
             
             const relativeTo = selectedPerson.id;
             
-            // Pai
+            // Pai/Mãe
             const parents = parentsMap[relativeTo];
             if (parents && (parents.father === personId || parents.mother === personId)) {
                 return parents.father === personId ? 'Pai' : 'Mãe';
@@ -1475,7 +1503,7 @@
                 if (parents.father) {
                     const paternalGrandparents = parentsMap[parents.father];
                     if (paternalGrandparents && (paternalGrandparents.father === personId || paternalGrandparents.mother === personId)) {
-                        return paternalGrandparents.father === personId ? 'Avô Paterno' : 'Avó Paterna';
+                        return paternalGrandparents.father === personId ? 'Avô P.' : 'Avó P.';
                     }
                 }
                 
@@ -1483,7 +1511,7 @@
                 if (parents.mother) {
                     const maternalGrandparents = parentsMap[parents.mother];
                     if (maternalGrandparents && (maternalGrandparents.father === personId || maternalGrandparents.mother === personId)) {
-                        return maternalGrandparents.father === personId ? 'Avô Materno' : 'Avó Materna';
+                        return maternalGrandparents.father === personId ? 'Avô M.' : 'Avó M.';
                     }
                 }
             }
@@ -1534,13 +1562,13 @@
             line1.style.left = `${parentPos.x + nodeWidth/2 - 1}px`;
             line1.style.top = `${parentPos.y + nodeHeight}px`;
             line1.style.width = '2px';
-            line1.style.height = '20px';
+            line1.style.height = '15px';
             treeContainer.appendChild(line1);
             
             const line2 = document.createElement('div');
             line2.className = 'tree-line';
             line2.style.left = `${Math.min(parentPos.x + nodeWidth/2, childPos.x + nodeWidth/2)}px`;
-            line2.style.top = `${parentPos.y + nodeHeight + 20}px`;
+            line2.style.top = `${parentPos.y + nodeHeight + 15}px`;
             line2.style.width = `${Math.abs(childPos.x - parentPos.x)}px`;
             line2.style.height = '2px';
             treeContainer.appendChild(line2);
@@ -1548,9 +1576,9 @@
             const line3 = document.createElement('div');
             line3.className = 'tree-line';
             line3.style.left = `${childPos.x + nodeWidth/2 - 1}px`;
-            line3.style.top = `${parentPos.y + nodeHeight + 20}px`;
+            line3.style.top = `${parentPos.y + nodeHeight + 15}px`;
             line3.style.width = '2px';
-            line3.style.height = `${childPos.y - (parentPos.y + nodeHeight + 20)}px`;
+            line3.style.height = `${childPos.y - (parentPos.y + nodeHeight + 15)}px`;
             treeContainer.appendChild(line3);
         }
         
@@ -1559,7 +1587,7 @@
             const line = document.createElement('div');
             line.className = 'tree-line';
             line.style.left = `${pos1.x + nodeWidth}px`;
-            line.style.top = `${pos1.y + 40}px`;
+            line.style.top = `${pos1.y + 30}px`;
             line.style.width = `${pos2.x - pos1.x - nodeWidth}px`;
             line.style.height = '2px';
             treeContainer.appendChild(line);
@@ -1608,13 +1636,13 @@
         }
         
         // Criar nó da árvore
-        function createPersonNode(person, x, y, width = 160, height = 90, relationship = '') {
+        function createPersonNode(person, x, y, width = 130, height = 75, relationship = '') {
             const node = document.createElement('div');
             node.className = `tree-node ${person.sexo || 'unknown'}`;
             node.style.left = `${x}px`;
             node.style.top = `${y}px`;
             node.style.width = `${width}px`;
-            node.style.minWidth = `${width}px`;
+            node.style.height = `${height}px`;
             node.dataset.id = person.id;
             
             const nameDiv = document.createElement('div');
@@ -1917,13 +1945,14 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                padding: 15px 20px;
+                padding: 12px 16px;
                 border-radius: 4px;
                 color: white;
                 font-weight: bold;
                 z-index: 1000;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.2);
                 animation: fadeIn 0.3s ease-in;
+                font-size: 0.85rem;
             `;
             
             if (type === 'success') messageDiv.style.backgroundColor = '#27ae60';
