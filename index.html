@@ -26,9 +26,9 @@
         }
 
         .container {
-            max-width: 1800px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 10px;
+            padding: 8px;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -38,52 +38,52 @@
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             flex-shrink: 0;
         }
 
         h1 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
         }
 
         .subtitle {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             opacity: 0.8;
         }
 
         .search-section {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             background-color: white;
-            padding: 12px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             position: relative;
             flex-shrink: 0;
         }
 
         .search-box {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             position: relative;
         }
 
         .search-box input {
             flex: 1;
-            padding: 12px;
+            padding: 10px 12px;
             border: 1px solid #ddd;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 14px;
             -webkit-appearance: none;
             appearance: none;
-            font-size: 16px; /* Prevents zoom on iOS */
+            font-size: 16px;
         }
 
         .search-button {
-            padding: 12px 16px;
+            padding: 10px;
             background-color: #3498db;
             color: white;
             border: none;
@@ -94,8 +94,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            min-width: 50px;
+            gap: 4px;
+            width: 44px;
+            flex-shrink: 0;
         }
 
         .search-button:hover,
@@ -105,26 +106,31 @@
 
         .clear-search {
             position: absolute;
-            right: 60px;
+            right: 52px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             color: #999;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
-            padding: 5px;
+            padding: 4px;
             display: none;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .clear-search.active {
-            display: block;
+            display: flex;
         }
 
         .main-content-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
             flex: 1;
             min-height: 0;
             overflow: hidden;
@@ -132,13 +138,14 @@
 
         .sidebar {
             background-color: white;
-            border-radius: 8px;
-            padding: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 6px;
+            padding: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            height: 250px;
+            height: 160px; /* Reduced height for mobile */
+            flex-shrink: 0;
         }
 
         .main-content-area {
@@ -148,24 +155,25 @@
             min-height: 0;
             overflow: hidden;
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
         .content-tabs {
             display: flex;
             border-bottom: 1px solid #eee;
             background-color: #f9f9f9;
-            border-radius: 8px 8px 0 0;
+            border-radius: 6px 6px 0 0;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px 8px;
+            padding: 12px 6px;
             background: none;
             border: none;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: bold;
             color: #7f8c8d;
             cursor: pointer;
@@ -173,14 +181,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             border-bottom: 3px solid transparent;
             touch-action: manipulation;
-        }
-
-        .tab-btn:hover {
-            background-color: #f1f1f1;
-            color: #2c3e50;
+            min-height: 44px;
         }
 
         .tab-btn.active {
@@ -190,7 +194,7 @@
         }
 
         .tab-btn .tab-icon {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .tab-content {
@@ -207,7 +211,7 @@
             flex-direction: column;
             min-height: 0;
             overflow: hidden;
-            padding: 12px;
+            padding: 10px;
         }
 
         .tab-pane.active {
@@ -221,6 +225,7 @@
             flex-direction: column;
             min-height: 0;
             overflow: hidden;
+            height: 100%;
         }
 
         .details-section {
@@ -229,17 +234,18 @@
             flex-direction: column;
             min-height: 0;
             overflow: hidden;
+            height: 100%;
         }
 
         .section-title {
-            font-size: 1rem;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
             color: #2c3e50;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 6px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 4px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             flex-shrink: 0;
         }
 
@@ -251,22 +257,27 @@
             list-style: none;
             flex: 1;
             overflow-y: auto;
-            padding-right: 5px;
             min-height: 0;
             -webkit-overflow-scrolling: touch;
+            padding-right: 4px;
+            margin-top: 4px;
         }
 
         .person-item {
-            padding: 10px;
+            padding: 8px;
             border: 1px solid #eee;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             background-color: white;
             position: relative;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             touch-action: manipulation;
+            min-height: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .person-item:active {
@@ -274,66 +285,43 @@
             transform: scale(0.98);
         }
 
-        .person-item:hover {
-            background-color: #f9f9f9;
-            border-color: #3498db;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.1);
-        }
-
         .person-item.active {
             background-color: #e8f4fc;
             border: 2px solid #3498db;
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
-            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.2);
         }
 
         .person-item.active::before {
             content: "✓";
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 6px;
+            right: 6px;
             color: #3498db;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.8rem;
         }
 
         .person-name-container {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            gap: 8px;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 2px;
         }
 
         .person-name {
             font-weight: bold;
             color: #2c3e50;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             flex: 1;
             position: relative;
-        }
-
-        .person-name.has-tooltip:hover::after,
-        .person-surname.has-tooltip:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #333;
-            color: white;
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 5px;
-            pointer-events: none;
         }
 
         .person-gender {
-            font-size: 1rem;
+            font-size: 0.8rem;
             color: #3498db;
             flex-shrink: 0;
         }
@@ -341,25 +329,24 @@
         .person-details {
             display: flex;
             flex-direction: column;
-            gap: 3px;
-            margin-top: 8px;
+            gap: 2px;
         }
 
         .person-surname {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #7f8c8d;
             font-style: italic;
-            position: relative;
-            margin-bottom: 1px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .person-meta {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             color: #666;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1px;
         }
 
         .person-birth {
@@ -369,15 +356,7 @@
         .person-id {
             color: #95a5a6;
             font-family: monospace;
-            font-size: 0.7rem;
-        }
-
-        .tree-container-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            overflow: hidden;
+            font-size: 0.6rem;
         }
 
         .tree-container {
@@ -388,36 +367,31 @@
             overflow: auto;
             position: relative;
             background-color: #f9f9f9;
-            min-height: 250px;
+            min-height: 300px;
             -webkit-overflow-scrolling: touch;
+            margin-top: 4px;
         }
 
         .tree-node {
             position: absolute;
             background-color: white;
             border: 2px solid #3498db;
-            border-radius: 8px;
+            border-radius: 6px;
             text-align: center;
-            width: 120px;
-            height: 70px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            width: 100px;
+            height: 55px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.2s;
             z-index: 1;
-            padding: 6px;
-            font-size: 0.75rem;
+            padding: 4px;
+            font-size: 0.65rem;
             overflow: hidden;
             touch-action: manipulation;
         }
 
         .tree-node:active {
             transform: scale(0.95);
-        }
-
-        .tree-node:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-            z-index: 2;
         }
 
         .tree-node.male {
@@ -436,81 +410,53 @@
         }
 
         .tree-node.selected {
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5), 0 6px 20px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5), 0 4px 12px rgba(52, 152, 219, 0.3);
             z-index: 3;
-            border-width: 4px;
+            border-width: 3px;
         }
 
         .node-name {
             font-weight: bold;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
             color: #2c3e50;
-            font-size: 0.8rem;
-            line-height: 1.1;
+            font-size: 0.7rem;
+            line-height: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            position: relative;
-        }
-
-        .node-name.has-tooltip,
-        .node-surname.has-tooltip {
-            position: relative;
-        }
-
-        .node-name.has-tooltip:hover::after,
-        .node-surname.has-tooltip:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #333;
-            color: white;
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 5px;
-            min-width: 120px;
-            max-width: 200px;
-            text-align: center;
         }
 
         .node-surname {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: #7f8c8d;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             font-style: italic;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            position: relative;
         }
 
         .node-details {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: #666;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             line-height: 1;
         }
 
         .node-relationship {
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             color: #3498db;
             font-weight: bold;
-            margin-top: 2px;
-            padding: 1px 4px;
+            margin-top: 1px;
+            padding: 1px 3px;
             background-color: rgba(52, 152, 219, 0.1);
-            border-radius: 8px;
+            border-radius: 6px;
             display: inline-block;
             max-width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
         .tree-line {
@@ -525,58 +471,63 @@
             flex-direction: column;
             min-height: 0;
             overflow: hidden;
+            height: 100%;
         }
 
         .details-content-wrapper {
             flex: 1;
             overflow-y: auto;
-            padding-right: 5px;
             -webkit-overflow-scrolling: touch;
+            padding-right: 4px;
+            margin-top: 4px;
         }
 
         .relationship-badge {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 4px 8px;
             background-color: #3498db;
             color: white;
-            border-radius: 16px;
-            font-size: 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
             font-weight: bold;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            align-self: flex-start;
         }
 
         .details-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            font-size: 0.85rem;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            font-size: 0.8rem;
         }
 
         .detail-item {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            break-inside: avoid;
         }
 
         .detail-label {
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.9rem;
+            gap: 4px;
+            font-size: 0.8rem;
         }
 
         .detail-label i {
             color: #3498db;
-            width: 16px;
-            font-size: 0.8rem;
+            width: 14px;
+            font-size: 0.7rem;
         }
 
         .detail-value {
             color: #555;
-            line-height: 1.4;
-            padding-left: 22px;
-            font-size: 0.85rem;
+            line-height: 1.3;
+            padding-left: 18px;
+            font-size: 0.75rem;
+            word-break: break-word;
         }
 
         .relationship-list {
@@ -585,18 +536,19 @@
         }
 
         .relationship-item {
-            padding: 8px;
+            padding: 6px;
             background-color: white;
             border: 1px solid #eee;
-            border-radius: 5px;
-            margin-bottom: 6px;
+            border-radius: 4px;
+            margin-bottom: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: all 0.2s;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             touch-action: manipulation;
+            min-height: 40px;
         }
 
         .relationship-item:active {
@@ -604,55 +556,56 @@
             transform: scale(0.98);
         }
 
-        .relationship-item:hover {
-            background-color: #f9f9f9;
-            border-color: #3498db;
-        }
-
         .relationship-info {
             flex: 1;
+            min-width: 0;
         }
 
         .relationship-name {
             font-weight: bold;
             color: #2c3e50;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .relationship-type {
             color: #3498db;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: bold;
         }
 
         .relationship-id {
             color: #95a5a6;
             font-family: monospace;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
+            flex-shrink: 0;
+            margin-left: 6px;
         }
 
         .empty-message {
             text-align: center;
-            padding: 30px;
+            padding: 20px 10px;
             color: #7f8c8d;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .empty-message i {
-            font-size: 2.25rem;
+            font-size: 1.5rem;
             color: #bdc3c7;
         }
 
         footer {
             text-align: center;
-            margin-top: 12px;
-            padding: 12px;
+            margin-top: 8px;
+            padding: 8px;
             color: #7f8c8d;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             border-top: 1px solid #eee;
             flex-shrink: 0;
         }
@@ -663,11 +616,11 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Search results dropdown */
+        /* Search results dropdown - Mobile optimized */
         .search-results {
             position: absolute;
             top: 100%;
@@ -676,12 +629,12 @@
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 4px;
-            max-height: 250px;
+            max-height: 50vh;
             overflow-y: auto;
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             display: none;
-            margin-top: 5px;
+            margin-top: 4px;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -690,27 +643,20 @@
         }
 
         .search-result-item {
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
             transition: background-color 0.2s;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.8rem;
             touch-action: manipulation;
+            min-height: 44px;
         }
 
         .search-result-item:active {
             background-color: #f0f0f0;
-        }
-
-        .search-result-item:hover {
-            background-color: #f9f9f9;
-        }
-
-        .search-result-item:last-child {
-            border-bottom: none;
         }
 
         .search-result-info {
@@ -721,38 +667,33 @@
         .search-result-name {
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 3px;
-            font-size: 0.9rem;
-            white-space: nowrap;
+            font-size: 0.8rem;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .search-result-surname {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #7f8c8d;
             font-style: italic;
-            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .search-result-details {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #7f8c8d;
             display: flex;
-            flex-direction: column;
-            gap: 4px;
-            align-items: flex-end;
-            text-align: right;
-            flex-shrink: 0;
-            margin-left: 10px;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .search-result-id {
             font-family: monospace;
             color: #95a5a6;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
 
         .search-result-birth {
@@ -760,10 +701,10 @@
         }
 
         .search-count {
-            padding: 8px 12px;
+            padding: 6px 10px;
             background-color: #f9f9f9;
             border-bottom: 1px solid #eee;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #7f8c8d;
             text-align: center;
         }
@@ -773,8 +714,8 @@
         .tree-container::-webkit-scrollbar,
         .details-content-wrapper::-webkit-scrollbar,
         .search-results::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 4px;
+            height: 4px;
         }
 
         .person-list::-webkit-scrollbar-track,
@@ -782,7 +723,7 @@
         .details-content-wrapper::-webkit-scrollbar-track,
         .search-results::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         .person-list::-webkit-scrollbar-thumb,
@@ -790,20 +731,32 @@
         .details-content-wrapper::-webkit-scrollbar-thumb,
         .search-results::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
-        .person-list::-webkit-scrollbar-thumb:hover,
-        .tree-container::-webkit-scrollbar-thumb:hover,
-        .details-content-wrapper::-webkit-scrollbar-thumb:hover,
-        .search-results::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-
-        /* Mobile optimizations */
+        /* Desktop styles - will be overridden by mobile styles */
         @media (min-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 15px;
+                max-width: 1200px;
+            }
+            
+            header {
+                padding: 15px 20px;
+                margin-bottom: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 0.8rem;
+            }
+            
+            .search-section {
+                margin-bottom: 15px;
+                padding: 12px 16px;
             }
             
             .main-content-wrapper {
@@ -815,120 +768,118 @@
                 flex: 0 0 280px;
                 height: auto;
                 max-height: none;
-            }
-            
-            .search-box {
-                flex-direction: row;
-            }
-            
-            .search-result-item {
-                flex-direction: row;
-            }
-            
-            .search-result-details {
-                flex-direction: row;
-                gap: 12px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 1.1rem;
-            }
-            
-            .tab-btn {
                 padding: 12px;
-                font-size: 0.95rem;
             }
             
-            .tab-btn .tab-icon {
-                font-size: 1rem;
+            .person-list {
+                height: auto;
             }
             
             .tree-node {
-                width: 130px;
-                height: 75px;
-                font-size: 0.75rem;
+                width: 120px;
+                height: 65px;
+                font-size: 0.7rem;
             }
             
             .node-name {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
+            }
+            
+            .details-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        /* Mobile-specific improvements */
+        @media (max-width: 767px) {
+            .container {
+                padding: 6px;
+            }
+            
+            .main-content-wrapper {
+                gap: 6px;
+            }
+            
+            /* Make tree container taller on mobile */
+            .tree-container {
+                min-height: 350px;
+                max-height: calc(100vh - 400px);
+            }
+            
+            /* Make details section scrollable */
+            .details-content-wrapper {
+                max-height: calc(100vh - 300px);
+            }
+            
+            /* Adjust tree layout for better visibility */
+            .tree-node {
+                width: 90px;
+                height: 50px;
+                padding: 3px;
+            }
+            
+            .node-name {
+                font-size: 0.65rem;
             }
             
             .node-surname {
-                font-size: 0.65rem;
+                font-size: 0.55rem;
+            }
+            
+            .node-details {
+                font-size: 0.5rem;
+            }
+            
+            .node-relationship {
+                font-size: 0.45rem;
+                padding: 0 2px;
             }
         }
 
-        @media (min-width: 1200px) {
-            .details-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-        }
-
-        /* Improve touch targets */
-        @media (max-width: 767px) {
-            .person-item,
-            .relationship-item,
-            .search-result-item,
+        /* Very small screens */
+        @media (max-width: 320px) {
             .tree-node {
-                min-height: 44px; /* Minimum touch target size */
+                width: 80px;
+                height: 45px;
             }
             
-            button,
-            .tab-btn {
-                min-height: 44px;
+            .node-name {
+                font-size: 0.6rem;
             }
             
-            input {
-                min-height: 44px;
-                font-size: 16px; /* Prevents zoom on iOS */
+            .node-surname {
+                font-size: 0.5rem;
             }
-            
-            .tree-container {
-                min-height: 300px;
-            }
-            
-            .search-box {
-                position: relative;
-            }
-            
-            .search-button {
-                position: absolute;
-                right: 0;
-                top: 0;
-                height: 100%;
-                width: 50px;
-            }
-            
-            .clear-search {
-                right: 55px;
-            }
+        }
+
+        /* Prevent horizontal scrolling on mobile */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
         }
 
         /* Loading animation */
         .loading {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #3498db;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
         .no-results {
-            padding: 20px;
+            padding: 15px 10px;
             text-align: center;
             color: #7f8c8d;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .highlight {
             background-color: #fffacd;
-            padding: 0 2px;
+            padding: 0 1px;
             border-radius: 2px;
         }
     </style>
@@ -937,13 +888,13 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-tree"></i> Árvore Genealógica</h1>
-            <p class="subtitle">Visualize toda a árvore genealógica com ancestrais e descendentes</p>
+            <p class="subtitle">Visualize toda a árvore genealógica</p>
         </header>
 
         <div class="search-section">
             <h2 class="section-title"><i class="fas fa-search"></i> Procurar Pessoa</h2>
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="Digite o nome, sobrenome ou ID..." autocomplete="off">
+                <input type="text" id="search-input" placeholder="Nome, sobrenome ou ID..." autocomplete="off">
                 <button class="clear-search" id="clear-search"><i class="fas fa-times"></i></button>
                 <button class="search-button" id="search-button"><i class="fas fa-search"></i></button>
             </div>
@@ -981,7 +932,7 @@
                             <div class="tree-container" id="tree-container">
                                 <div class="empty-message">
                                     <i class="fas fa-tree"></i>
-                                    <div>Selecione uma pessoa para visualizar a árvore genealógica completa</div>
+                                    <div>Selecione uma pessoa para visualizar a árvore</div>
                                 </div>
                             </div>
                         </div>
@@ -1007,7 +958,7 @@
         </div>
 
         <footer>
-            <p>Árvore Genealógica &copy; 2023 | Mostra relações familiares com graus de parentesco</p>
+            <p>Árvore Genealógica &copy; 2023</p>
         </footer>
     </div>
 
@@ -1050,7 +1001,7 @@
             initializeElements();
             initializeEventListeners();
             loadAllFiles();
-            showMessage('A carregar dados automaticamente...', 'info');
+            showMessage('A carregar dados...', 'info');
             
             // Ajustar layout inicial para mobile
             adjustMobileLayout();
@@ -1059,10 +1010,17 @@
         // Ajustar layout para mobile
         function adjustMobileLayout() {
             if (window.innerWidth <= 767) {
-                // Ajustar altura do sidebar em mobile
+                // Garantir que o container da árvore tenha altura suficiente
+                const treeContainer = document.getElementById('tree-container');
+                if (treeContainer) {
+                    const availableHeight = window.innerHeight - 400;
+                    treeContainer.style.minHeight = Math.max(300, availableHeight) + 'px';
+                }
+                
+                // Ajustar altura do sidebar
                 const sidebar = document.querySelector('.sidebar');
                 if (sidebar) {
-                    sidebar.style.height = '200px';
+                    sidebar.style.height = '160px';
                 }
             }
         }
@@ -1143,6 +1101,18 @@
             
             // Ajustar layout ao redimensionar
             window.addEventListener('resize', adjustMobileLayout);
+            
+            // Melhorar scroll no mobile
+            if ('ontouchstart' in window) {
+                document.addEventListener('touchmove', function(e) {
+                    if (e.target.classList.contains('tree-container') || 
+                        e.target.classList.contains('details-content-wrapper') ||
+                        e.target.classList.contains('person-list')) {
+                        // Permitir scroll apenas nos containers apropriados
+                        return;
+                    }
+                }, { passive: true });
+            }
         }
         
         // Switch between tabs
@@ -1159,9 +1129,31 @@
             if (tabName === 'tree') {
                 treeTab.classList.add('active');
                 treePane.classList.add('active');
+                
+                // Ajustar altura da árvore quando ativa
+                setTimeout(() => {
+                    if (window.innerWidth <= 767) {
+                        const treeContainer = document.getElementById('tree-container');
+                        if (treeContainer) {
+                            const availableHeight = window.innerHeight - 300;
+                            treeContainer.style.minHeight = Math.max(350, availableHeight) + 'px';
+                        }
+                    }
+                }, 100);
             } else if (tabName === 'details') {
                 detailsTab.classList.add('active');
                 detailsPane.classList.add('active');
+                
+                // Ajustar altura dos detalhes quando ativa
+                setTimeout(() => {
+                    if (window.innerWidth <= 767) {
+                        const detailsWrapper = document.querySelector('.details-content-wrapper');
+                        if (detailsWrapper) {
+                            const availableHeight = window.innerHeight - 250;
+                            detailsWrapper.style.maxHeight = Math.max(300, availableHeight) + 'px';
+                        }
+                    }
+                }, 100);
             }
         }
         
@@ -1426,10 +1418,8 @@
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'person-name';
                 const fullName = person.nome || 'Nome desconhecido';
-                if (fullName.length > 20) {
-                    nameDiv.textContent = fullName.substring(0, 20) + '...';
-                    nameDiv.classList.add('has-tooltip');
-                    nameDiv.setAttribute('data-tooltip', fullName);
+                if (fullName.length > 15) {
+                    nameDiv.textContent = fullName.substring(0, 15) + '...';
                 } else {
                     nameDiv.textContent = fullName;
                 }
@@ -1447,10 +1437,8 @@
                 const surnameDiv = document.createElement('div');
                 surnameDiv.className = 'person-surname';
                 const fullSurname = person.sobrenome || '';
-                if (fullSurname.length > 25) {
-                    surnameDiv.textContent = fullSurname.substring(0, 25) + '...';
-                    surnameDiv.classList.add('has-tooltip');
-                    surnameDiv.setAttribute('data-tooltip', fullSurname);
+                if (fullSurname.length > 20) {
+                    surnameDiv.textContent = fullSurname.substring(0, 20) + '...';
                 } else {
                     surnameDiv.textContent = fullSurname;
                 }
@@ -1516,13 +1504,14 @@
             // Scroll para o item selecionado na lista em mobile
             if (window.innerWidth <= 767) {
                 const activeItem = document.querySelector(`.person-item[data-id="${personId}"]`);
-                if (activeItem) {
+                if (activeItem && personList) {
+                    // Scroll suave para o item selecionado
                     activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
             }
         }
         
-        // Gerar árvore genealógica
+        // Gerar árvore genealógica - Versão otimizada para mobile
         function generateFamilyTree(personId) {
             if (!treeContainer) return;
             
@@ -1534,12 +1523,16 @@
                 return;
             }
             
-            // Get layout based on screen size
-            const layout = adjustTreeLayoutForScreen();
-            const nodeWidth = layout.nodeWidth;
-            const nodeHeight = layout.nodeHeight;
-            const horizontalSpacing = layout.horizontalSpacing;
-            const verticalSpacing = layout.verticalSpacing;
+            // Obter dimensões do container
+            const containerWidth = treeContainer.clientWidth;
+            const containerHeight = treeContainer.clientHeight;
+            
+            // Ajustar tamanho dos nós para mobile
+            const isMobile = window.innerWidth <= 767;
+            const nodeWidth = isMobile ? 90 : 120;
+            const nodeHeight = isMobile ? 50 : 65;
+            const horizontalSpacing = isMobile ? 100 : 140;
+            const verticalSpacing = isMobile ? 90 : 110;
             
             // Coletar pessoas para mostrar
             const allPersons = new Set([personId]);
@@ -1550,20 +1543,6 @@
             if (parents) {
                 if (parents.father) allPersons.add(parents.father);
                 if (parents.mother) allPersons.add(parents.mother);
-                
-                // Adicionar avós paternos
-                const paternalGrandparents = parents.father ? parentsMap[parents.father] : null;
-                if (paternalGrandparents) {
-                    if (paternalGrandparents.father) allPersons.add(paternalGrandparents.father);
-                    if (paternalGrandparents.mother) allPersons.add(paternalGrandparents.mother);
-                }
-                
-                // Adicionar avós maternos
-                const maternalGrandparents = parents.mother ? parentsMap[parents.mother] : null;
-                if (maternalGrandparents) {
-                    if (maternalGrandparents.father) allPersons.add(maternalGrandparents.father);
-                    if (maternalGrandparents.mother) allPersons.add(maternalGrandparents.mother);
-                }
             }
             
             // Adicionar filhos
@@ -1577,25 +1556,7 @@
             // Organizar por gerações
             const generations = [];
             
-            // Geração -2: Bisavós (simplificado)
-            const greatGrandparents = [];
-            
-            // Geração -1: Avós
-            const grandparents = [];
-            if (parents) {
-                const paternalGrandparents = parents.father ? parentsMap[parents.father] : null;
-                if (paternalGrandparents) {
-                    if (paternalGrandparents.father) grandparents.push(paternalGrandparents.father);
-                    if (paternalGrandparents.mother) grandparents.push(paternalGrandparents.mother);
-                }
-                const maternalGrandparents = parents.mother ? parentsMap[parents.mother] : null;
-                if (maternalGrandparents) {
-                    if (maternalGrandparents.father) grandparents.push(maternalGrandparents.father);
-                    if (maternalGrandparents.mother) grandparents.push(maternalGrandparents.mother);
-                }
-            }
-            
-            // Geração 0: Pais
+            // Geração 0: Pais (se existirem)
             const parentGeneration = [];
             if (parents) {
                 if (parents.father) parentGeneration.push(parents.father);
@@ -1610,8 +1571,6 @@
             const childrenGeneration = children;
             
             // Adicionar gerações
-            if (greatGrandparents.length > 0) generations.push({depth: -2, persons: greatGrandparents});
-            if (grandparents.length > 0) generations.push({depth: -1, persons: grandparents});
             if (parentGeneration.length > 0) generations.push({depth: 0, persons: parentGeneration});
             generations.push({depth: 1, persons: mainGeneration});
             if (childrenGeneration.length > 0) generations.push({depth: 2, persons: childrenGeneration});
@@ -1622,13 +1581,15 @@
                 if (gen.persons.length > maxNodesInRow) maxNodesInRow = gen.persons.length;
             });
             
-            const startX = Math.max(30, (treeContainer.clientWidth - (maxNodesInRow * horizontalSpacing)) / 2);
+            // Calcular posição inicial para centralizar
+            const totalWidthNeeded = maxNodesInRow * horizontalSpacing;
+            const startX = Math.max(20, (containerWidth - totalWidthNeeded) / 2);
             
             // Posicionar nós
             generations.forEach((gen, genIndex) => {
-                const y = 30 + genIndex * verticalSpacing;
+                const y = 20 + genIndex * verticalSpacing;
                 const genWidth = gen.persons.length * horizontalSpacing;
-                const startGenX = startX + (maxNodesInRow * horizontalSpacing - genWidth) / 2;
+                const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
                 
                 gen.persons.forEach((personId, index) => {
                     const person = personsMap[personId];
@@ -1675,7 +1636,7 @@
                 });
             }
             
-            // Desenhar conexões entre cônjuges
+            // Desenhar conexões entre cônjuges (apenas na geração principal)
             mainGeneration.forEach(personId1 => {
                 mainGeneration.forEach(personId2 => {
                     if (personId1 !== personId2 && areSpouses(personId1, personId2)) {
@@ -1687,50 +1648,13 @@
                     }
                 });
             });
-        }
-        
-        // Adjust tree layout based on screen size
-        function adjustTreeLayoutForScreen() {
-            const treeContainer = document.getElementById('tree-container');
-            if (!treeContainer) {
-                return {
-                    nodeWidth: 120,
-                    nodeHeight: 70,
-                    horizontalSpacing: 140,
-                    verticalSpacing: 110
-                };
+            
+            // Ajustar altura do container baseado no conteúdo
+            if (generations.length > 0) {
+                const lastGen = generations[generations.length - 1];
+                const lastY = 20 + (generations.length - 1) * verticalSpacing + nodeHeight + 40;
+                treeContainer.style.minHeight = Math.max(containerHeight, lastY) + 'px';
             }
-            
-            const containerHeight = treeContainer.clientHeight;
-            const containerWidth = treeContainer.clientWidth;
-            
-            // Mobile screens
-            if (containerWidth < 768) {
-                return {
-                    nodeWidth: 100,
-                    nodeHeight: 60,
-                    horizontalSpacing: 110,
-                    verticalSpacing: 90
-                };
-            }
-            
-            // Medium screens
-            if (containerWidth < 1024) {
-                return {
-                    nodeWidth: 110,
-                    nodeHeight: 65,
-                    horizontalSpacing: 125,
-                    verticalSpacing: 100
-                };
-            }
-            
-            // Large screens
-            return {
-                nodeWidth: 130,
-                nodeHeight: 75,
-                horizontalSpacing: 150,
-                verticalSpacing: 120
-            };
         }
         
         // Determinar relação com a pessoa selecionada - versão abreviada
@@ -1758,61 +1682,6 @@
                 return person && person.sexo === 'masculino' ? 'Marido' : 'Esposa';
             }
             
-            // Avós
-            if (parents) {
-                // Avô paterno
-                if (parents.father) {
-                    const paternalGrandparents = parentsMap[parents.father];
-                    if (paternalGrandparents && (paternalGrandparents.father === personId || paternalGrandparents.mother === personId)) {
-                        return paternalGrandparents.father === personId ? 'Avô P.' : 'Avó P.';
-                    }
-                }
-                
-                // Avô materno
-                if (parents.mother) {
-                    const maternalGrandparents = parentsMap[parents.mother];
-                    if (maternalGrandparents && (maternalGrandparents.father === personId || maternalGrandparents.mother === personId)) {
-                        return maternalGrandparents.father === personId ? 'Avô M.' : 'Avó M.';
-                    }
-                }
-            }
-            
-            // Netos
-            const grandchildren = [];
-            children.forEach(childId => {
-                const childsChildren = findChildren(childId);
-                childsChildren.forEach(grandchildId => grandchildren.push(grandchildId));
-            });
-            
-            if (grandchildren.includes(personId)) {
-                const person = personsMap[personId];
-                return person && person.sexo === 'masculino' ? 'Neto' : 'Neta';
-            }
-            
-            // Irmãos
-            if (parents) {
-                const siblings = [];
-                if (parents.father || parents.mother) {
-                    // Encontrar todos os filhos dos mesmos pais
-                    Object.keys(parentsMap).forEach(childId => {
-                        const childParents = parentsMap[childId];
-                        if (childParents && 
-                            ((childParents.father === parents.father && childParents.mother === parents.mother) ||
-                             (childParents.father === parents.father && !parents.mother && !childParents.mother) ||
-                             (!parents.father && childParents.mother === parents.mother && !childParents.father))) {
-                            if (childId !== relativeTo) {
-                                siblings.push(childId);
-                            }
-                        }
-                    });
-                }
-                
-                if (siblings.includes(personId)) {
-                    const person = personsMap[personId];
-                    return person && person.sexo === 'masculino' ? 'Irmão' : 'Irmã';
-                }
-            }
-            
             return 'Parente';
         }
         
@@ -1823,13 +1692,13 @@
             line1.style.left = `${parentPos.x + nodeWidth/2 - 1}px`;
             line1.style.top = `${parentPos.y + nodeHeight}px`;
             line1.style.width = '2px';
-            line1.style.height = '15px';
+            line1.style.height = '12px';
             treeContainer.appendChild(line1);
             
             const line2 = document.createElement('div');
             line2.className = 'tree-line';
             line2.style.left = `${Math.min(parentPos.x + nodeWidth/2, childPos.x + nodeWidth/2)}px`;
-            line2.style.top = `${parentPos.y + nodeHeight + 15}px`;
+            line2.style.top = `${parentPos.y + nodeHeight + 12}px`;
             line2.style.width = `${Math.abs(childPos.x - parentPos.x)}px`;
             line2.style.height = '2px';
             treeContainer.appendChild(line2);
@@ -1837,9 +1706,9 @@
             const line3 = document.createElement('div');
             line3.className = 'tree-line';
             line3.style.left = `${childPos.x + nodeWidth/2 - 1}px`;
-            line3.style.top = `${parentPos.y + nodeHeight + 15}px`;
+            line3.style.top = `${parentPos.y + nodeHeight + 12}px`;
             line3.style.width = '2px';
-            line3.style.height = `${childPos.y - (parentPos.y + nodeHeight + 15)}px`;
+            line3.style.height = `${childPos.y - (parentPos.y + nodeHeight + 12)}px`;
             treeContainer.appendChild(line3);
         }
         
@@ -1848,7 +1717,7 @@
             const line = document.createElement('div');
             line.className = 'tree-line';
             line.style.left = `${pos1.x + nodeWidth}px`;
-            line.style.top = `${pos1.y + 30}px`;
+            line.style.top = `${pos1.y + 25}px`;
             line.style.width = `${pos2.x - pos1.x - nodeWidth}px`;
             line.style.height = '2px';
             treeContainer.appendChild(line);
@@ -1896,8 +1765,8 @@
             return children;
         }
         
-        // Criar nó da árvore
-        function createPersonNode(person, x, y, width = 130, height = 75, relationship = '') {
+        // Criar nó da árvore - versão otimizada para mobile
+        function createPersonNode(person, x, y, width = 90, height = 50, relationship = '') {
             const node = document.createElement('div');
             node.className = `tree-node ${person.sexo || 'unknown'}`;
             node.style.left = `${x}px`;
@@ -1909,10 +1778,8 @@
             const nameDiv = document.createElement('div');
             nameDiv.className = 'node-name';
             const fullName = person.nome || 'Nome desconhecido';
-            if (fullName.length > 15) {
-                nameDiv.textContent = fullName.substring(0, 15) + '...';
-                nameDiv.classList.add('has-tooltip');
-                nameDiv.setAttribute('data-tooltip', fullName);
+            if (fullName.length > 10) {
+                nameDiv.textContent = fullName.substring(0, 10) + '...';
             } else {
                 nameDiv.textContent = fullName;
             }
@@ -1920,10 +1787,8 @@
             const surnameDiv = document.createElement('div');
             surnameDiv.className = 'node-surname';
             const fullSurname = person.sobrenome || '';
-            if (fullSurname.length > 18) {
-                surnameDiv.textContent = fullSurname.substring(0, 18) + '...';
-                surnameDiv.classList.add('has-tooltip');
-                surnameDiv.setAttribute('data-tooltip', fullSurname);
+            if (fullSurname.length > 12) {
+                surnameDiv.textContent = fullSurname.substring(0, 12) + '...';
             } else {
                 surnameDiv.textContent = fullSurname;
             }
@@ -1935,7 +1800,7 @@
             const deathYear = extractYear(person.data_falecimento);
             
             let detailsText = `${birthYear}`;
-            if (deathYear && deathYear !== '?') detailsText += ` - ${deathYear}`;
+            if (deathYear && deathYear !== '?') detailsText += `-${deathYear}`;
             
             detailsDiv.textContent = detailsText;
             
@@ -1956,7 +1821,7 @@
             return node;
         }
         
-        // Mostrar detalhes da pessoa
+        // Mostrar detalhes da pessoa - versão otimizada para mobile
         function showPersonDetails(personId) {
             const person = personsMap[personId];
             if (!person || !detailsContent) return;
@@ -1965,7 +1830,7 @@
             detailsContent.innerHTML = '';
             
             // Informações básicas
-            addDetailItem('fas fa-user', 'Nome Completo', person.nome || 'Desconhecido');
+            addDetailItem('fas fa-user', 'Nome', person.nome || 'Desconhecido');
             addDetailItem('fas fa-tag', 'Sobrenome', person.sobrenome || 'Não registado');
             addDetailItem('fas fa-venus-mars', 'Sexo', person.sexo === 'masculino' ? 'Masculino (♂)' : 
                          person.sexo === 'feminino' ? 'Feminino (♀)' : 'Desconhecido');
@@ -1973,28 +1838,20 @@
             
             // Nascimento
             if (person.data_nascimento) {
-                addDetailItem('fas fa-birthday-cake', 'Data de Nascimento', formatDate(person.data_nascimento));
+                addDetailItem('fas fa-birthday-cake', 'Nascimento', formatDate(person.data_nascimento));
             }
             if (person.lugar_nascimento_nome) {
-                addDetailItem('fas fa-map-marker-alt', 'Local de Nascimento', person.lugar_nascimento_nome);
+                addDetailItem('fas fa-map-marker-alt', 'Local Nasc.', person.lugar_nascimento_nome);
             } else if (person.lugar_nascimento) {
-                addDetailItem('fas fa-map-marker-alt', 'Local de Nascimento', `ID: ${person.lugar_nascimento}`);
-            }
-            
-            // Batismo
-            if (person.data_batismo) {
-                addDetailItem('fas fa-water', 'Data de Batismo', formatDate(person.data_batismo));
-            }
-            if (person.lugar_batismo && placesMap[person.lugar_batismo]) {
-                addDetailItem('fas fa-map-marker-alt', 'Local de Batismo', placesMap[person.lugar_batismo].nome);
+                addDetailItem('fas fa-map-marker-alt', 'Local Nasc.', `ID: ${person.lugar_nascimento}`);
             }
             
             // Falecimento
             if (person.data_falecimento) {
-                addDetailItem('fas fa-cross', 'Data de Falecimento', formatDate(person.data_falecimento));
+                addDetailItem('fas fa-cross', 'Falecimento', formatDate(person.data_falecimento));
             }
             if (person.lugar_falecimento && placesMap[person.lugar_falecimento]) {
-                addDetailItem('fas fa-map-marker-alt', 'Local de Falecimento', placesMap[person.lugar_falecimento].nome);
+                addDetailItem('fas fa-map-marker-alt', 'Local Fal.', placesMap[person.lugar_falecimento].nome);
             }
             
             // Pais
@@ -2053,6 +1910,14 @@
                 
                 addDetailItemWithContent('fas fa-baby', 'Filhos', childrenList);
             }
+            
+            // Garantir que o conteúdo seja scrollável
+            setTimeout(() => {
+                const detailsWrapper = document.querySelector('.details-content-wrapper');
+                if (detailsWrapper) {
+                    detailsWrapper.scrollTop = 0;
+                }
+            }, 100);
         }
         
         // Criar item de relação
@@ -2159,8 +2024,7 @@
                     const year = parseInt(parts[2]);
                     
                     if (!isNaN(day) && month !== undefined && !isNaN(year)) {
-                        const date = new Date(year, month, day);
-                        return date.toLocaleDateString('pt-PT');
+                        return `${day}/${month + 1}/${year}`;
                     }
                 }
             } catch (e) {}
@@ -2178,16 +2042,18 @@
             messageDiv.textContent = message;
             messageDiv.style.cssText = `
                 position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 12px 16px;
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                padding: 10px;
                 border-radius: 4px;
                 color: white;
                 font-weight: bold;
                 z-index: 1000;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.2);
                 animation: fadeIn 0.3s ease-in;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
+                text-align: center;
             `;
             
             if (type === 'success') messageDiv.style.backgroundColor = '#27ae60';
