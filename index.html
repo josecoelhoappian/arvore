@@ -986,13 +986,44 @@
                 font-size: 0.45rem;
             }
             
+            /* IMPROVED: Relationship text on mobile - more visible */
             .node-relationship {
-                font-size: 0.45rem;
-                padding: 0 1px;
+                font-size: 0.55rem !important;
+                font-weight: bold;
+                background-color: rgba(52, 152, 219, 0.2);
+                padding: 1px 3px !important;
+                border-radius: 3px;
+                white-space: normal !important;
+                max-height: 12px;
+                overflow: hidden;
+                line-height: 1.2;
+                margin-top: 0;
+            }
+            
+            .tree-node.selected .node-relationship {
+                background-color: rgba(52, 152, 219, 0.3);
+                color: #2980b9;
+                font-weight: bold;
             }
             
             .tree-node.grandparent .node-relationship {
-                font-size: 0.4rem;
+                font-size: 0.5rem !important;
+            }
+            
+            /* Adjust node padding for better spacing */
+            .tree-node {
+                padding: 2px !important;
+            }
+            
+            /* Reduce other text to make room for relationship */
+            .node-surname {
+                font-size: 0.5rem !important;
+                margin-bottom: 1px !important;
+            }
+            
+            .node-details {
+                font-size: 0.45rem !important;
+                margin-bottom: 0 !important;
             }
         }
 
@@ -1014,6 +1045,28 @@
             
             .node-surname {
                 font-size: 0.5rem;
+            }
+            
+            /* Relationship on very small screens */
+            .node-relationship {
+                font-size: 0.5rem !important;
+                padding: 0 2px !important;
+                max-height: 11px;
+            }
+            
+            /* Alternative: Show relationship as a badge on hover/tap */
+            .tree-node:active .node-relationship {
+                position: absolute;
+                top: -10px;
+                right: -5px;
+                background-color: #3498db;
+                color: white;
+                padding: 2px 4px;
+                border-radius: 3px;
+                font-size: 0.5rem;
+                z-index: 10;
+                white-space: nowrap;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             }
         }
 
@@ -1046,6 +1099,32 @@
             padding: 0 1px;
             border-radius: 2px;
         }
+        
+        /* Search help text */
+        .search-help {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            font-size: 0.7rem;
+            color: #7f8c8d;
+            padding: 4px 8px;
+            background-color: #f9f9f9;
+            border-radius: 0 0 4px 4px;
+            display: none;
+        }
+        
+        .search-box input:focus + .search-help {
+            display: block;
+        }
+        
+        /* Improve search results highlighting */
+        .highlight {
+            background-color: #ffeaa7;
+            padding: 0 2px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -1058,9 +1137,12 @@
         <div class="search-section">
             <h2 class="section-title"><i class="fas fa-search"></i> Procurar Pessoa</h2>
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="Nome, sobrenome ou ID..." autocomplete="off">
+                <input type="text" id="search-input" placeholder="Nome, sobrenome ou combinação (ex: jose coelho)..." autocomplete="off" title="Pode pesquisar por: nome, sobrenome, ou combinações como 'jose coelho'">
                 <button class="clear-search" id="clear-search"><i class="fas fa-times"></i></button>
                 <button class="search-button" id="search-button"><i class="fas fa-search"></i></button>
+                <div class="search-help">
+                    Dica: Pode pesquisar por partes do nome, ex: "jose coelho" encontra "josé francisco garcias coelho"
+                </div>
             </div>
             <div class="search-results" id="search-results">
                 <!-- Search results will appear here -->
@@ -1122,7 +1204,7 @@
         </div>
 
         <footer>
-            <p>Árvore Genealógica &copy; 2023</p>
+            <p>Árvore Genealógica &copy; 2026</p>
         </footer>
     </div>
 
@@ -1323,7 +1405,7 @@
             searchResults.classList.remove('active');
         }
         
-        // Perform search and show results
+        // Perform search and show results - ENHANCED VERSION
         function performSearch() {
             const searchTerm = searchInput.value.trim();
             if (!searchTerm) {
@@ -1331,24 +1413,73 @@
                 return;
             }
             
-            // Normalizar o termo de busca (remover acentos e converter para minúsculas)
-            const normalizedSearchTerm = normalizeSearchText(searchTerm);
+            // Normalizar o termo de busca (remover acentos, converter para minúsculas, remover espaços extras)
+            const normalizedSearchTerm = normalizeSearchText(searchTerm).replace(/\s+/g, ' ');
             
-            // Procurar pessoas
+            // Procurar pessoas com algoritmo melhorado
             const foundPersons = persons.filter(person => {
                 // Normalizar os campos para busca
-                const normalizedName = normalizeSearchText(person.nome);
-                const normalizedSurname = normalizeSearchText(person.sobrenome);
-                const normalizedId = normalizeSearchText(person.id);
+                const normalizedName = normalizeSearchText(person.nome || '');
+                const normalizedSurname = normalizeSearchText(person.sobrenome || '');
                 
-                // Verificar se o termo de busca corresponde a qualquer campo
-                return normalizedName.includes(normalizedSearchTerm) ||
-                       normalizedSurname.includes(normalizedSearchTerm) ||
-                       normalizedId.includes(normalizedSearchTerm);
+                // 1. Busca exata em qualquer campo individual
+                if (normalizedName.includes(normalizedSearchTerm) ||
+                    normalizedSurname.includes(normalizedSearchTerm)) {
+                    return true;
+                }
+                
+                // 2. Busca combinada: nome + sobrenome
+                const fullNameCombined = `${normalizedName} ${normalizedSurname}`.trim();
+                if (fullNameCombined.includes(normalizedSearchTerm)) {
+                    return true;
+                }
+                
+                // 3. Busca por partes do nome (ex: "jose coelho" encontra "josé francisco garcias coelho")
+                const searchParts = normalizedSearchTerm.split(' ');
+                if (searchParts.length >= 2) {
+                    let matchesAllParts = true;
+                    
+                    for (const part of searchParts) {
+                        if (part.length < 2) continue; // Ignorar partes muito curtas
+                        
+                        const matchesName = normalizedName.includes(part);
+                        const matchesSurname = normalizedSurname.includes(part);
+                        const matchesFullName = fullNameCombined.includes(part);
+                        
+                        if (!matchesName && !matchesSurname && !matchesFullName) {
+                            matchesAllParts = false;
+                            break;
+                        }
+                    }
+                    
+                    if (matchesAllParts) return true;
+                }
+                
+                // 4. Busca fonética aproximada (para erros de digitação leves)
+                if (normalizedSearchTerm.length >= 3) {
+                    // Verificar similaridade com nome completo
+                    const fullNormalized = `${normalizedName}${normalizedSurname}`.replace(/\s/g, '');
+                    
+                    // Algoritmo simples de similaridade
+                    const similarityThreshold = 0.7;
+                    const similarity = calculateStringSimilarity(
+                        normalizedSearchTerm.replace(/\s/g, ''), 
+                        fullNormalized
+                    );
+                    
+                    if (similarity >= similarityThreshold) {
+                        return true;
+                    }
+                }
+                
+                return false;
             });
             
-            if (foundPersons.length > 0) {
-                showSearchResults(foundPersons, searchTerm);
+            // Ordenar resultados por relevância
+            const sortedResults = sortSearchResults(foundPersons, searchTerm, normalizedSearchTerm);
+            
+            if (sortedResults.length > 0) {
+                showSearchResults(sortedResults, searchTerm);
             } else {
                 showSearchResults([], searchTerm);
             }
@@ -1357,6 +1488,84 @@
             if (window.innerWidth <= 767) {
                 searchResults.classList.add('active');
             }
+        }
+        
+        // Função para calcular similaridade entre strings (algoritmo simples)
+        function calculateStringSimilarity(str1, str2) {
+            if (str1 === str2) return 1.0;
+            
+            // Se uma string contém a outra
+            if (str1.includes(str2) || str2.includes(str1)) {
+                return 0.9;
+            }
+            
+            // Algoritmo de distância de Levenshtein simplificado
+            const longer = str1.length > str2.length ? str1 : str2;
+            const shorter = str1.length > str2.length ? str2 : str1;
+            
+            if (longer.length === 0) return 1.0;
+            
+            // Calcular distância
+            let distance = 0;
+            for (let i = 0; i < shorter.length; i++) {
+                if (shorter[i] !== longer[i]) distance++;
+            }
+            
+            // Adicionar diferença de comprimento
+            distance += longer.length - shorter.length;
+            
+            return 1.0 - (distance / longer.length);
+        }
+        
+        // Ordenar resultados por relevância
+        function sortSearchResults(results, originalSearchTerm, normalizedSearchTerm) {
+            return results.sort((a, b) => {
+                const aName = normalizeSearchText(a.nome || '');
+                const aSurname = normalizeSearchText(a.sobrenome || '');
+                const bName = normalizeSearchText(b.nome || '');
+                const bSurname = normalizeSearchText(b.sobrenome || '');
+                
+                const aFullName = `${aName} ${aSurname}`;
+                const bFullName = `${bName} ${bSurname}`;
+                
+                // Pontuação de relevância
+                let aScore = 0;
+                let bScore = 0;
+                
+                // 1. Correspondência exata no nome ou sobrenome
+                if (aName === normalizedSearchTerm || aSurname === normalizedSearchTerm) aScore += 10;
+                if (bName === normalizedSearchTerm || bSurname === normalizedSearchTerm) bScore += 10;
+                
+                // 2. Correspondência exata no nome completo
+                if (aFullName.trim() === normalizedSearchTerm) aScore += 15;
+                if (bFullName.trim() === normalizedSearchTerm) bScore += 15;
+                
+                // 3. Nome começa com o termo de busca
+                if (aName.startsWith(normalizedSearchTerm)) aScore += 5;
+                if (bName.startsWith(normalizedSearchTerm)) bScore += 5;
+                
+                // 4. Termo aparece no início do nome
+                if (aName.indexOf(normalizedSearchTerm) === 0) aScore += 4;
+                if (bName.indexOf(normalizedSearchTerm) === 0) bScore += 4;
+                
+                // 5. Termo aparece no início do sobrenome
+                if (aSurname.indexOf(normalizedSearchTerm) === 0) aScore += 4;
+                if (bSurname.indexOf(normalizedSearchTerm) === 0) bScore += 4;
+                
+                // 6. Correspondência parcial
+                if (aName.includes(normalizedSearchTerm)) aScore += 3;
+                if (bName.includes(normalizedSearchTerm)) bScore += 3;
+                
+                if (aSurname.includes(normalizedSearchTerm)) aScore += 3;
+                if (bSurname.includes(normalizedSearchTerm)) bScore += 3;
+                
+                // 7. Ordenar alfabeticamente como desempate
+                if (aScore === bScore) {
+                    return aFullName.localeCompare(bFullName);
+                }
+                
+                return bScore - aScore;
+            });
         }
         
         // Destacar texto nos resultados
@@ -1390,7 +1599,7 @@
                    text.substring(endIndex);
         }
         
-        // Show search results in dropdown
+        // Show search results in dropdown - ENHANCED VERSION
         function showSearchResults(results, searchTerm) {
             searchResults.innerHTML = '';
             
@@ -1431,12 +1640,13 @@
                     birthSpan.className = 'search-result-birth';
                     birthSpan.textContent = `Nasc: ${extractYear(person.data_nascimento)}`;
                     
-                    const idSpan = document.createElement('span');
-                    idSpan.className = 'search-result-id';
-                    idSpan.textContent = person.id;
-                    
                     detailsDiv.appendChild(birthSpan);
-                    detailsDiv.appendChild(idSpan);
+                    
+                    // REMOVED: ID from search results as requested
+                    // const idSpan = document.createElement('span');
+                    // idSpan.className = 'search-result-id';
+                    // idSpan.textContent = person.id;
+                    // detailsDiv.appendChild(idSpan);
                     
                     resultItem.appendChild(infoDiv);
                     resultItem.appendChild(detailsDiv);
@@ -2081,7 +2291,7 @@
             const relationshipDiv = document.createElement('div');
             relationshipDiv.className = 'node-relationship';
             relationshipDiv.textContent = relationship;
-            relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : '0.45rem';
+            relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : '0.55rem';
             
             node.appendChild(nameDiv);
             node.appendChild(surnameDiv);
