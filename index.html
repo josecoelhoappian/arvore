@@ -372,22 +372,20 @@
             margin-top: 4px;
         }
 
+        /* Tree nodes - Larger for desktop */
         .tree-node {
             position: absolute;
             background-color: white;
             border: 2px solid #3498db;
             border-radius: 6px;
             text-align: center;
-            width: 90px;
-            height: 50px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.2s;
             z-index: 1;
-            padding: 3px;
-            font-size: 0.6rem;
             overflow: hidden;
             touch-action: manipulation;
+            padding: 3px;
         }
 
         .tree-node:active {
@@ -431,7 +429,6 @@
             font-weight: bold;
             margin-bottom: 1px;
             color: #2c3e50;
-            font-size: 0.65rem;
             line-height: 1;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -439,7 +436,6 @@
         }
 
         .node-surname {
-            font-size: 0.55rem;
             color: #7f8c8d;
             margin-bottom: 2px;
             font-style: italic;
@@ -449,14 +445,12 @@
         }
 
         .node-details {
-            font-size: 0.5rem;
             color: #666;
             margin-bottom: 1px;
             line-height: 1;
         }
 
         .node-relationship {
-            font-size: 0.45rem;
             color: #3498db;
             font-weight: bold;
             margin-top: 1px;
@@ -746,11 +740,11 @@
             border-radius: 2px;
         }
 
-        /* Desktop styles - will be overridden by mobile styles */
+        /* Desktop styles - Larger zoom and better spacing */
         @media (min-width: 768px) {
             .container {
                 padding: 15px;
-                max-width: 1200px;
+                max-width: 1400px;
             }
             
             header {
@@ -759,16 +753,16 @@
             }
             
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             
             .subtitle {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
             }
             
             .search-section {
                 margin-bottom: 15px;
-                padding: 12px 16px;
+                padding: 15px 20px;
             }
             
             .main-content-wrapper {
@@ -777,29 +771,159 @@
             }
             
             .sidebar {
-                flex: 0 0 280px;
+                flex: 0 0 300px; /* Wider sidebar on desktop */
                 height: auto;
                 max-height: none;
-                padding: 12px;
+                padding: 15px;
             }
             
             .person-list {
                 height: auto;
             }
             
+            /* Larger tree nodes for desktop */
             .tree-node {
-                width: 100px;
-                height: 55px;
-                font-size: 0.65rem;
+                width: 140px; /* Increased from 100px */
+                height: 75px; /* Increased from 55px */
+                font-size: 0.8rem;
+                padding: 5px;
+                border-width: 3px;
+            }
+            
+            .tree-node.grandparent {
+                width: 120px; /* Increased for desktop */
+                height: 65px; /* Increased for desktop */
+                font-size: 0.75rem;
+                padding: 4px;
             }
             
             .node-name {
+                font-size: 0.9rem; /* Larger font */
+                margin-bottom: 2px;
+            }
+            
+            .tree-node.grandparent .node-name {
+                font-size: 0.8rem;
+            }
+            
+            .node-surname {
+                font-size: 0.75rem; /* Larger font */
+                margin-bottom: 3px;
+            }
+            
+            .tree-node.grandparent .node-surname {
                 font-size: 0.7rem;
             }
             
+            .node-details {
+                font-size: 0.7rem; /* Larger font */
+                margin-bottom: 2px;
+            }
+            
+            .tree-node.grandparent .node-details {
+                font-size: 0.65rem;
+            }
+            
+            .node-relationship {
+                font-size: 0.65rem; /* Larger font */
+                padding: 1px 4px;
+            }
+            
+            .tree-node.grandparent .node-relationship {
+                font-size: 0.6rem;
+            }
+            
             .details-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 15px;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Wider columns */
+                gap: 20px;
+                font-size: 0.9rem;
+            }
+            
+            .detail-label {
+                font-size: 0.9rem;
+            }
+            
+            .detail-value {
+                font-size: 0.85rem;
+                padding-left: 22px;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+                padding-bottom: 6px;
+            }
+            
+            .person-item {
+                padding: 10px;
+                font-size: 0.85rem;
+                min-height: 50px;
+            }
+            
+            .person-name {
+                font-size: 0.9rem;
+            }
+            
+            .person-surname {
+                font-size: 0.8rem;
+            }
+            
+            .person-meta {
+                font-size: 0.75rem;
+            }
+            
+            .tab-btn {
+                padding: 15px;
+                font-size: 1rem;
+                min-height: 50px;
+            }
+            
+            .tab-btn .tab-icon {
+                font-size: 1rem;
+            }
+            
+            .tree-container {
+                min-height: 500px; /* Taller on desktop */
+            }
+        }
+
+        /* Large desktop screens */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1600px;
+            }
+            
+            .sidebar {
+                flex: 0 0 320px; /* Even wider sidebar */
+            }
+            
+            /* Even larger tree nodes for large screens */
+            .tree-node {
+                width: 150px;
+                height: 80px;
+                font-size: 0.85rem;
+                padding: 6px;
+            }
+            
+            .tree-node.grandparent {
+                width: 130px;
+                height: 70px;
+            }
+            
+            .node-name {
+                font-size: 0.95rem;
+            }
+            
+            .node-surname {
+                font-size: 0.8rem;
+            }
+            
+            .details-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+            
+            .tree-container {
+                min-height: 600px;
             }
         }
 
@@ -824,11 +948,12 @@
                 max-height: calc(100vh - 300px);
             }
             
-            /* Adjust tree layout for better visibility with grandparents */
+            /* Mobile tree node sizes */
             .tree-node {
                 width: 85px;
                 height: 48px;
                 padding: 3px;
+                font-size: 0.6rem;
             }
             
             .tree-node.grandparent {
@@ -838,36 +963,36 @@
             }
             
             .node-name {
-                font-size: 0.6rem;
+                font-size: 0.65rem;
             }
             
             .tree-node.grandparent .node-name {
-                font-size: 0.55rem;
+                font-size: 0.6rem;
             }
             
             .node-surname {
-                font-size: 0.5rem;
+                font-size: 0.55rem;
             }
             
             .tree-node.grandparent .node-surname {
-                font-size: 0.45rem;
+                font-size: 0.5rem;
             }
             
             .node-details {
-                font-size: 0.45rem;
+                font-size: 0.5rem;
             }
             
             .tree-node.grandparent .node-details {
-                font-size: 0.4rem;
+                font-size: 0.45rem;
             }
             
             .node-relationship {
-                font-size: 0.4rem;
+                font-size: 0.45rem;
                 padding: 0 1px;
             }
             
             .tree-node.grandparent .node-relationship {
-                font-size: 0.35rem;
+                font-size: 0.4rem;
             }
         }
 
@@ -884,11 +1009,11 @@
             }
             
             .node-name {
-                font-size: 0.55rem;
+                font-size: 0.6rem;
             }
             
             .node-surname {
-                font-size: 0.45rem;
+                font-size: 0.5rem;
             }
         }
 
@@ -997,7 +1122,7 @@
         </div>
 
         <footer>
-            <p>Árvore Genealógica &copy; 2026</p>
+            <p>Árvore Genealógica &copy; 2023</p>
         </footer>
     </div>
 
@@ -1042,25 +1167,28 @@
             loadAllFiles();
             showMessage('A carregar dados...', 'info');
             
-            // Ajustar layout inicial para mobile
-            adjustMobileLayout();
+            // Ajustar layout inicial
+            adjustLayoutForScreen();
         });
         
-        // Ajustar layout para mobile
-        function adjustMobileLayout() {
+        // Ajustar layout para diferentes tamanhos de tela
+        function adjustLayoutForScreen() {
+            const treeContainer = document.getElementById('tree-container');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (!treeContainer || !sidebar) return;
+            
             if (window.innerWidth <= 767) {
-                // Garantir que o container da árvore tenha altura suficiente
-                const treeContainer = document.getElementById('tree-container');
-                if (treeContainer) {
-                    const availableHeight = window.innerHeight - 350;
-                    treeContainer.style.minHeight = Math.max(400, availableHeight) + 'px';
-                }
-                
-                // Ajustar altura do sidebar
-                const sidebar = document.querySelector('.sidebar');
-                if (sidebar) {
-                    sidebar.style.height = '160px';
-                }
+                // Mobile
+                const availableHeight = window.innerHeight - 350;
+                treeContainer.style.minHeight = Math.max(400, availableHeight) + 'px';
+                sidebar.style.height = '160px';
+            } else if (window.innerWidth >= 1200) {
+                // Large desktop
+                treeContainer.style.minHeight = '600px';
+            } else {
+                // Tablet/medium desktop
+                treeContainer.style.minHeight = '500px';
             }
         }
         
@@ -1139,7 +1267,7 @@
             if (detailsTab) detailsTab.addEventListener('click', () => switchTab('details'));
             
             // Ajustar layout ao redimensionar
-            window.addEventListener('resize', adjustMobileLayout);
+            window.addEventListener('resize', adjustLayoutForScreen);
             
             // Melhorar scroll no mobile
             if ('ontouchstart' in window) {
@@ -1171,13 +1299,7 @@
                 
                 // Ajustar altura da árvore quando ativa
                 setTimeout(() => {
-                    if (window.innerWidth <= 767) {
-                        const treeContainer = document.getElementById('tree-container');
-                        if (treeContainer) {
-                            const availableHeight = window.innerHeight - 300;
-                            treeContainer.style.minHeight = Math.max(400, availableHeight) + 'px';
-                        }
-                    }
+                    adjustLayoutForScreen();
                 }, 100);
             } else if (tabName === 'details') {
                 detailsTab.classList.add('active');
@@ -1550,7 +1672,7 @@
             }
         }
         
-        // Gerar árvore genealógica com avós - Versão otimizada para mobile
+        // Gerar árvore genealógica com avós - Versão otimizada para diferentes tamanhos de tela
         function generateFamilyTreeWithGrandparents(personId) {
             if (!treeContainer) return;
             
@@ -1565,14 +1687,38 @@
             // Obter dimensões do container
             const containerWidth = treeContainer.clientWidth;
             const isMobile = window.innerWidth <= 767;
+            const isLargeDesktop = window.innerWidth >= 1200;
+            const isDesktop = window.innerWidth >= 768;
             
-            // Ajustar tamanho dos nós para mobile
-            const regularNodeWidth = isMobile ? 85 : 100;
-            const regularNodeHeight = isMobile ? 48 : 55;
-            const grandparentNodeWidth = isMobile ? 75 : 90;
-            const grandparentNodeHeight = isMobile ? 42 : 50;
-            const horizontalSpacing = isMobile ? 95 : 120;
-            const verticalSpacing = isMobile ? 85 : 100;
+            // Ajustar tamanho dos nós para diferentes tamanhos de tela
+            let regularNodeWidth, regularNodeHeight, grandparentNodeWidth, grandparentNodeHeight;
+            let horizontalSpacing, verticalSpacing;
+            
+            if (isMobile) {
+                // Mobile
+                regularNodeWidth = 85;
+                regularNodeHeight = 48;
+                grandparentNodeWidth = 75;
+                grandparentNodeHeight = 42;
+                horizontalSpacing = 95;
+                verticalSpacing = 85;
+            } else if (isLargeDesktop) {
+                // Large desktop - Increased zoom
+                regularNodeWidth = 150;
+                regularNodeHeight = 80;
+                grandparentNodeWidth = 130;
+                grandparentNodeHeight = 70;
+                horizontalSpacing = 170;
+                verticalSpacing = 130;
+            } else {
+                // Tablet/medium desktop - Increased zoom
+                regularNodeWidth = 140;
+                regularNodeHeight = 75;
+                grandparentNodeWidth = 120;
+                grandparentNodeHeight = 65;
+                horizontalSpacing = 160;
+                verticalSpacing = 120;
+            }
             
             // Coletar pessoas para mostrar
             const allPersons = new Set([personId]);
@@ -1654,11 +1800,11 @@
             
             // Calcular posição inicial para centralizar
             const totalWidthNeeded = maxNodesInRow * horizontalSpacing;
-            const startX = Math.max(15, (containerWidth - totalWidthNeeded) / 2);
+            const startX = Math.max(20, (containerWidth - totalWidthNeeded) / 2);
             
             // Posicionar nós
             generations.forEach((gen, genIndex) => {
-                const y = 15 + genIndex * verticalSpacing;
+                const y = 20 + genIndex * verticalSpacing;
                 const genWidth = gen.persons.length * horizontalSpacing;
                 const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
                 
@@ -1675,10 +1821,10 @@
                     // Criar nó - tamanhos diferentes para avós
                     let node;
                     if (gen.isGrandparent) {
-                        node = createPersonNode(person, x, y, grandparentNodeWidth, grandparentNodeHeight, relationship);
+                        node = createPersonNode(person, x, y, grandparentNodeWidth, grandparentNodeHeight, relationship, isDesktop);
                         node.classList.add('grandparent');
                     } else {
-                        node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship);
+                        node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship, isDesktop);
                     }
                     
                     if (personId === selectedPerson.id) {
@@ -1733,8 +1879,9 @@
             // Ajustar altura do container baseado no conteúdo
             if (generations.length > 0) {
                 const lastGen = generations[generations.length - 1];
-                const lastY = 15 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
-                treeContainer.style.minHeight = Math.max(400, lastY) + 'px';
+                const lastY = 20 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
+                const minHeight = isMobile ? 400 : (isLargeDesktop ? 600 : 500);
+                treeContainer.style.minHeight = Math.max(minHeight, lastY) + 'px';
             }
             
             // Scroll para a pessoa selecionada
@@ -1879,8 +2026,8 @@
             return children;
         }
         
-        // Criar nó da árvore - versão otimizada para mobile
-        function createPersonNode(person, x, y, width = 85, height = 48, relationship = '') {
+        // Criar nó da árvore - versão otimizada para diferentes tamanhos de tela
+        function createPersonNode(person, x, y, width, height, relationship = '', isDesktop = false) {
             const node = document.createElement('div');
             node.className = `tree-node ${person.sexo || 'unknown'}`;
             node.style.left = `${x}px`;
@@ -1892,20 +2039,32 @@
             const nameDiv = document.createElement('div');
             nameDiv.className = 'node-name';
             const fullName = person.nome || 'Nome desconhecido';
-            if (fullName.length > 8) {
-                nameDiv.textContent = fullName.substring(0, 8) + '...';
+            
+            // Ajustar corte de texto baseado no tamanho da tela
+            const nameMaxLength = isDesktop ? 12 : 8;
+            if (fullName.length > nameMaxLength) {
+                nameDiv.textContent = fullName.substring(0, nameMaxLength) + '...';
             } else {
                 nameDiv.textContent = fullName;
             }
             
+            // Ajustar tamanho da fonte baseado no tamanho da tela
+            nameDiv.style.fontSize = isDesktop ? '0.9rem' : '0.65rem';
+            
             const surnameDiv = document.createElement('div');
             surnameDiv.className = 'node-surname';
             const fullSurname = person.sobrenome || '';
-            if (fullSurname.length > 10) {
-                surnameDiv.textContent = fullSurname.substring(0, 10) + '...';
+            
+            // Ajustar corte de texto baseado no tamanho da tela
+            const surnameMaxLength = isDesktop ? 14 : 10;
+            if (fullSurname.length > surnameMaxLength) {
+                surnameDiv.textContent = fullSurname.substring(0, surnameMaxLength) + '...';
             } else {
                 surnameDiv.textContent = fullSurname;
             }
+            
+            // Ajustar tamanho da fonte baseado no tamanho da tela
+            surnameDiv.style.fontSize = isDesktop ? '0.75rem' : '0.55rem';
             
             const detailsDiv = document.createElement('div');
             detailsDiv.className = 'node-details';
@@ -1917,10 +2076,12 @@
             if (deathYear && deathYear !== '?') detailsText += `-${deathYear}`;
             
             detailsDiv.textContent = detailsText;
+            detailsDiv.style.fontSize = isDesktop ? '0.7rem' : '0.5rem';
             
             const relationshipDiv = document.createElement('div');
             relationshipDiv.className = 'node-relationship';
             relationshipDiv.textContent = relationship;
+            relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : '0.45rem';
             
             node.appendChild(nameDiv);
             node.appendChild(surnameDiv);
@@ -1935,7 +2096,7 @@
             return node;
         }
         
-        // Mostrar detalhes da pessoa - versão otimizada para mobile
+        // Mostrar detalhes da pessoa
         function showPersonDetails(personId) {
             const person = personsMap[personId];
             if (!person || !detailsContent) return;
