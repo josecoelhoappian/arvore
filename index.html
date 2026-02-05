@@ -927,7 +927,7 @@
             }
         }
 
-        /* MOBILE-SPECIFIC IMPROVEMENTS - FIXED FOR GRANDPARENTS AND CHILDREN */
+        /* MOBILE-SPECIFIC IMPROVEMENTS - FIXED FOR CHILDREN VISIBILITY */
         @media (max-width: 767px) {
             .container {
                 padding: 6px;
@@ -939,8 +939,8 @@
             
             /* SIGNIFICANTLY INCREASED TREE CONTAINER HEIGHT FOR MOBILE */
             .tree-container {
-                min-height: 550px !important; /* Increased from 400px */
-                max-height: calc(100vh - 250px) !important; /* Allow more space */
+                min-height: 650px !important; /* Increased from 550px */
+                max-height: none !important; /* Remove max-height restriction */
             }
             
             /* Make details section scrollable */
@@ -950,26 +950,26 @@
             
             /* LARGER TREE NODES FOR BETTER READABILITY */
             .tree-node {
-                width: 95px !important; /* Increased from 85px */
-                height: 55px !important; /* Increased from 48px */
+                width: 100px !important; /* Increased from 95px */
+                height: 60px !important; /* Increased from 55px */
                 padding: 4px !important;
                 font-size: 0.65rem !important;
             }
             
             .tree-node.grandparent {
-                width: 85px !important; /* Increased from 75px */
-                height: 50px !important; /* Increased from 42px */
+                width: 90px !important; /* Increased from 85px */
+                height: 55px !important; /* Increased from 50px */
                 font-size: 0.6rem !important;
                 padding: 3px !important;
             }
             
             .node-name {
-                font-size: 0.7rem !important; /* Larger font */
+                font-size: 0.75rem !important; /* Larger font */
                 margin-bottom: 1px;
             }
             
             .tree-node.grandparent .node-name {
-                font-size: 0.65rem !important;
+                font-size: 0.7rem !important;
             }
             
             /* REDUCE SURNAME VISIBILITY TO MAKE ROOM FOR RELATIONSHIP */
@@ -979,11 +979,11 @@
                 opacity: 0.8;
                 max-height: 10px;
                 overflow: hidden;
+                display: none; /* Hide surname on mobile to save space */
             }
             
             .tree-node.grandparent .node-surname {
-                font-size: 0.45rem !important;
-                display: none; /* Hide surname for grandparents to save space */
+                display: none; /* Hide surname for grandparents */
             }
             
             .node-details {
@@ -995,20 +995,27 @@
                 font-size: 0.45rem !important;
             }
             
-            /* IMPROVED RELATIONSHIP TEXT - MUCH MORE VISIBLE */
+            /* IMPROVED RELATIONSHIP TEXT - ADJUSTED FOR "SELECIONADO" */
             .node-relationship {
-                font-size: 0.6rem !important; /* Larger font */
+                font-size: 0.55rem !important; /* Adjusted for better fit */
                 font-weight: bold;
-                background-color: rgba(52, 152, 219, 0.25) !important; /* More contrast */
-                color: #2980b9 !important; /* Darker blue for better contrast */
-                padding: 2px 4px !important;
-                border-radius: 4px;
+                background-color: rgba(52, 152, 219, 0.25) !important;
+                color: #2980b9 !important;
+                padding: 1px 3px !important; /* Reduced padding */
+                border-radius: 3px;
                 white-space: normal !important;
-                max-height: 14px;
+                max-height: 12px;
                 overflow: hidden;
-                line-height: 1.2;
+                line-height: 1.1;
                 margin-top: 2px;
                 border: 1px solid rgba(52, 152, 219, 0.3);
+                text-align: center;
+            }
+            
+            /* Special smaller font for "Selecionado" */
+            .node-relationship:contains("Selecionado") {
+                font-size: 0.5rem !important; /* Even smaller for "Selecionado" */
+                padding: 0 2px !important;
             }
             
             .tree-node.selected .node-relationship {
@@ -1020,8 +1027,8 @@
             
             /* Special styling for grandparents relationship */
             .tree-node.grandparent .node-relationship {
-                font-size: 0.55rem !important;
-                background-color: rgba(155, 89, 182, 0.25) !important; /* Different color for grandparents */
+                font-size: 0.5rem !important;
+                background-color: rgba(155, 89, 182, 0.25) !important;
                 color: #8e44ad !important;
                 font-weight: bold;
             }
@@ -1035,42 +1042,50 @@
                 padding: 3px !important;
             }
             
-            /* Increase vertical spacing to prevent overlap */
+            /* Increase vertical spacing to prevent overlap - CRITICAL FOR CHILDREN */
             .tree-line {
-                background-color: #5d6d7e; /* Darker lines for better visibility */
+                background-color: #5d6d7e;
             }
             
             /* Make the tree container background lighter for better contrast */
             .tree-container {
                 background-color: #f5f7fa;
             }
+            
+            /* Additional spacing for children generation */
+            .tree-node:nth-last-child(1),
+            .tree-node:nth-last-child(2),
+            .tree-node:nth-last-child(3) {
+                z-index: 2; /* Ensure children are visible */
+            }
         }
 
         /* Very small screens - Additional optimization */
         @media (max-width: 320px) {
             .tree-node {
-                width: 85px !important;
-                height: 50px !important;
+                width: 90px !important;
+                height: 55px !important;
             }
             
             .tree-node.grandparent {
-                width: 75px !important;
-                height: 45px !important;
+                width: 80px !important;
+                height: 50px !important;
             }
             
             .node-name {
-                font-size: 0.65rem !important;
+                font-size: 0.7rem !important;
             }
             
-            .node-surname {
-                font-size: 0.45rem !important;
-            }
-            
-            /* Relationship on very small screens */
+            /* Relationship on very small screens - even smaller for "Selecionado" */
             .node-relationship {
-                font-size: 0.55rem !important;
-                padding: 1px 3px !important;
-                max-height: 12px;
+                font-size: 0.5rem !important;
+                padding: 0 2px !important;
+                max-height: 11px;
+            }
+            
+            .node-relationship:contains("Selecionado") {
+                font-size: 0.45rem !important;
+                padding: 0 1px !important;
             }
         }
 
@@ -1266,16 +1281,16 @@
             
             if (window.innerWidth <= 767) {
                 // Mobile - SIGNIFICANTLY INCREASED HEIGHT
-                const availableHeight = window.innerHeight - 250; // Reduced from 350
-                treeContainer.style.minHeight = Math.max(550, availableHeight) + 'px'; // Increased from 400
-                treeContainer.style.maxHeight = 'calc(100vh - 250px)'; // Ensure enough space
+                const availableHeight = window.innerHeight - 200; // Reduced further
+                treeContainer.style.minHeight = Math.max(650, availableHeight) + 'px'; // Increased from 550
+                treeContainer.style.maxHeight = 'none'; // Remove restriction
                 sidebar.style.height = '160px';
                 
                 // Also adjust the main content wrapper height
                 const mainContentWrapper = document.querySelector('.main-content-wrapper');
                 if (mainContentWrapper) {
                     mainContentWrapper.style.gap = '8px';
-                    mainContentWrapper.style.minHeight = 'calc(100vh - 200px)';
+                    mainContentWrapper.style.minHeight = 'calc(100vh - 180px)';
                 }
             } else if (window.innerWidth >= 1200) {
                 // Large desktop
@@ -1888,7 +1903,7 @@
             }
         }
         
-        // Gerar árvore genealógica com avós - UPDATED FOR MOBILE VISIBILITY
+        // Gerar árvore genealógica com avós - FIXED CHILDREN VISIBILITY
         function generateFamilyTreeWithGrandparents(personId) {
             if (!treeContainer) return;
             
@@ -1911,13 +1926,13 @@
             let horizontalSpacing, verticalSpacing;
             
             if (isMobile) {
-                // Mobile - INCREASED SIZES
-                regularNodeWidth = 95; // Increased from 85
-                regularNodeHeight = 55; // Increased from 48
-                grandparentNodeWidth = 85; // Increased from 75
-                grandparentNodeHeight = 50; // Increased from 42
-                horizontalSpacing = 105; // Increased from 95
-                verticalSpacing = 100; // INCREASED FROM 85 - MORE VERTICAL SPACE FOR CHILDREN
+                // Mobile - LARGER SIZES FOR BETTER VISIBILITY
+                regularNodeWidth = 100;
+                regularNodeHeight = 60;
+                grandparentNodeWidth = 90;
+                grandparentNodeHeight = 55;
+                horizontalSpacing = 110; // More horizontal space
+                verticalSpacing = 120; // SIGNIFICANTLY INCREASED VERTICAL SPACE FOR CHILDREN
             } else if (isLargeDesktop) {
                 // Large desktop
                 regularNodeWidth = 150;
@@ -1966,7 +1981,7 @@
                 }
             }
             
-            // Adicionar filhos - FIXED TO ENSURE CHILDREN ARE ALWAYS SHOWN
+            // Adicionar filhos - CRITICAL FIX
             const children = findChildren(personId);
             children.forEach(childId => {
                 allPersons.add(childId);
@@ -2001,7 +2016,7 @@
             const mainGeneration = [personId];
             spouses.forEach(spouseId => mainGeneration.push(spouseId));
             
-            // Geração 1: Filhos - ALWAYS ADD THIS GENERATION EVEN IF EMPTY FOR LAYOUT
+            // Geração 1: Filhos - ALWAYS CREATE THIS GENERATION
             const childrenGeneration = children;
             
             // Adicionar gerações
@@ -2013,7 +2028,7 @@
             }
             generations.push({depth: 0, persons: mainGeneration});
             
-            // ALWAYS ADD CHILDREN GENERATION - FIX FOR MOBILE VISIBILITY
+            // CRITICAL FIX: ALWAYS ADD CHILDREN GENERATION, EVEN IF EMPTY
             generations.push({depth: 1, persons: childrenGeneration});
             
             // Encontrar geração com mais pessoas
@@ -2028,7 +2043,7 @@
             
             // Posicionar nós
             generations.forEach((gen, genIndex) => {
-                const y = 20 + genIndex * verticalSpacing;
+                const y = 30 + genIndex * verticalSpacing; // Increased starting Y
                 const genWidth = gen.persons.length * horizontalSpacing;
                 const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
                 
@@ -2039,7 +2054,7 @@
                     const x = startGenX + index * horizontalSpacing;
                     positions.set(personId, { x, y });
                     
-                    // Determinar relação com a pessoa selecionada
+                    // Determinar relação com a pessoa selecionada - UPDATED TO USE "SELECIONADO"
                     const relationship = getRelationship(personId, personId === personId ? 'self' : personId);
                     
                     // Criar nó - tamanhos diferentes para avós
@@ -2103,16 +2118,13 @@
             // Ajustar altura do container baseado no conteúdo - INCREASED FOR MOBILE
             if (generations.length > 0) {
                 const lastGen = generations[generations.length - 1];
-                const lastY = 20 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
-                const minHeight = isMobile ? 550 : (isLargeDesktop ? 600 : 500);
+                const lastY = 30 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 50;
+                const minHeight = isMobile ? 650 : (isLargeDesktop ? 600 : 500);
                 treeContainer.style.minHeight = Math.max(minHeight, lastY) + 'px';
                 
                 // Ensure tree container has enough space on mobile
-                if (isMobile) {
-                    treeContainer.style.maxHeight = 'none';
-                    if (lastY > 550) {
-                        treeContainer.style.minHeight = lastY + 50 + 'px';
-                    }
+                if (isMobile && lastY > 650) {
+                    treeContainer.style.minHeight = lastY + 50 + 'px';
                 }
             }
             
@@ -2120,20 +2132,21 @@
             setTimeout(() => {
                 const selectedNode = treeContainer.querySelector('.tree-node.selected');
                 if (selectedNode) {
-                    const nodeRect = selectedNode.getBoundingClientRect();
-                    const containerRect = treeContainer.getBoundingClientRect();
+                    selectedNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
                     
-                    // Se o nó selecionado não estiver visível, scroll para ele
-                    if (nodeRect.top < containerRect.top || nodeRect.bottom > containerRect.bottom) {
-                        selectedNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                    // Also ensure children are visible by scrolling a bit more
+                    if (isMobile && children.length > 0) {
+                        setTimeout(() => {
+                            treeContainer.scrollBy(0, 50);
+                        }, 300);
                     }
                 }
             }, 100);
         }
         
-        // Determinar relação com a pessoa selecionada - versão completa com avós
+        // Determinar relação com a pessoa selecionada - UPDATED TO USE "SELECIONADO"
         function getRelationship(personId, relativeToId) {
-            if (personId === relativeToId) return 'Eu';
+            if (personId === selectedPerson.id) return 'Selecionado'; // CHANGED FROM "Eu" TO "Selecionado"
             
             const relativeTo = selectedPerson.id;
             
@@ -2258,7 +2271,7 @@
             return children;
         }
         
-        // Criar nó da árvore - UPDATED FOR MOBILE VISIBILITY
+        // Criar nó da árvore - UPDATED FOR "SELECIONADO"
         function createPersonNode(person, x, y, width, height, relationship = '', isDesktop = false, isMobile = false) {
             const node = document.createElement('div');
             node.className = `tree-node ${person.sexo || 'unknown'}`;
@@ -2281,25 +2294,21 @@
             }
             
             // Ajustar tamanho da fonte baseado no tamanho da tela
-            nameDiv.style.fontSize = isDesktop ? '0.9rem' : (isMobile ? '0.7rem' : '0.65rem');
+            nameDiv.style.fontSize = isDesktop ? '0.9rem' : (isMobile ? '0.75rem' : '0.65rem');
             
+            // Hide surname on mobile to save space
             const surnameDiv = document.createElement('div');
             surnameDiv.className = 'node-surname';
-            const fullSurname = person.sobrenome || '';
-            
-            // Ajustar corte de texto baseado no tamanho da tela
-            const surnameMaxLength = isDesktop ? 14 : (isMobile ? 8 : 10);
-            if (fullSurname.length > surnameMaxLength) {
-                surnameDiv.textContent = fullSurname.substring(0, surnameMaxLength) + '...';
+            if (!isMobile) {
+                const fullSurname = person.sobrenome || '';
+                const surnameMaxLength = isDesktop ? 14 : 10;
+                if (fullSurname.length > surnameMaxLength) {
+                    surnameDiv.textContent = fullSurname.substring(0, surnameMaxLength) + '...';
+                } else {
+                    surnameDiv.textContent = fullSurname;
+                }
+                surnameDiv.style.fontSize = isDesktop ? '0.75rem' : '0.55rem';
             } else {
-                surnameDiv.textContent = fullSurname;
-            }
-            
-            // Ajustar tamanho da fonte baseado no tamanho da tela
-            surnameDiv.style.fontSize = isDesktop ? '0.75rem' : (isMobile ? '0.5rem' : '0.55rem');
-            
-            // Hide surname for grandparents on mobile to save space
-            if (isMobile && node.classList.contains('grandparent')) {
                 surnameDiv.style.display = 'none';
             }
             
@@ -2317,18 +2326,31 @@
             
             const relationshipDiv = document.createElement('div');
             relationshipDiv.className = 'node-relationship';
-            relationshipDiv.textContent = relationship;
-            relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : (isMobile ? '0.6rem' : '0.55rem');
+            
+            // Special handling for "Selecionado" - use smaller font if needed
+            if (relationship === 'Selecionado') {
+                if (isMobile) {
+                    relationshipDiv.textContent = 'Selec.'; // Shortened version for mobile
+                    relationshipDiv.style.fontSize = '0.5rem !important';
+                } else {
+                    relationshipDiv.textContent = 'Selecionado';
+                    relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : '0.55rem';
+                }
+            } else {
+                relationshipDiv.textContent = relationship;
+                relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : (isMobile ? '0.55rem' : '0.55rem');
+            }
             
             // Special styling for mobile
             if (isMobile) {
                 relationshipDiv.style.fontWeight = 'bold';
                 relationshipDiv.style.backgroundColor = 'rgba(52, 152, 219, 0.25)';
                 relationshipDiv.style.color = '#2980b9';
-                relationshipDiv.style.padding = '2px 4px';
-                relationshipDiv.style.borderRadius = '4px';
+                relationshipDiv.style.padding = '1px 3px';
+                relationshipDiv.style.borderRadius = '3px';
                 relationshipDiv.style.border = '1px solid rgba(52, 152, 219, 0.3)';
                 relationshipDiv.style.marginTop = '2px';
+                relationshipDiv.style.textAlign = 'center';
                 
                 // Different color for grandparents
                 if (node.classList.contains('grandparent')) {
@@ -2336,10 +2358,27 @@
                     relationshipDiv.style.color = '#8e44ad';
                     relationshipDiv.style.borderColor = 'rgba(155, 89, 182, 0.3)';
                 }
+                
+                // Special styling for "Selecionado" on mobile
+                if (relationship === 'Selecionado') {
+                    relationshipDiv.style.backgroundColor = 'rgba(46, 204, 113, 0.3)';
+                    relationshipDiv.style.color = '#27ae60';
+                    relationshipDiv.style.borderColor = 'rgba(46, 204, 113, 0.4)';
+                    relationshipDiv.style.fontWeight = 'bold';
+                }
+            } else {
+                // Desktop styling
+                if (relationship === 'Selecionado') {
+                    relationshipDiv.style.backgroundColor = 'rgba(46, 204, 113, 0.2)';
+                    relationshipDiv.style.color = '#27ae60';
+                    relationshipDiv.style.fontWeight = 'bold';
+                }
             }
             
             node.appendChild(nameDiv);
-            node.appendChild(surnameDiv);
+            if (!isMobile || !node.classList.contains('grandparent')) {
+                node.appendChild(surnameDiv);
+            }
             node.appendChild(detailsDiv);
             node.appendChild(relationshipDiv);
             
