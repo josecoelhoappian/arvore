@@ -1037,8 +1037,188 @@
             }
         }
 
+        /* VERY IMPORTANT: LANDSCAPE ORIENTATION FOR MOBILE */
+        @media (max-width: 767px) and (orientation: landscape) {
+            .container {
+                padding: 6px;
+                height: 100vh;
+                overflow: hidden;
+            }
+            
+            header {
+                padding: 8px 10px;
+                margin-bottom: 6px;
+                flex-shrink: 0;
+            }
+            
+            h1 {
+                font-size: 1rem;
+                margin-bottom: 2px;
+            }
+            
+            .subtitle {
+                font-size: 0.6rem;
+            }
+            
+            .search-section {
+                margin-bottom: 6px;
+                padding: 8px;
+                flex-shrink: 0;
+            }
+            
+            .search-box input {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+            
+            .search-button {
+                padding: 8px;
+                width: 40px;
+            }
+            
+            .main-content-wrapper {
+                flex-direction: row !important; /* FORCE ROW LAYOUT IN LANDSCAPE */
+                gap: 8px;
+                flex: 1;
+                min-height: 0;
+                height: calc(100vh - 150px); /* Ajustar altura para landscape */
+            }
+            
+            .sidebar {
+                flex: 0 0 200px !important; /* Largura fixa para landscape */
+                height: 100% !important; /* Altura total */
+                max-height: none !important;
+                padding: 8px;
+                overflow: hidden;
+            }
+            
+            .person-list {
+                height: calc(100% - 40px); /* Ajustar altura da lista */
+                margin-top: 0;
+            }
+            
+            .main-content-area {
+                flex: 1;
+                height: 100%;
+                min-height: 0;
+                overflow: hidden;
+            }
+            
+            .content-tabs {
+                min-height: 40px;
+                flex-shrink: 0;
+            }
+            
+            .tab-btn {
+                padding: 8px 4px;
+                font-size: 0.7rem;
+                min-height: 40px;
+            }
+            
+            .tab-btn .tab-icon {
+                font-size: 0.7rem;
+            }
+            
+            .tab-pane {
+                padding: 8px;
+                height: calc(100% - 40px); /* Ajustar altura do conteúdo */
+            }
+            
+            /* TREE CONTAINER FOR LANDSCAPE */
+            .tree-container {
+                min-height: 300px !important;
+                max-height: none !important;
+                height: 100% !important;
+                padding: 15px 10px !important;
+                margin-top: 0;
+            }
+            
+            /* Adjust tree nodes for landscape */
+            .tree-node {
+                width: 110px !important; /* Larger for landscape */
+                height: 65px !important;
+                padding: 4px !important;
+                font-size: 0.7rem !important;
+            }
+            
+            .node-name {
+                font-size: 0.75rem !important;
+            }
+            
+            .node-details {
+                font-size: 0.55rem !important;
+            }
+            
+            .node-relationship {
+                font-size: 0.65rem !important;
+                padding: 1px 3px !important;
+            }
+            
+            /* DETAILS SECTION FOR LANDSCAPE */
+            .details-panel {
+                height: 100%;
+            }
+            
+            .details-content-wrapper {
+                max-height: none !important;
+                height: calc(100% - 60px);
+                margin-top: 0;
+            }
+            
+            .details-grid {
+                font-size: 0.7rem;
+                gap: 8px;
+            }
+            
+            .detail-label {
+                font-size: 0.7rem;
+            }
+            
+            .detail-value {
+                font-size: 0.65rem;
+                padding-left: 16px;
+            }
+            
+            .relationship-item {
+                padding: 4px;
+                min-height: 36px;
+                font-size: 0.7rem;
+            }
+            
+            footer {
+                margin-top: 6px;
+                padding: 6px;
+                font-size: 0.6rem;
+                flex-shrink: 0;
+            }
+            
+            /* Person items in list for landscape */
+            .person-item {
+                padding: 6px;
+                min-height: 40px;
+                font-size: 0.7rem;
+                margin-bottom: 3px;
+            }
+            
+            .person-name {
+                font-size: 0.75rem;
+            }
+            
+            .person-surname {
+                font-size: 0.65rem;
+            }
+            
+            .person-meta {
+                font-size: 0.6rem;
+            }
+            
+            .person-id {
+                font-size: 0.55rem;
+            }
+        }
+
         /* Very small screens - Additional optimization */
-        @media (max-width: 320px) {
+        @media (max-width: 320px) and (orientation: portrait) {
             .tree-node {
                 width: 85px !important;
                 height: 50px !important;
@@ -1057,6 +1237,22 @@
                 font-size: 0.55rem !important;
                 padding: 1px 3px !important;
                 max-height: 12px;
+            }
+        }
+
+        /* Landscape for very small screens */
+        @media (max-width: 320px) and (orientation: landscape) {
+            .sidebar {
+                flex: 0 0 180px !important;
+            }
+            
+            .tree-node {
+                width: 100px !important;
+                height: 60px !important;
+            }
+            
+            .node-name {
+                font-size: 0.7rem !important;
             }
         }
 
@@ -1112,7 +1308,7 @@
         .highlight {
             background-color: #ffeaa7;
             padding: 0 2px;
-            border-radius: 3px;
+            bordergit radius: 3px;
             font-weight: bold;
         }
         
@@ -1239,6 +1435,9 @@
         let searchResults;
         let treeTab, detailsTab, treePane, detailsPane;
         
+        // Variável para rastrear orientação
+        let isLandscape = false;
+        
         // Função para remover acentos
         function removeAccents(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -1257,26 +1456,70 @@
             loadAllFiles();
             showMessage('A carregar dados...', 'info');
             
+            // Verificar orientação inicial
+            checkOrientation();
+            
             // Ajustar layout inicial
             adjustLayoutForScreen();
         });
+        
+        // Verificar orientação do dispositivo
+        function checkOrientation() {
+            isLandscape = window.innerWidth > window.innerHeight;
+            
+            // Adicionar listener para mudanças de orientação
+            window.addEventListener('resize', function() {
+                const newIsLandscape = window.innerWidth > window.innerHeight;
+                if (newIsLandscape !== isLandscape) {
+                    isLandscape = newIsLandscape;
+                    adjustLayoutForScreen();
+                    
+                    // Se houver uma pessoa selecionada, regenerar a árvore
+                    if (selectedPerson) {
+                        selectPerson(selectedPerson.id);
+                    }
+                }
+            });
+        }
         
         // Ajustar layout para diferentes tamanhos de tela
         function adjustLayoutForScreen() {
             const treeContainer = document.getElementById('tree-container');
             const sidebar = document.querySelector('.sidebar');
+            const mainContentWrapper = document.querySelector('.main-content-wrapper');
             
             if (!treeContainer || !sidebar) return;
             
-            if (window.innerWidth <= 767) {
-                // Mobile
+            // Verificar se é landscape no mobile
+            const isMobileLandscape = window.innerWidth <= 767 && window.innerWidth > window.innerHeight;
+            
+            if (isMobileLandscape) {
+                // Mobile landscape - layout horizontal
+                treeContainer.style.minHeight = '300px';
+                treeContainer.style.maxHeight = 'none';
+                treeContainer.style.height = '100%';
+                sidebar.style.height = '100%';
+                sidebar.style.flex = '0 0 200px';
+                
+                // Ajustar altura total
+                const containerHeight = window.innerHeight;
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const searchHeight = document.querySelector('.search-section').offsetHeight;
+                const footerHeight = document.querySelector('footer').offsetHeight;
+                
+                const availableHeight = containerHeight - headerHeight - searchHeight - footerHeight - 30;
+                if (mainContentWrapper) {
+                    mainContentWrapper.style.height = Math.max(300, availableHeight) + 'px';
+                }
+                
+            } else if (window.innerWidth <= 767) {
+                // Mobile portrait
                 const availableHeight = window.innerHeight - 250;
                 treeContainer.style.minHeight = Math.max(400, availableHeight) + 'px';
                 treeContainer.style.maxHeight = 'calc(100vh - 250px)';
                 sidebar.style.height = '160px';
                 
                 // Also adjust the main content wrapper height
-                const mainContentWrapper = document.querySelector('.main-content-wrapper');
                 if (mainContentWrapper) {
                     mainContentWrapper.style.gap = '8px';
                     mainContentWrapper.style.minHeight = 'calc(100vh - 200px)';
@@ -1371,7 +1614,10 @@
             if (detailsTab) detailsTab.addEventListener('click', () => switchTab('details'));
             
             // Ajustar layout ao redimensionar
-            window.addEventListener('resize', adjustLayoutForScreen);
+            window.addEventListener('resize', function() {
+                checkOrientation();
+                adjustLayoutForScreen();
+            });
             
             // Melhorar scroll no mobile
             if ('ontouchstart' in window) {
@@ -1897,9 +2143,12 @@
                 }
             }
             
-            // Gerar árvore
-            if (window.innerWidth <= 767) {
-                // Mobile: mostrar apenas pais e filhos
+            // Gerar árvore baseado na orientação
+            if (window.innerWidth <= 767 && isLandscape) {
+                // Mobile landscape: layout especial para landscape
+                generateFamilyTreeMobileLandscape(personId);
+            } else if (window.innerWidth <= 767) {
+                // Mobile portrait: mostrar apenas pais e filhos
                 generateFamilyTreeMobile(personId);
             } else {
                 // Desktop: mostrar com avós
@@ -1912,16 +2161,14 @@
             // Switch to tree tab by default when selecting a person
             switchTab('tree');
             
-            // Scroll para o item selecionado na lista em mobile
-            if (window.innerWidth <= 767) {
-                const activeItem = document.querySelector(`.person-item[data-id="${personId}"]`);
-                if (activeItem && personList) {
-                    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
+            // Scroll para o item selecionado na lista
+            const activeItem = document.querySelector(`.person-item[data-id="${personId}"]`);
+            if (activeItem && personList) {
+                activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
         
-        // Gerar árvore genealógica para mobile (apenas pais e filhos)
+        // Gerar árvore genealógica para mobile portrait (apenas pais e filhos)
         function generateFamilyTreeMobile(personId) {
             if (!treeContainer) return;
             
@@ -1994,9 +2241,12 @@
             const totalWidthNeeded = maxNodesInRow * horizontalSpacing;
             const startX = Math.max(20, (containerWidth - totalWidthNeeded) / 2);
             
+            // POSIÇÃO Y COMEÇA MAIS ALTO PARA PORTRAIT
+            const startY = 20;
+            
             // Posicionar nós
             generations.forEach((gen, genIndex) => {
-                const y = 20 + genIndex * verticalSpacing;
+                const y = startY + genIndex * verticalSpacing;
                 const genWidth = gen.persons.length * horizontalSpacing;
                 const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
                 
@@ -2011,7 +2261,7 @@
                     const relationship = getRelationshipMobile(personId, personId === personId ? 'self' : personId);
                     
                     // Criar nó
-                    const node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship, false, isMobile);
+                    const node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship, false, true);
                     
                     if (personId === selectedPerson.id) {
                         node.classList.add('selected');
@@ -2068,7 +2318,7 @@
             // Ajustar altura do container
             if (generations.length > 0) {
                 const lastGen = generations[generations.length - 1];
-                const lastY = 20 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
+                const lastY = startY + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
                 const minHeight = 400;
                 treeContainer.style.minHeight = Math.max(minHeight, lastY) + 'px';
                 
@@ -2077,6 +2327,181 @@
                     if (lastY > 400) {
                         treeContainer.style.minHeight = lastY + 50 + 'px';
                     }
+                }
+            }
+            
+            // Scroll para a pessoa selecionada
+            setTimeout(() => {
+                const selectedNode = treeContainer.querySelector('.tree-node.selected');
+                if (selectedNode) {
+                    selectedNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                }
+            }, 100);
+        }
+        
+        // Gerar árvore genealógica para mobile landscape
+        function generateFamilyTreeMobileLandscape(personId) {
+            if (!treeContainer) return;
+            
+            treeContainer.innerHTML = '';
+            
+            const mainPerson = personsMap[personId];
+            if (!mainPerson) {
+                treeContainer.innerHTML = '<div class="empty-message"><i class="fas fa-user-times"></i><div>Pessoa não encontrada</div></div>';
+                return;
+            }
+            
+            // Obter dimensões do container (landscape tem mais largura)
+            const containerWidth = treeContainer.clientWidth;
+            const containerHeight = treeContainer.clientHeight;
+            const isLandscapeMode = true;
+            
+            // Ajustar tamanho dos nós para landscape (maiores porque temos mais espaço)
+            let regularNodeWidth = 110;
+            let regularNodeHeight = 65;
+            let horizontalSpacing = 130;
+            let verticalSpacing = 90; // Menos espaçamento vertical para caber melhor
+            
+            // Coletar pessoas para mostrar
+            const allPersons = new Set([personId]);
+            const positions = new Map();
+            
+            // Adicionar pais
+            const parents = parentsMap[personId];
+            
+            // Adicionar filhos
+            const children = findChildren(personId);
+            children.forEach(childId => {
+                allPersons.add(childId);
+            });
+            
+            // Adicionar cônjuge(s)
+            const spouses = findSpouses(personId);
+            spouses.forEach(spouseId => allPersons.add(spouseId));
+            
+            // Organizar por gerações
+            const generations = [];
+            
+            // Geração -1: Pais (se existirem)
+            const parentGeneration = [];
+            if (parents) {
+                if (parents.father) parentGeneration.push(parents.father);
+                if (parents.mother) parentGeneration.push(parents.mother);
+            }
+            
+            // Geração 0: Pessoa principal e cônjuges
+            const mainGeneration = [personId];
+            spouses.forEach(spouseId => mainGeneration.push(spouseId));
+            
+            // Geração 1: Filhos
+            const childrenGeneration = children;
+            
+            // Adicionar gerações
+            if (parentGeneration.length > 0) {
+                generations.push({depth: -1, persons: parentGeneration});
+            }
+            generations.push({depth: 0, persons: mainGeneration});
+            generations.push({depth: 1, persons: childrenGeneration});
+            
+            // Encontrar geração com mais pessoas
+            let maxNodesInRow = 0;
+            generations.forEach(gen => {
+                if (gen.persons.length > maxNodesInRow) maxNodesInRow = gen.persons.length;
+            });
+            
+            // Calcular posição inicial para centralizar
+            const totalWidthNeeded = maxNodesInRow * horizontalSpacing;
+            const startX = Math.max(20, (containerWidth - totalWidthNeeded) / 2);
+            
+            // POSIÇÃO Y COMEÇA MAIS BAIXO PARA LANDSCAPE (mais espaço no topo)
+            const startY = 30;
+            
+            // Verificar se há espaço vertical suficiente
+            const neededHeight = startY + (generations.length * verticalSpacing) + regularNodeHeight + 40;
+            if (neededHeight > containerHeight && generations.length > 2) {
+                // Ajustar espaçamento vertical se necessário
+                verticalSpacing = Math.max(70, (containerHeight - startY - regularNodeHeight - 40) / generations.length);
+            }
+            
+            // Posicionar nós
+            generations.forEach((gen, genIndex) => {
+                const y = startY + genIndex * verticalSpacing;
+                const genWidth = gen.persons.length * horizontalSpacing;
+                const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
+                
+                gen.persons.forEach((personId, index) => {
+                    const person = personsMap[personId];
+                    if (!person) return;
+                    
+                    const x = startGenX + index * horizontalSpacing;
+                    positions.set(personId, { x, y });
+                    
+                    // Determinar relação com a pessoa selecionada
+                    const relationship = getRelationshipMobile(personId, personId === personId ? 'self' : personId);
+                    
+                    // Criar nó
+                    const node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship, false, isLandscapeMode);
+                    
+                    if (personId === selectedPerson.id) {
+                        node.classList.add('selected');
+                    }
+                    
+                    // Adicionar destaque se for a pessoa pesquisada
+                    if (lastSearchResult && lastSearchResult.id === personId) {
+                        node.classList.add('search-highlight');
+                    }
+                    
+                    treeContainer.appendChild(node);
+                });
+            });
+            
+            // Desenhar conexões entre gerações
+            for (let i = 0; i < generations.length - 1; i++) {
+                const currentGen = generations[i];
+                const nextGen = generations[i + 1];
+                
+                currentGen.persons.forEach(parentId => {
+                    const parent = personsMap[parentId];
+                    if (!parent) return;
+                    
+                    const parentPos = positions.get(parentId);
+                    if (!parentPos) return;
+                    
+                    // Encontrar filhos desta pessoa na próxima geração
+                    const childrenIds = findChildren(parentId);
+                    
+                    childrenIds.forEach(childId => {
+                        if (nextGen.persons.includes(childId)) {
+                            const childPos = positions.get(childId);
+                            if (childPos) {
+                                drawConnection(parentPos, childPos, regularNodeWidth, regularNodeHeight);
+                            }
+                        }
+                    });
+                });
+            }
+            
+            // Desenhar conexões entre cônjuges
+            mainGeneration.forEach(personId1 => {
+                mainGeneration.forEach(personId2 => {
+                    if (personId1 !== personId2 && areSpouses(personId1, personId2)) {
+                        const pos1 = positions.get(personId1);
+                        const pos2 = positions.get(personId2);
+                        if (pos1 && pos2) {
+                            drawSpouseConnection(pos1, pos2, regularNodeWidth);
+                        }
+                    }
+                });
+            });
+            
+            // Ajustar altura do container se necessário
+            if (generations.length > 0) {
+                const lastGen = generations[generations.length - 1];
+                const lastY = startY + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
+                
+                // Se precisar de mais altura, ajustar
+                if (lastY > containerHeight) {
+                    treeContainer.style.minHeight = lastY + 'px';
                 }
             }
             
@@ -2131,7 +2556,6 @@
             
             // Obter dimensões reais do container (considerando padding)
             const containerWidth = treeContainer.clientWidth;
-            const containerHeight = treeContainer.clientHeight;
             const isDesktop = window.innerWidth >= 768;
             const isLargeDesktop = window.innerWidth >= 1200;
             
