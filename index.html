@@ -291,6 +291,12 @@
             box-shadow: 0 2px 6px rgba(52, 152, 219, 0.2);
         }
 
+        .person-item.search-highlight {
+            background-color: #fffacd;
+            border: 2px solid #f1c40f;
+            box-shadow: 0 2px 6px rgba(241, 196, 15, 0.3);
+        }
+
         .person-item.active::before {
             content: "✓";
             position: absolute;
@@ -407,10 +413,22 @@
             background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
         }
 
+        /* HIGHLIGHT FOR SELECTED PERSON */
         .tree-node.selected {
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5), 0 4px 12px rgba(52, 152, 219, 0.3);
             z-index: 3;
             border-width: 3px;
+            border-color: #2980b9;
+            background: linear-gradient(135deg, #d4e8f7 0%, #b9d7f2 100%);
+        }
+
+        /* HIGHLIGHT FOR SEARCHED PERSON */
+        .tree-node.search-highlight {
+            box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.5), 0 4px 12px rgba(241, 196, 15, 0.3);
+            z-index: 4;
+            border-width: 3px;
+            border-color: #f1c40f;
+            background: linear-gradient(135deg, #fffacd 0%, #fff4b3 100%);
         }
 
         .tree-node.grandparent {
@@ -927,7 +945,7 @@
             }
         }
 
-        /* MOBILE-SPECIFIC IMPROVEMENTS - FIXED FOR CHILDREN VISIBILITY */
+        /* MOBILE-SPECIFIC IMPROVEMENTS - MODIFIED TO REMOVE GRANDPARENTS */
         @media (max-width: 767px) {
             .container {
                 padding: 6px;
@@ -939,8 +957,8 @@
             
             /* SIGNIFICANTLY INCREASED TREE CONTAINER HEIGHT FOR MOBILE */
             .tree-container {
-                min-height: 650px !important; /* Increased from 550px */
-                max-height: none !important; /* Remove max-height restriction */
+                min-height: 400px !important;
+                max-height: calc(100vh - 250px) !important;
             }
             
             /* Make details section scrollable */
@@ -950,31 +968,20 @@
             
             /* LARGER TREE NODES FOR BETTER READABILITY */
             .tree-node {
-                width: 100px !important; /* Increased from 95px */
-                height: 60px !important; /* Increased from 55px */
+                width: 95px !important;
+                height: 55px !important;
                 padding: 4px !important;
                 font-size: 0.65rem !important;
             }
             
-            .tree-node.grandparent {
-                width: 90px !important; /* Increased from 85px */
-                height: 55px !important; /* Increased from 50px */
-                font-size: 0.6rem !important;
-                padding: 3px !important;
-            }
-            
             .node-name {
-                font-size: 0.75rem !important; /* Larger font */
+                font-size: 0.7rem !important;
                 margin-bottom: 1px;
             }
             
-            .tree-node.grandparent .node-name {
-                font-size: 0.7rem !important;
-            }
-            
-            /* REDUCE SURNAME VISIBILITY TO MAKE ROOM FOR RELATIONSHIP */
+            /* REMOVE SURNAME FOR MOBILE TO SAVE SPACE */
             .node-surname {
-                font-size: 0.5rem !important; /* Smaller font */
+                font-size: 0.5rem !important;
                 margin-bottom: 1px;
                 opacity: 0.8;
                 max-height: 10px;
@@ -982,40 +989,25 @@
                 display: none; /* Hide surname on mobile to save space */
             }
             
-            .tree-node.grandparent .node-surname {
-                display: none; /* Hide surname for grandparents */
-            }
-            
             .node-details {
                 font-size: 0.5rem !important;
                 margin-bottom: 0;
             }
             
-            .tree-node.grandparent .node-details {
-                font-size: 0.45rem !important;
-            }
-            
-            /* IMPROVED RELATIONSHIP TEXT - ADJUSTED FOR "SELECIONADO" */
+            /* IMPROVED RELATIONSHIP TEXT */
             .node-relationship {
-                font-size: 0.55rem !important; /* Adjusted for better fit */
+                font-size: 0.6rem !important;
                 font-weight: bold;
                 background-color: rgba(52, 152, 219, 0.25) !important;
                 color: #2980b9 !important;
-                padding: 1px 3px !important; /* Reduced padding */
-                border-radius: 3px;
+                padding: 2px 4px !important;
+                border-radius: 4px;
                 white-space: normal !important;
-                max-height: 12px;
+                max-height: 14px;
                 overflow: hidden;
-                line-height: 1.1;
+                line-height: 1.2;
                 margin-top: 2px;
                 border: 1px solid rgba(52, 152, 219, 0.3);
-                text-align: center;
-            }
-            
-            /* Special smaller font for "Selecionado" */
-            .node-relationship:contains("Selecionado") {
-                font-size: 0.5rem !important; /* Even smaller for "Selecionado" */
-                padding: 0 2px !important;
             }
             
             .tree-node.selected .node-relationship {
@@ -1025,24 +1017,12 @@
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }
             
-            /* Special styling for grandparents relationship */
-            .tree-node.grandparent .node-relationship {
-                font-size: 0.5rem !important;
-                background-color: rgba(155, 89, 182, 0.25) !important;
-                color: #8e44ad !important;
-                font-weight: bold;
-            }
-            
-            .tree-node.grandparent.selected .node-relationship {
-                background-color: rgba(155, 89, 182, 0.35) !important;
-            }
-            
             /* Adjust spacing for better layout */
             .tree-node {
                 padding: 3px !important;
             }
             
-            /* Increase vertical spacing to prevent overlap - CRITICAL FOR CHILDREN */
+            /* Increase vertical spacing to prevent overlap */
             .tree-line {
                 background-color: #5d6d7e;
             }
@@ -1051,41 +1031,28 @@
             .tree-container {
                 background-color: #f5f7fa;
             }
-            
-            /* Additional spacing for children generation */
-            .tree-node:nth-last-child(1),
-            .tree-node:nth-last-child(2),
-            .tree-node:nth-last-child(3) {
-                z-index: 2; /* Ensure children are visible */
-            }
         }
 
         /* Very small screens - Additional optimization */
         @media (max-width: 320px) {
             .tree-node {
-                width: 90px !important;
-                height: 55px !important;
-            }
-            
-            .tree-node.grandparent {
-                width: 80px !important;
+                width: 85px !important;
                 height: 50px !important;
             }
             
             .node-name {
-                font-size: 0.7rem !important;
+                font-size: 0.65rem !important;
             }
             
-            /* Relationship on very small screens - even smaller for "Selecionado" */
-            .node-relationship {
-                font-size: 0.5rem !important;
-                padding: 0 2px !important;
-                max-height: 11px;
-            }
-            
-            .node-relationship:contains("Selecionado") {
+            .node-surname {
                 font-size: 0.45rem !important;
-                padding: 0 1px !important;
+            }
+            
+            /* Relationship on very small screens */
+            .node-relationship {
+                font-size: 0.55rem !important;
+                padding: 1px 3px !important;
+                max-height: 12px;
             }
         }
 
@@ -1143,6 +1110,23 @@
             padding: 0 2px;
             border-radius: 3px;
             font-weight: bold;
+        }
+        
+        /* Status message toast */
+        .status-message-toast {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease-in;
+            font-size: 0.8rem;
+            text-align: center;
         }
     </style>
 </head>
@@ -1243,6 +1227,7 @@
         
         // Pessoa selecionada atualmente
         let selectedPerson = null;
+        let lastSearchResult = null; // Armazena o último resultado de pesquisa
         
         // Variáveis para elementos DOM
         let searchInput, personList, treeContainer, detailsPanel, detailsContent;
@@ -1272,7 +1257,7 @@
             adjustLayoutForScreen();
         });
         
-        // Ajustar layout para diferentes tamanhos de tela - UPDATED FOR MOBILE
+        // Ajustar layout para diferentes tamanhos de tela
         function adjustLayoutForScreen() {
             const treeContainer = document.getElementById('tree-container');
             const sidebar = document.querySelector('.sidebar');
@@ -1280,17 +1265,17 @@
             if (!treeContainer || !sidebar) return;
             
             if (window.innerWidth <= 767) {
-                // Mobile - SIGNIFICANTLY INCREASED HEIGHT
-                const availableHeight = window.innerHeight - 200; // Reduced further
-                treeContainer.style.minHeight = Math.max(650, availableHeight) + 'px'; // Increased from 550
-                treeContainer.style.maxHeight = 'none'; // Remove restriction
+                // Mobile
+                const availableHeight = window.innerHeight - 250;
+                treeContainer.style.minHeight = Math.max(400, availableHeight) + 'px';
+                treeContainer.style.maxHeight = 'calc(100vh - 250px)';
                 sidebar.style.height = '160px';
                 
                 // Also adjust the main content wrapper height
                 const mainContentWrapper = document.querySelector('.main-content-wrapper');
                 if (mainContentWrapper) {
                     mainContentWrapper.style.gap = '8px';
-                    mainContentWrapper.style.minHeight = 'calc(100vh - 180px)';
+                    mainContentWrapper.style.minHeight = 'calc(100vh - 200px)';
                 }
             } else if (window.innerWidth >= 1200) {
                 // Large desktop
@@ -1331,6 +1316,10 @@
                         performSearch();
                     } else {
                         hideSearchResults();
+                        // Remover destaque da pessoa pesquisada anterior
+                        if (lastSearchResult) {
+                            removeSearchHighlight();
+                        }
                     }
                 });
                 
@@ -1368,6 +1357,8 @@
                     this.classList.remove('active');
                     hideSearchResults();
                     searchInput.focus();
+                    // Remover destaque da pessoa pesquisada
+                    removeSearchHighlight();
                 });
             }
             
@@ -1432,7 +1423,7 @@
             searchResults.classList.remove('active');
         }
         
-        // Perform search and show results - ENHANCED VERSION
+        // Perform search and show results
         function performSearch() {
             const searchTerm = searchInput.value.trim();
             if (!searchTerm) {
@@ -1440,34 +1431,33 @@
                 return;
             }
             
-            // Normalizar o termo de busca (remover acentos, converter para minúsculas, remover espaços extras)
+            // Normalizar o termo de busca
             const normalizedSearchTerm = normalizeSearchText(searchTerm).replace(/\s+/g, ' ');
             
-            // Procurar pessoas com algoritmo melhorado
+            // Procurar pessoas
             const foundPersons = persons.filter(person => {
-                // Normalizar os campos para busca
                 const normalizedName = normalizeSearchText(person.nome || '');
                 const normalizedSurname = normalizeSearchText(person.sobrenome || '');
                 
-                // 1. Busca exata em qualquer campo individual
+                // Busca exata em qualquer campo individual
                 if (normalizedName.includes(normalizedSearchTerm) ||
                     normalizedSurname.includes(normalizedSearchTerm)) {
                     return true;
                 }
                 
-                // 2. Busca combinada: nome + sobrenome
+                // Busca combinada: nome + sobrenome
                 const fullNameCombined = `${normalizedName} ${normalizedSurname}`.trim();
                 if (fullNameCombined.includes(normalizedSearchTerm)) {
                     return true;
                 }
                 
-                // 3. Busca por partes do nome (ex: "jose coelho" encontra "josé francisco garcias coelho")
+                // Busca por partes do nome
                 const searchParts = normalizedSearchTerm.split(' ');
                 if (searchParts.length >= 2) {
                     let matchesAllParts = true;
                     
                     for (const part of searchParts) {
-                        if (part.length < 2) continue; // Ignorar partes muito curtas
+                        if (part.length < 2) continue;
                         
                         const matchesName = normalizedName.includes(part);
                         const matchesSurname = normalizedSurname.includes(part);
@@ -1482,23 +1472,6 @@
                     if (matchesAllParts) return true;
                 }
                 
-                // 4. Busca fonética aproximada (para erros de digitação leves)
-                if (normalizedSearchTerm.length >= 3) {
-                    // Verificar similaridade com nome completo
-                    const fullNormalized = `${normalizedName}${normalizedSurname}`.replace(/\s/g, '');
-                    
-                    // Algoritmo simples de similaridade
-                    const similarityThreshold = 0.7;
-                    const similarity = calculateStringSimilarity(
-                        normalizedSearchTerm.replace(/\s/g, ''), 
-                        fullNormalized
-                    );
-                    
-                    if (similarity >= similarityThreshold) {
-                        return true;
-                    }
-                }
-                
                 return false;
             });
             
@@ -1507,8 +1480,17 @@
             
             if (sortedResults.length > 0) {
                 showSearchResults(sortedResults, searchTerm);
+                
+                // Armazenar o primeiro resultado da pesquisa
+                lastSearchResult = sortedResults[0];
+                
+                // Destacar a pessoa pesquisada na lista e na árvore
+                highlightSearchedPerson(sortedResults[0].id);
             } else {
                 showSearchResults([], searchTerm);
+                // Remover destaque da pessoa pesquisada anterior
+                removeSearchHighlight();
+                lastSearchResult = null;
             }
             
             // Mostrar resultados automaticamente em mobile
@@ -1517,31 +1499,50 @@
             }
         }
         
-        // Função para calcular similaridade entre strings (algoritmo simples)
-        function calculateStringSimilarity(str1, str2) {
-            if (str1 === str2) return 1.0;
+        // Destacar pessoa pesquisada
+        function highlightSearchedPerson(personId) {
+            // Remover destaque anterior
+            removeSearchHighlight();
             
-            // Se uma string contém a outra
-            if (str1.includes(str2) || str2.includes(str1)) {
-                return 0.9;
+            // Destacar na lista de pessoas
+            const personItem = document.querySelector(`.person-item[data-id="${personId}"]`);
+            if (personItem) {
+                personItem.classList.add('search-highlight');
+                
+                // Scroll para a pessoa destacada na lista
+                personItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
             
-            // Algoritmo de distância de Levenshtein simplificado
-            const longer = str1.length > str2.length ? str1 : str2;
-            const shorter = str1.length > str2.length ? str2 : str1;
-            
-            if (longer.length === 0) return 1.0;
-            
-            // Calcular distância
-            let distance = 0;
-            for (let i = 0; i < shorter.length; i++) {
-                if (shorter[i] !== longer[i]) distance++;
+            // Se a pessoa estiver na árvore atual, destacar também
+            const treeNode = document.querySelector(`.tree-node[data-id="${personId}"]`);
+            if (treeNode) {
+                treeNode.classList.add('search-highlight');
             }
             
-            // Adicionar diferença de comprimento
-            distance += longer.length - shorter.length;
+            // Atualizar badge de relação se for a pessoa selecionada
+            if (selectedPerson && selectedPerson.id === personId && relationshipBadge) {
+                relationshipBadge.textContent = 'Pesquisado/Selecionado';
+                relationshipBadge.style.backgroundColor = '#f1c40f';
+            }
+        }
+        
+        // Remover destaque da pessoa pesquisada
+        function removeSearchHighlight() {
+            // Remover da lista
+            document.querySelectorAll('.person-item.search-highlight').forEach(item => {
+                item.classList.remove('search-highlight');
+            });
             
-            return 1.0 - (distance / longer.length);
+            // Remover da árvore
+            document.querySelectorAll('.tree-node.search-highlight').forEach(node => {
+                node.classList.remove('search-highlight');
+            });
+            
+            // Restaurar badge se for a pessoa selecionada
+            if (selectedPerson && relationshipBadge) {
+                relationshipBadge.textContent = 'Selecionado';
+                relationshipBadge.style.backgroundColor = '#3498db';
+            }
         }
         
         // Ordenar resultados por relevância
@@ -1604,11 +1605,10 @@
             
             if (!normalizedText.includes(normalizedSearchTerm)) return text;
             
-            // Encontrar posição onde o termo começa (considerando acentos)
+            // Encontrar posição onde o termo começa
             let startIndex = 0;
             let found = false;
             
-            // Procurar o termo no texto original considerando acentos
             for (let i = 0; i <= text.length - searchTerm.length; i++) {
                 const substring = text.substring(i, i + searchTerm.length);
                 if (normalizeSearchText(substring) === normalizedSearchTerm) {
@@ -1626,7 +1626,7 @@
                    text.substring(endIndex);
         }
         
-        // Show search results in dropdown - ENHANCED VERSION
+        // Show search results in dropdown
         function showSearchResults(results, searchTerm) {
             searchResults.innerHTML = '';
             
@@ -1677,6 +1677,9 @@
                         searchInput.value = '';
                         clearSearchButton.classList.remove('active');
                         hideSearchResults();
+                        
+                        // Destacar a pessoa pesquisada
+                        highlightSearchedPerson(person.id);
                         
                         // Fechar teclado virtual em mobile após seleção
                         if (window.innerWidth <= 767) {
@@ -1880,12 +1883,24 @@
             
             // Atualizar badge de relação
             if (relationshipBadge) {
-                relationshipBadge.textContent = 'Pessoa Selecionada';
-                relationshipBadge.style.backgroundColor = '#3498db';
+                // Verificar se é a mesma pessoa que foi pesquisada
+                if (lastSearchResult && lastSearchResult.id === personId) {
+                    relationshipBadge.textContent = 'Pesquisado/Selecionado';
+                    relationshipBadge.style.backgroundColor = '#f1c40f';
+                } else {
+                    relationshipBadge.textContent = 'Selecionado';
+                    relationshipBadge.style.backgroundColor = '#3498db';
+                }
             }
             
-            // Gerar árvore com avós
-            generateFamilyTreeWithGrandparents(personId);
+            // Gerar árvore
+            if (window.innerWidth <= 767) {
+                // Mobile: mostrar apenas pais e filhos
+                generateFamilyTreeMobile(personId);
+            } else {
+                // Desktop: mostrar com avós
+                generateFamilyTreeWithGrandparents(personId);
+            }
             
             // Mostrar detalhes
             showPersonDetails(personId);
@@ -1897,14 +1912,13 @@
             if (window.innerWidth <= 767) {
                 const activeItem = document.querySelector(`.person-item[data-id="${personId}"]`);
                 if (activeItem && personList) {
-                    // Scroll suave para o item selecionado
                     activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
             }
         }
         
-        // Gerar árvore genealógica com avós - FIXED CHILDREN VISIBILITY
-        function generateFamilyTreeWithGrandparents(personId) {
+        // Gerar árvore genealógica para mobile (apenas pais e filhos)
+        function generateFamilyTreeMobile(personId) {
             if (!treeContainer) return;
             
             treeContainer.innerHTML = '';
@@ -1918,23 +1932,209 @@
             // Obter dimensões do container
             const containerWidth = treeContainer.clientWidth;
             const isMobile = window.innerWidth <= 767;
-            const isLargeDesktop = window.innerWidth >= 1200;
-            const isDesktop = window.innerWidth >= 768;
             
-            // Ajustar tamanho dos nós para diferentes tamanhos de tela
+            // Ajustar tamanho dos nós para mobile
+            let regularNodeWidth = 95;
+            let regularNodeHeight = 55;
+            let horizontalSpacing = 105;
+            let verticalSpacing = 100;
+            
+            // Coletar pessoas para mostrar
+            const allPersons = new Set([personId]);
+            const positions = new Map();
+            
+            // Adicionar pais
+            const parents = parentsMap[personId];
+            
+            // Adicionar filhos
+            const children = findChildren(personId);
+            children.forEach(childId => {
+                allPersons.add(childId);
+            });
+            
+            // Adicionar cônjuge(s)
+            const spouses = findSpouses(personId);
+            spouses.forEach(spouseId => allPersons.add(spouseId));
+            
+            // Organizar por gerações
+            const generations = [];
+            
+            // Geração -1: Pais (se existirem)
+            const parentGeneration = [];
+            if (parents) {
+                if (parents.father) parentGeneration.push(parents.father);
+                if (parents.mother) parentGeneration.push(parents.mother);
+            }
+            
+            // Geração 0: Pessoa principal e cônjuges
+            const mainGeneration = [personId];
+            spouses.forEach(spouseId => mainGeneration.push(spouseId));
+            
+            // Geração 1: Filhos
+            const childrenGeneration = children;
+            
+            // Adicionar gerações
+            if (parentGeneration.length > 0) {
+                generations.push({depth: -1, persons: parentGeneration});
+            }
+            generations.push({depth: 0, persons: mainGeneration});
+            generations.push({depth: 1, persons: childrenGeneration});
+            
+            // Encontrar geração com mais pessoas
+            let maxNodesInRow = 0;
+            generations.forEach(gen => {
+                if (gen.persons.length > maxNodesInRow) maxNodesInRow = gen.persons.length;
+            });
+            
+            // Calcular posição inicial para centralizar
+            const totalWidthNeeded = maxNodesInRow * horizontalSpacing;
+            const startX = Math.max(20, (containerWidth - totalWidthNeeded) / 2);
+            
+            // Posicionar nós
+            generations.forEach((gen, genIndex) => {
+                const y = 20 + genIndex * verticalSpacing;
+                const genWidth = gen.persons.length * horizontalSpacing;
+                const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
+                
+                gen.persons.forEach((personId, index) => {
+                    const person = personsMap[personId];
+                    if (!person) return;
+                    
+                    const x = startGenX + index * horizontalSpacing;
+                    positions.set(personId, { x, y });
+                    
+                    // Determinar relação com a pessoa selecionada
+                    const relationship = getRelationshipMobile(personId, personId === personId ? 'self' : personId);
+                    
+                    // Criar nó
+                    const node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship, false, isMobile);
+                    
+                    if (personId === selectedPerson.id) {
+                        node.classList.add('selected');
+                    }
+                    
+                    // Adicionar destaque se for a pessoa pesquisada
+                    if (lastSearchResult && lastSearchResult.id === personId) {
+                        node.classList.add('search-highlight');
+                    }
+                    
+                    treeContainer.appendChild(node);
+                });
+            });
+            
+            // Desenhar conexões entre gerações
+            for (let i = 0; i < generations.length - 1; i++) {
+                const currentGen = generations[i];
+                const nextGen = generations[i + 1];
+                
+                currentGen.persons.forEach(parentId => {
+                    const parent = personsMap[parentId];
+                    if (!parent) return;
+                    
+                    const parentPos = positions.get(parentId);
+                    if (!parentPos) return;
+                    
+                    // Encontrar filhos desta pessoa na próxima geração
+                    const childrenIds = findChildren(parentId);
+                    
+                    childrenIds.forEach(childId => {
+                        if (nextGen.persons.includes(childId)) {
+                            const childPos = positions.get(childId);
+                            if (childPos) {
+                                drawConnection(parentPos, childPos, regularNodeWidth, regularNodeHeight);
+                            }
+                        }
+                    });
+                });
+            }
+            
+            // Desenhar conexões entre cônjuges
+            mainGeneration.forEach(personId1 => {
+                mainGeneration.forEach(personId2 => {
+                    if (personId1 !== personId2 && areSpouses(personId1, personId2)) {
+                        const pos1 = positions.get(personId1);
+                        const pos2 = positions.get(personId2);
+                        if (pos1 && pos2) {
+                            drawSpouseConnection(pos1, pos2, regularNodeWidth);
+                        }
+                    }
+                });
+            });
+            
+            // Ajustar altura do container
+            if (generations.length > 0) {
+                const lastGen = generations[generations.length - 1];
+                const lastY = 20 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
+                const minHeight = 400;
+                treeContainer.style.minHeight = Math.max(minHeight, lastY) + 'px';
+                
+                if (isMobile) {
+                    treeContainer.style.maxHeight = 'none';
+                    if (lastY > 400) {
+                        treeContainer.style.minHeight = lastY + 50 + 'px';
+                    }
+                }
+            }
+            
+            // Scroll para a pessoa selecionada
+            setTimeout(() => {
+                const selectedNode = treeContainer.querySelector('.tree-node.selected');
+                if (selectedNode) {
+                    selectedNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                }
+            }, 100);
+        }
+        
+        // Determinar relação para mobile
+        function getRelationshipMobile(personId, relativeToId) {
+            if (personId === relativeToId) return 'Eu';
+            
+            const relativeTo = selectedPerson.id;
+            
+            // Pai/Mãe
+            const parents = parentsMap[relativeTo];
+            if (parents && (parents.father === personId || parents.mother === personId)) {
+                return parents.father === personId ? 'Pai' : 'Mãe';
+            }
+            
+            // Filhos
+            const children = findChildren(relativeTo);
+            if (children.includes(personId)) {
+                const person = personsMap[personId];
+                return person && person.sexo === 'masculino' ? 'Filho' : 'Filha';
+            }
+            
+            // Cônjuge
+            if (areSpouses(personId, relativeTo)) {
+                const person = personsMap[personId];
+                return person && person.sexo === 'masculino' ? 'Marido' : 'Esposa';
+            }
+            
+            return 'Selecionado';
+        }
+        
+        // Gerar árvore genealógica com avós para desktop
+        function generateFamilyTreeWithGrandparents(personId) {
+            if (!treeContainer) return;
+            
+            treeContainer.innerHTML = '';
+            
+            const mainPerson = personsMap[personId];
+            if (!mainPerson) {
+                treeContainer.innerHTML = '<div class="empty-message"><i class="fas fa-user-times"></i><div>Pessoa não encontrada</div></div>';
+                return;
+            }
+            
+            // Obter dimensões do container
+            const containerWidth = treeContainer.clientWidth;
+            const isDesktop = window.innerWidth >= 768;
+            const isLargeDesktop = window.innerWidth >= 1200;
+            
+            // Ajustar tamanho dos nós
             let regularNodeWidth, regularNodeHeight, grandparentNodeWidth, grandparentNodeHeight;
             let horizontalSpacing, verticalSpacing;
             
-            if (isMobile) {
-                // Mobile - LARGER SIZES FOR BETTER VISIBILITY
-                regularNodeWidth = 100;
-                regularNodeHeight = 60;
-                grandparentNodeWidth = 90;
-                grandparentNodeHeight = 55;
-                horizontalSpacing = 110; // More horizontal space
-                verticalSpacing = 120; // SIGNIFICANTLY INCREASED VERTICAL SPACE FOR CHILDREN
-            } else if (isLargeDesktop) {
-                // Large desktop
+            if (isLargeDesktop) {
                 regularNodeWidth = 150;
                 regularNodeHeight = 80;
                 grandparentNodeWidth = 130;
@@ -1942,7 +2142,6 @@
                 horizontalSpacing = 170;
                 verticalSpacing = 130;
             } else {
-                // Tablet/medium desktop
                 regularNodeWidth = 140;
                 regularNodeHeight = 75;
                 grandparentNodeWidth = 120;
@@ -1981,7 +2180,7 @@
                 }
             }
             
-            // Adicionar filhos - CRITICAL FIX
+            // Adicionar filhos
             const children = findChildren(personId);
             children.forEach(childId => {
                 allPersons.add(childId);
@@ -2016,7 +2215,7 @@
             const mainGeneration = [personId];
             spouses.forEach(spouseId => mainGeneration.push(spouseId));
             
-            // Geração 1: Filhos - ALWAYS CREATE THIS GENERATION
+            // Geração 1: Filhos
             const childrenGeneration = children;
             
             // Adicionar gerações
@@ -2027,8 +2226,6 @@
                 generations.push({depth: -1, persons: parentGeneration});
             }
             generations.push({depth: 0, persons: mainGeneration});
-            
-            // CRITICAL FIX: ALWAYS ADD CHILDREN GENERATION, EVEN IF EMPTY
             generations.push({depth: 1, persons: childrenGeneration});
             
             // Encontrar geração com mais pessoas
@@ -2043,7 +2240,7 @@
             
             // Posicionar nós
             generations.forEach((gen, genIndex) => {
-                const y = 30 + genIndex * verticalSpacing; // Increased starting Y
+                const y = 20 + genIndex * verticalSpacing;
                 const genWidth = gen.persons.length * horizontalSpacing;
                 const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
                 
@@ -2054,26 +2251,32 @@
                     const x = startGenX + index * horizontalSpacing;
                     positions.set(personId, { x, y });
                     
-                    // Determinar relação com a pessoa selecionada - UPDATED TO USE "SELECIONADO"
+                    // Determinar relação com a pessoa selecionada
                     const relationship = getRelationship(personId, personId === personId ? 'self' : personId);
                     
-                    // Criar nó - tamanhos diferentes para avós
+                    // Criar nó
                     let node;
                     if (gen.isGrandparent) {
-                        node = createPersonNode(person, x, y, grandparentNodeWidth, grandparentNodeHeight, relationship, isDesktop, isMobile);
+                        node = createPersonNode(person, x, y, grandparentNodeWidth, grandparentNodeHeight, relationship, isDesktop, false);
                         node.classList.add('grandparent');
                     } else {
-                        node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship, isDesktop, isMobile);
+                        node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship, isDesktop, false);
                     }
                     
                     if (personId === selectedPerson.id) {
                         node.classList.add('selected');
                     }
+                    
+                    // Adicionar destaque se for a pessoa pesquisada
+                    if (lastSearchResult && lastSearchResult.id === personId) {
+                        node.classList.add('search-highlight');
+                    }
+                    
                     treeContainer.appendChild(node);
                 });
             });
             
-            // Desenhar conexões entre gerações
+            // Desenhar conexões
             for (let i = 0; i < generations.length - 1; i++) {
                 const currentGen = generations[i];
                 const nextGen = generations[i + 1];
@@ -2085,14 +2288,12 @@
                     const parentPos = positions.get(parentId);
                     if (!parentPos) return;
                     
-                    // Encontrar filhos desta pessoa na próxima geração
                     const childrenIds = findChildren(parentId);
                     
                     childrenIds.forEach(childId => {
                         if (nextGen.persons.includes(childId)) {
                             const childPos = positions.get(childId);
                             if (childPos) {
-                                // Usar tamanho de nó apropriado para cada geração
                                 const parentNodeHeight = currentGen.isGrandparent ? grandparentNodeHeight : regularNodeHeight;
                                 const childNodeHeight = nextGen.isGrandparent ? grandparentNodeHeight : regularNodeHeight;
                                 drawConnection(parentPos, childPos, regularNodeWidth, parentNodeHeight);
@@ -2102,7 +2303,7 @@
                 });
             }
             
-            // Desenhar conexões entre cônjuges (apenas na geração principal)
+            // Desenhar conexões entre cônjuges
             mainGeneration.forEach(personId1 => {
                 mainGeneration.forEach(personId2 => {
                     if (personId1 !== personId2 && areSpouses(personId1, personId2)) {
@@ -2115,17 +2316,12 @@
                 });
             });
             
-            // Ajustar altura do container baseado no conteúdo - INCREASED FOR MOBILE
+            // Ajustar altura do container
             if (generations.length > 0) {
                 const lastGen = generations[generations.length - 1];
-                const lastY = 30 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 50;
-                const minHeight = isMobile ? 650 : (isLargeDesktop ? 600 : 500);
+                const lastY = 20 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
+                const minHeight = isLargeDesktop ? 600 : 500;
                 treeContainer.style.minHeight = Math.max(minHeight, lastY) + 'px';
-                
-                // Ensure tree container has enough space on mobile
-                if (isMobile && lastY > 650) {
-                    treeContainer.style.minHeight = lastY + 50 + 'px';
-                }
             }
             
             // Scroll para a pessoa selecionada
@@ -2133,20 +2329,13 @@
                 const selectedNode = treeContainer.querySelector('.tree-node.selected');
                 if (selectedNode) {
                     selectedNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-                    
-                    // Also ensure children are visible by scrolling a bit more
-                    if (isMobile && children.length > 0) {
-                        setTimeout(() => {
-                            treeContainer.scrollBy(0, 50);
-                        }, 300);
-                    }
                 }
             }, 100);
         }
         
-        // Determinar relação com a pessoa selecionada - UPDATED TO USE "SELECIONADO"
+        // Determinar relação com a pessoa selecionada - versão completa para desktop
         function getRelationship(personId, relativeToId) {
-            if (personId === selectedPerson.id) return 'Selecionado'; // CHANGED FROM "Eu" TO "Selecionado"
+            if (personId === relativeToId) return 'Eu';
             
             const relativeTo = selectedPerson.id;
             
@@ -2188,7 +2377,7 @@
                 }
             }
             
-            return 'Parente';
+            return 'Selecionado';
         }
         
         // Desenhar conexão entre pais e filhos
@@ -2271,7 +2460,7 @@
             return children;
         }
         
-        // Criar nó da árvore - UPDATED FOR "SELECIONADO"
+        // Criar nó da árvore
         function createPersonNode(person, x, y, width, height, relationship = '', isDesktop = false, isMobile = false) {
             const node = document.createElement('div');
             node.className = `tree-node ${person.sexo || 'unknown'}`;
@@ -2285,7 +2474,6 @@
             nameDiv.className = 'node-name';
             const fullName = person.nome || 'Nome desconhecido';
             
-            // Ajustar corte de texto baseado no tamanho da tela
             const nameMaxLength = isDesktop ? 12 : (isMobile ? 10 : 8);
             if (fullName.length > nameMaxLength) {
                 nameDiv.textContent = fullName.substring(0, nameMaxLength) + '...';
@@ -2293,22 +2481,23 @@
                 nameDiv.textContent = fullName;
             }
             
-            // Ajustar tamanho da fonte baseado no tamanho da tela
-            nameDiv.style.fontSize = isDesktop ? '0.9rem' : (isMobile ? '0.75rem' : '0.65rem');
+            nameDiv.style.fontSize = isDesktop ? '0.9rem' : (isMobile ? '0.7rem' : '0.65rem');
             
-            // Hide surname on mobile to save space
             const surnameDiv = document.createElement('div');
             surnameDiv.className = 'node-surname';
-            if (!isMobile) {
-                const fullSurname = person.sobrenome || '';
-                const surnameMaxLength = isDesktop ? 14 : 10;
-                if (fullSurname.length > surnameMaxLength) {
-                    surnameDiv.textContent = fullSurname.substring(0, surnameMaxLength) + '...';
-                } else {
-                    surnameDiv.textContent = fullSurname;
-                }
-                surnameDiv.style.fontSize = isDesktop ? '0.75rem' : '0.55rem';
+            const fullSurname = person.sobrenome || '';
+            
+            const surnameMaxLength = isDesktop ? 14 : (isMobile ? 8 : 10);
+            if (fullSurname.length > surnameMaxLength) {
+                surnameDiv.textContent = fullSurname.substring(0, surnameMaxLength) + '...';
             } else {
+                surnameDiv.textContent = fullSurname;
+            }
+            
+            surnameDiv.style.fontSize = isDesktop ? '0.75rem' : (isMobile ? '0.5rem' : '0.55rem');
+            
+            // Hide surname on mobile
+            if (isMobile) {
                 surnameDiv.style.display = 'none';
             }
             
@@ -2326,59 +2515,22 @@
             
             const relationshipDiv = document.createElement('div');
             relationshipDiv.className = 'node-relationship';
-            
-            // Special handling for "Selecionado" - use smaller font if needed
-            if (relationship === 'Selecionado') {
-                if (isMobile) {
-                    relationshipDiv.textContent = 'Selec.'; // Shortened version for mobile
-                    relationshipDiv.style.fontSize = '0.5rem !important';
-                } else {
-                    relationshipDiv.textContent = 'Selecionado';
-                    relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : '0.55rem';
-                }
-            } else {
-                relationshipDiv.textContent = relationship;
-                relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : (isMobile ? '0.55rem' : '0.55rem');
-            }
+            relationshipDiv.textContent = relationship;
+            relationshipDiv.style.fontSize = isDesktop ? '0.65rem' : (isMobile ? '0.6rem' : '0.55rem');
             
             // Special styling for mobile
             if (isMobile) {
                 relationshipDiv.style.fontWeight = 'bold';
                 relationshipDiv.style.backgroundColor = 'rgba(52, 152, 219, 0.25)';
                 relationshipDiv.style.color = '#2980b9';
-                relationshipDiv.style.padding = '1px 3px';
-                relationshipDiv.style.borderRadius = '3px';
+                relationshipDiv.style.padding = '2px 4px';
+                relationshipDiv.style.borderRadius = '4px';
                 relationshipDiv.style.border = '1px solid rgba(52, 152, 219, 0.3)';
                 relationshipDiv.style.marginTop = '2px';
-                relationshipDiv.style.textAlign = 'center';
-                
-                // Different color for grandparents
-                if (node.classList.contains('grandparent')) {
-                    relationshipDiv.style.backgroundColor = 'rgba(155, 89, 182, 0.25)';
-                    relationshipDiv.style.color = '#8e44ad';
-                    relationshipDiv.style.borderColor = 'rgba(155, 89, 182, 0.3)';
-                }
-                
-                // Special styling for "Selecionado" on mobile
-                if (relationship === 'Selecionado') {
-                    relationshipDiv.style.backgroundColor = 'rgba(46, 204, 113, 0.3)';
-                    relationshipDiv.style.color = '#27ae60';
-                    relationshipDiv.style.borderColor = 'rgba(46, 204, 113, 0.4)';
-                    relationshipDiv.style.fontWeight = 'bold';
-                }
-            } else {
-                // Desktop styling
-                if (relationship === 'Selecionado') {
-                    relationshipDiv.style.backgroundColor = 'rgba(46, 204, 113, 0.2)';
-                    relationshipDiv.style.color = '#27ae60';
-                    relationshipDiv.style.fontWeight = 'bold';
-                }
             }
             
             node.appendChild(nameDiv);
-            if (!isMobile || !node.classList.contains('grandparent')) {
-                node.appendChild(surnameDiv);
-            }
+            node.appendChild(surnameDiv);
             node.appendChild(detailsDiv);
             node.appendChild(relationshipDiv);
             
