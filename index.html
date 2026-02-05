@@ -367,7 +367,7 @@
             overflow: auto;
             position: relative;
             background-color: #f9f9f9;
-            min-height: 300px;
+            min-height: 350px;
             -webkit-overflow-scrolling: touch;
             margin-top: 4px;
         }
@@ -378,14 +378,14 @@
             border: 2px solid #3498db;
             border-radius: 6px;
             text-align: center;
-            width: 100px;
-            height: 55px;
+            width: 90px;
+            height: 50px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.2s;
             z-index: 1;
-            padding: 4px;
-            font-size: 0.65rem;
+            padding: 3px;
+            font-size: 0.6rem;
             overflow: hidden;
             touch-action: manipulation;
         }
@@ -415,11 +415,23 @@
             border-width: 3px;
         }
 
+        .tree-node.grandparent {
+            border-width: 1.5px;
+            opacity: 0.9;
+            transform: scale(0.9);
+        }
+
+        .tree-node.grandparent.selected {
+            border-width: 3px;
+            opacity: 1;
+            transform: scale(1);
+        }
+
         .node-name {
             font-weight: bold;
             margin-bottom: 1px;
             color: #2c3e50;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             line-height: 1;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -427,7 +439,7 @@
         }
 
         .node-surname {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: #7f8c8d;
             margin-bottom: 2px;
             font-style: italic;
@@ -437,26 +449,26 @@
         }
 
         .node-details {
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             color: #666;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
             line-height: 1;
         }
 
         .node-relationship {
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             color: #3498db;
             font-weight: bold;
             margin-top: 1px;
-            padding: 1px 3px;
+            padding: 0 2px;
             background-color: rgba(52, 152, 219, 0.1);
-            border-radius: 6px;
+            border-radius: 4px;
             display: inline-block;
             max-width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            line-height: 1.1;
+            line-height: 1;
         }
 
         .tree-line {
@@ -776,13 +788,13 @@
             }
             
             .tree-node {
-                width: 120px;
-                height: 65px;
-                font-size: 0.7rem;
+                width: 100px;
+                height: 55px;
+                font-size: 0.65rem;
             }
             
             .node-name {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
             }
             
             .details-grid {
@@ -803,8 +815,8 @@
             
             /* Make tree container taller on mobile */
             .tree-container {
-                min-height: 350px;
-                max-height: calc(100vh - 400px);
+                min-height: 400px;
+                max-height: calc(100vh - 350px);
             }
             
             /* Make details section scrollable */
@@ -812,44 +824,71 @@
                 max-height: calc(100vh - 300px);
             }
             
-            /* Adjust tree layout for better visibility */
+            /* Adjust tree layout for better visibility with grandparents */
             .tree-node {
-                width: 90px;
-                height: 50px;
+                width: 85px;
+                height: 48px;
                 padding: 3px;
             }
             
-            .node-name {
-                font-size: 0.65rem;
-            }
-            
-            .node-surname {
+            .tree-node.grandparent {
+                width: 75px;
+                height: 42px;
                 font-size: 0.55rem;
-            }
-            
-            .node-details {
-                font-size: 0.5rem;
-            }
-            
-            .node-relationship {
-                font-size: 0.45rem;
-                padding: 0 2px;
-            }
-        }
-
-        /* Very small screens */
-        @media (max-width: 320px) {
-            .tree-node {
-                width: 80px;
-                height: 45px;
             }
             
             .node-name {
                 font-size: 0.6rem;
             }
             
+            .tree-node.grandparent .node-name {
+                font-size: 0.55rem;
+            }
+            
             .node-surname {
                 font-size: 0.5rem;
+            }
+            
+            .tree-node.grandparent .node-surname {
+                font-size: 0.45rem;
+            }
+            
+            .node-details {
+                font-size: 0.45rem;
+            }
+            
+            .tree-node.grandparent .node-details {
+                font-size: 0.4rem;
+            }
+            
+            .node-relationship {
+                font-size: 0.4rem;
+                padding: 0 1px;
+            }
+            
+            .tree-node.grandparent .node-relationship {
+                font-size: 0.35rem;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 320px) {
+            .tree-node {
+                width: 75px;
+                height: 42px;
+            }
+            
+            .tree-node.grandparent {
+                width: 65px;
+                height: 38px;
+            }
+            
+            .node-name {
+                font-size: 0.55rem;
+            }
+            
+            .node-surname {
+                font-size: 0.45rem;
             }
         }
 
@@ -958,7 +997,7 @@
         </div>
 
         <footer>
-            <p>Árvore Genealógica &copy; 2023</p>
+            <p>Árvore Genealógica &copy; 2026</p>
         </footer>
     </div>
 
@@ -1013,8 +1052,8 @@
                 // Garantir que o container da árvore tenha altura suficiente
                 const treeContainer = document.getElementById('tree-container');
                 if (treeContainer) {
-                    const availableHeight = window.innerHeight - 400;
-                    treeContainer.style.minHeight = Math.max(300, availableHeight) + 'px';
+                    const availableHeight = window.innerHeight - 350;
+                    treeContainer.style.minHeight = Math.max(400, availableHeight) + 'px';
                 }
                 
                 // Ajustar altura do sidebar
@@ -1136,7 +1175,7 @@
                         const treeContainer = document.getElementById('tree-container');
                         if (treeContainer) {
                             const availableHeight = window.innerHeight - 300;
-                            treeContainer.style.minHeight = Math.max(350, availableHeight) + 'px';
+                            treeContainer.style.minHeight = Math.max(400, availableHeight) + 'px';
                         }
                     }
                 }, 100);
@@ -1492,8 +1531,8 @@
                 relationshipBadge.style.backgroundColor = '#3498db';
             }
             
-            // Gerar árvore
-            generateFamilyTree(personId);
+            // Gerar árvore com avós
+            generateFamilyTreeWithGrandparents(personId);
             
             // Mostrar detalhes
             showPersonDetails(personId);
@@ -1511,8 +1550,8 @@
             }
         }
         
-        // Gerar árvore genealógica - Versão otimizada para mobile
-        function generateFamilyTree(personId) {
+        // Gerar árvore genealógica com avós - Versão otimizada para mobile
+        function generateFamilyTreeWithGrandparents(personId) {
             if (!treeContainer) return;
             
             treeContainer.innerHTML = '';
@@ -1525,14 +1564,15 @@
             
             // Obter dimensões do container
             const containerWidth = treeContainer.clientWidth;
-            const containerHeight = treeContainer.clientHeight;
+            const isMobile = window.innerWidth <= 767;
             
             // Ajustar tamanho dos nós para mobile
-            const isMobile = window.innerWidth <= 767;
-            const nodeWidth = isMobile ? 90 : 120;
-            const nodeHeight = isMobile ? 50 : 65;
-            const horizontalSpacing = isMobile ? 100 : 140;
-            const verticalSpacing = isMobile ? 90 : 110;
+            const regularNodeWidth = isMobile ? 85 : 100;
+            const regularNodeHeight = isMobile ? 48 : 55;
+            const grandparentNodeWidth = isMobile ? 75 : 90;
+            const grandparentNodeHeight = isMobile ? 42 : 50;
+            const horizontalSpacing = isMobile ? 95 : 120;
+            const verticalSpacing = isMobile ? 85 : 100;
             
             // Coletar pessoas para mostrar
             const allPersons = new Set([personId]);
@@ -1540,9 +1580,28 @@
             
             // Adicionar pais
             const parents = parentsMap[personId];
+            let paternalGrandparents = null;
+            let maternalGrandparents = null;
+            
             if (parents) {
-                if (parents.father) allPersons.add(parents.father);
-                if (parents.mother) allPersons.add(parents.mother);
+                if (parents.father) {
+                    allPersons.add(parents.father);
+                    // Adicionar avós paternos
+                    paternalGrandparents = parentsMap[parents.father];
+                    if (paternalGrandparents) {
+                        if (paternalGrandparents.father) allPersons.add(paternalGrandparents.father);
+                        if (paternalGrandparents.mother) allPersons.add(paternalGrandparents.mother);
+                    }
+                }
+                if (parents.mother) {
+                    allPersons.add(parents.mother);
+                    // Adicionar avós maternos
+                    maternalGrandparents = parentsMap[parents.mother];
+                    if (maternalGrandparents) {
+                        if (maternalGrandparents.father) allPersons.add(maternalGrandparents.father);
+                        if (maternalGrandparents.mother) allPersons.add(maternalGrandparents.mother);
+                    }
+                }
             }
             
             // Adicionar filhos
@@ -1556,24 +1615,36 @@
             // Organizar por gerações
             const generations = [];
             
-            // Geração 0: Pais (se existirem)
+            // Geração -2: Avós (se existirem)
+            const grandparentGeneration = [];
+            if (paternalGrandparents) {
+                if (paternalGrandparents.father) grandparentGeneration.push(paternalGrandparents.father);
+                if (paternalGrandparents.mother) grandparentGeneration.push(paternalGrandparents.mother);
+            }
+            if (maternalGrandparents) {
+                if (maternalGrandparents.father) grandparentGeneration.push(maternalGrandparents.father);
+                if (maternalGrandparents.mother) grandparentGeneration.push(maternalGrandparents.mother);
+            }
+            
+            // Geração -1: Pais (se existirem)
             const parentGeneration = [];
             if (parents) {
                 if (parents.father) parentGeneration.push(parents.father);
                 if (parents.mother) parentGeneration.push(parents.mother);
             }
             
-            // Geração 1: Pessoa principal e cônjuges
+            // Geração 0: Pessoa principal e cônjuges
             const mainGeneration = [personId];
             spouses.forEach(spouseId => mainGeneration.push(spouseId));
             
-            // Geração 2: Filhos
+            // Geração 1: Filhos
             const childrenGeneration = children;
             
             // Adicionar gerações
-            if (parentGeneration.length > 0) generations.push({depth: 0, persons: parentGeneration});
-            generations.push({depth: 1, persons: mainGeneration});
-            if (childrenGeneration.length > 0) generations.push({depth: 2, persons: childrenGeneration});
+            if (grandparentGeneration.length > 0) generations.push({depth: -2, persons: grandparentGeneration, isGrandparent: true});
+            if (parentGeneration.length > 0) generations.push({depth: -1, persons: parentGeneration});
+            generations.push({depth: 0, persons: mainGeneration});
+            if (childrenGeneration.length > 0) generations.push({depth: 1, persons: childrenGeneration});
             
             // Encontrar geração com mais pessoas
             let maxNodesInRow = 0;
@@ -1583,11 +1654,11 @@
             
             // Calcular posição inicial para centralizar
             const totalWidthNeeded = maxNodesInRow * horizontalSpacing;
-            const startX = Math.max(20, (containerWidth - totalWidthNeeded) / 2);
+            const startX = Math.max(15, (containerWidth - totalWidthNeeded) / 2);
             
             // Posicionar nós
             generations.forEach((gen, genIndex) => {
-                const y = 20 + genIndex * verticalSpacing;
+                const y = 15 + genIndex * verticalSpacing;
                 const genWidth = gen.persons.length * horizontalSpacing;
                 const startGenX = startX + (totalWidthNeeded - genWidth) / 2;
                 
@@ -1601,8 +1672,15 @@
                     // Determinar relação com a pessoa selecionada
                     const relationship = getRelationship(personId, personId === personId ? 'self' : personId);
                     
-                    // Criar nó
-                    const node = createPersonNode(person, x, y, nodeWidth, nodeHeight, relationship);
+                    // Criar nó - tamanhos diferentes para avós
+                    let node;
+                    if (gen.isGrandparent) {
+                        node = createPersonNode(person, x, y, grandparentNodeWidth, grandparentNodeHeight, relationship);
+                        node.classList.add('grandparent');
+                    } else {
+                        node = createPersonNode(person, x, y, regularNodeWidth, regularNodeHeight, relationship);
+                    }
+                    
                     if (personId === selectedPerson.id) {
                         node.classList.add('selected');
                     }
@@ -1629,7 +1707,10 @@
                         if (nextGen.persons.includes(childId)) {
                             const childPos = positions.get(childId);
                             if (childPos) {
-                                drawConnection(parentPos, childPos, nodeWidth, nodeHeight);
+                                // Usar tamanho de nó apropriado para cada geração
+                                const parentNodeHeight = currentGen.isGrandparent ? grandparentNodeHeight : regularNodeHeight;
+                                const childNodeHeight = nextGen.isGrandparent ? grandparentNodeHeight : regularNodeHeight;
+                                drawConnection(parentPos, childPos, regularNodeWidth, parentNodeHeight);
                             }
                         }
                     });
@@ -1643,7 +1724,7 @@
                         const pos1 = positions.get(personId1);
                         const pos2 = positions.get(personId2);
                         if (pos1 && pos2) {
-                            drawSpouseConnection(pos1, pos2, nodeWidth);
+                            drawSpouseConnection(pos1, pos2, regularNodeWidth);
                         }
                     }
                 });
@@ -1652,12 +1733,26 @@
             // Ajustar altura do container baseado no conteúdo
             if (generations.length > 0) {
                 const lastGen = generations[generations.length - 1];
-                const lastY = 20 + (generations.length - 1) * verticalSpacing + nodeHeight + 40;
-                treeContainer.style.minHeight = Math.max(containerHeight, lastY) + 'px';
+                const lastY = 15 + (generations.length - 1) * verticalSpacing + regularNodeHeight + 40;
+                treeContainer.style.minHeight = Math.max(400, lastY) + 'px';
             }
+            
+            // Scroll para a pessoa selecionada
+            setTimeout(() => {
+                const selectedNode = treeContainer.querySelector('.tree-node.selected');
+                if (selectedNode) {
+                    const nodeRect = selectedNode.getBoundingClientRect();
+                    const containerRect = treeContainer.getBoundingClientRect();
+                    
+                    // Se o nó selecionado não estiver visível, scroll para ele
+                    if (nodeRect.top < containerRect.top || nodeRect.bottom > containerRect.bottom) {
+                        selectedNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                    }
+                }
+            }, 100);
         }
         
-        // Determinar relação com a pessoa selecionada - versão abreviada
+        // Determinar relação com a pessoa selecionada - versão completa com avós
         function getRelationship(personId, relativeToId) {
             if (personId === relativeToId) return 'Eu';
             
@@ -1682,6 +1777,25 @@
                 return person && person.sexo === 'masculino' ? 'Marido' : 'Esposa';
             }
             
+            // Avós
+            if (parents) {
+                // Avô paterno
+                if (parents.father) {
+                    const paternalGrandparents = parentsMap[parents.father];
+                    if (paternalGrandparents && (paternalGrandparents.father === personId || paternalGrandparents.mother === personId)) {
+                        return paternalGrandparents.father === personId ? 'Avô P.' : 'Avó P.';
+                    }
+                }
+                
+                // Avô materno
+                if (parents.mother) {
+                    const maternalGrandparents = parentsMap[parents.mother];
+                    if (maternalGrandparents && (maternalGrandparents.father === personId || maternalGrandparents.mother === personId)) {
+                        return maternalGrandparents.father === personId ? 'Avô M.' : 'Avó M.';
+                    }
+                }
+            }
+            
             return 'Parente';
         }
         
@@ -1692,13 +1806,13 @@
             line1.style.left = `${parentPos.x + nodeWidth/2 - 1}px`;
             line1.style.top = `${parentPos.y + nodeHeight}px`;
             line1.style.width = '2px';
-            line1.style.height = '12px';
+            line1.style.height = '10px';
             treeContainer.appendChild(line1);
             
             const line2 = document.createElement('div');
             line2.className = 'tree-line';
             line2.style.left = `${Math.min(parentPos.x + nodeWidth/2, childPos.x + nodeWidth/2)}px`;
-            line2.style.top = `${parentPos.y + nodeHeight + 12}px`;
+            line2.style.top = `${parentPos.y + nodeHeight + 10}px`;
             line2.style.width = `${Math.abs(childPos.x - parentPos.x)}px`;
             line2.style.height = '2px';
             treeContainer.appendChild(line2);
@@ -1706,9 +1820,9 @@
             const line3 = document.createElement('div');
             line3.className = 'tree-line';
             line3.style.left = `${childPos.x + nodeWidth/2 - 1}px`;
-            line3.style.top = `${parentPos.y + nodeHeight + 12}px`;
+            line3.style.top = `${parentPos.y + nodeHeight + 10}px`;
             line3.style.width = '2px';
-            line3.style.height = `${childPos.y - (parentPos.y + nodeHeight + 12)}px`;
+            line3.style.height = `${childPos.y - (parentPos.y + nodeHeight + 10)}px`;
             treeContainer.appendChild(line3);
         }
         
@@ -1717,7 +1831,7 @@
             const line = document.createElement('div');
             line.className = 'tree-line';
             line.style.left = `${pos1.x + nodeWidth}px`;
-            line.style.top = `${pos1.y + 25}px`;
+            line.style.top = `${pos1.y + 20}px`;
             line.style.width = `${pos2.x - pos1.x - nodeWidth}px`;
             line.style.height = '2px';
             treeContainer.appendChild(line);
@@ -1766,7 +1880,7 @@
         }
         
         // Criar nó da árvore - versão otimizada para mobile
-        function createPersonNode(person, x, y, width = 90, height = 50, relationship = '') {
+        function createPersonNode(person, x, y, width = 85, height = 48, relationship = '') {
             const node = document.createElement('div');
             node.className = `tree-node ${person.sexo || 'unknown'}`;
             node.style.left = `${x}px`;
@@ -1778,8 +1892,8 @@
             const nameDiv = document.createElement('div');
             nameDiv.className = 'node-name';
             const fullName = person.nome || 'Nome desconhecido';
-            if (fullName.length > 10) {
-                nameDiv.textContent = fullName.substring(0, 10) + '...';
+            if (fullName.length > 8) {
+                nameDiv.textContent = fullName.substring(0, 8) + '...';
             } else {
                 nameDiv.textContent = fullName;
             }
@@ -1787,8 +1901,8 @@
             const surnameDiv = document.createElement('div');
             surnameDiv.className = 'node-surname';
             const fullSurname = person.sobrenome || '';
-            if (fullSurname.length > 12) {
-                surnameDiv.textContent = fullSurname.substring(0, 12) + '...';
+            if (fullSurname.length > 10) {
+                surnameDiv.textContent = fullSurname.substring(0, 10) + '...';
             } else {
                 surnameDiv.textContent = fullSurname;
             }
